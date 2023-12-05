@@ -1,0 +1,70 @@
+.App {
+    text-align: center;
+  }
+  
+  .App-logo {
+    height: 40vmin;
+    pointer-events: none;
+  }
+  
+  .cardContent {
+    text-align: left;
+  }
+  .categorySlides{
+    gap: 12;
+  }
+  
+  #categoriesSlider { 
+    gap: 3px;
+  }
+  #nav-link {
+    text-decoration: none;
+    color: inherit; /* Use the default text color */
+  }
+  section.bakery .card-title {
+    margin-top: 20px;
+  }
+  
+  .stores .form-check {
+    font-size: 13px;
+    text-align: left;
+  }
+  
+  .priceField input {
+    font-size: 12px;
+  }
+  
+  .orderInfo {
+    text-align: left;
+  }
+  
+  @media (prefers-reduced-motion: no-preference) {
+    .App-logo {
+      animation: App-logo-spin infinite 20s linear;
+    }
+  }
+  
+  .App-header {
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+  }
+  
+  .App-link {
+    color: #61dafb;
+  }
+  
+  @keyframes App-logo-spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
