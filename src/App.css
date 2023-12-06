@@ -72,3 +72,17 @@ section.bakery .card-title {
   margin-right: 10px;
 
 }
+.categoryBox img {
+ 
+  margin: auto;
+}
+
+
+.store_tabbing_section .selection_div {
+  
+  text-decoration: none;
+  color: inherit;
+}
+.order_name {
+  width: 135px;
+}

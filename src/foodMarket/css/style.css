@@ -1104,6 +1104,7 @@ width: 50%;
     border-radius: 10px;
     border: 1px solid var(--primaryColor);
     object-fit: cover;
+    width: 120px;
 }
 .selection_div .order_cancel {
     border-radius: 10px;

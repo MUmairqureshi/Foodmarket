@@ -14,9 +14,30 @@ export const Get_all_product = async() => {
   } catch (error) {
     console.log('Error in getting all products (service) =>', error)
   }
+  // ${url}/public/api/filter_product/?category_id=1&menu_id=3&dietary_id=1&min_price=20&max_price=40
 }
+// 
+export const filterProducts = async (url, categoryID, menuID, dietaryID, minPrice, maxPrice) => {
+  try {
+    const apiUrl = `${url}/public/api/filter_product/?category_id=${categoryID}&menu_id=${menuID}&dietary_id=${dietaryID}&min_price=${minPrice}&max_price=${maxPrice}`;
+  
+    console.log(apiUrl)
+    const response = await fetch(apiUrl, {
+      method: 'GET',
+    });
 
- 
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    console.error('Error in filtering products =>', error);
+    throw error;  
+  }
+};
  
 
 
@@ -27,7 +48,7 @@ export const Get_all_product_detail = async (productId) => {
       method: 'GET',
     });
     const data = await res.json();
-    console.log(data)
+ 
     return data;
   } catch (error) {
     console.log('Error in getting all products (service) =>', error)
@@ -69,18 +90,50 @@ export const Popular_product = async () => {
 // };
 
  
-export const Filter_product = async() => {
+// export const Filter_product = async() => {
+//   try {
+//     // fetch(`${url}/public/api/filter_product/?category_id=${categoryID}&menu_id=${menuID}&dietary_id=${dietaryID}&min_price=${minPrice}&max_price=${maxPrice}`)
+//     const res = await fetch(`${url}/public/api/filter_product/?category_id=1&menu_id=3&dietary_id=1&min_price=20&max_price=40`, {
+
+//       method: 'GET',
+//       headers: {
+//         "application": ''
+//       }
+//     });
+//     const data = await res.json();
+//     console.log(data)
+//     return data;
+//   } catch (error) {
+//     console.log('Error in getting all products (service) =>', error)
+//   }
+// }
+
+
+export const filterProduct = async () => {
   try {
-    // fetch(`${url}/public/api/filter_product/?category_id=${categoryID}&menu_id=${menuID}&dietary_id=${dietaryID}&min_price=${minPrice}&max_price=${maxPrice}`)
-    const res = await fetch(`${url}/public/api/filter_product/?category_id=1&menu_id=3&dietary_id=1&min_price=20&max_price=40`, {
+    const categoryID = 2;
+    const menuID = 3;
+    const dietaryID = 1;
+    const minPrice = 300;
+    const maxPrice = 304;
+
+    const res = await fetch(`https://custom2.mystagingserver.site/food-stadium/public/api/filter_product/?category_id=2&menu_id=3&dietary_id=1&min_price=300&max_price=304`, {
       method: 'GET',
+      headers: {
+        'Content-Type': 'application/json', // Replace with the appropriate content type
+        // Add any other headers as needed for your API
+      }
     });
+
     const data = await res.json();
+    console.log(data);
     return data;
   } catch (error) {
-    console.log('Error in getting all products (service) =>', error)
+    console.error('Error in getting filtered products:', error);
+    throw error; // Rethrow the error to propagate it to the caller if needed
   }
-}
+};
+
  
  
 export const Menu_listing =async () => {

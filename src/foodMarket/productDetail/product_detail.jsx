@@ -1,7 +1,6 @@
             
 // import mac from '../images/mac.png' 
  
-
 // import '../css/style.css'
 // import product_extras_1 from '../images/product_extras_1.png'
 // import pe_2 from '../images/pe_2.png'
@@ -442,6 +441,7 @@
 
 
 
+ 
 
 
 
@@ -453,8 +453,7 @@
 
 
 
-
-
+ 
 
 
 
@@ -474,9 +473,7 @@
 
 
 
-
-
-
+ 
 
 
 
@@ -515,7 +512,11 @@ import { Tabs, Tab } from 'react-bootstrap';
 // import b_img   from './img/b_.png' 
 // Store details
 export const Product_deatail = (props) => {
-      const [key, setKey] = useState('section1');
+    // data come from api increment dec functionality on individual product and add to card  using react js 
+console.log(props.productDetails?.data.variation)
+    const ImageUrl = "https://custom2.mystagingserver.site/food-stadium/public/"
+
+       const [key, setKey] = useState('section1');
    return (
     <Modal
     {...props}
@@ -523,8 +524,7 @@ export const Product_deatail = (props) => {
     aria-labelledby="contained-modal-title-vcenter"
     centered
   >
-
-{/* img */}
+ 
  
 <section class="store_detail_section">
     <div class="container">
@@ -541,17 +541,17 @@ export const Product_deatail = (props) => {
 
             <div class="col-md-5">
                 <div class="img_div">
-                    <img src={b_img} class="img-fluid" alt=""/>
+                    <img src={ImageUrl + props.productDetails?.data.feature_image} class="img-fluid" alt=""/>
                 </div>
             </div>
             <div class="col-md-7 align-self-center">
                 <div class="store_content">
                 <div class="titleBox mb-3">
-                    <h2>Burger </h2>
+                    <h2>{props.productDetails?.data.title} </h2>
                 </div>
                 <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever 
                     since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                <h3>Price: <span class="text-theme-primary font-weight-bold">$99.00</span></h3>
+                <h3>Price: <span class="text-theme-primary font-weight-bold">{props.productDetails?.data.product_price}</span></h3>
                 <p class="star">
                 <i class="fa fa-star" aria-hidden="true"></i>
                 <i class="fa fa-star" aria-hidden="true"></i>
@@ -561,6 +561,7 @@ export const Product_deatail = (props) => {
             
             </p>
                 </div>
+
             </div>
         </div>
     </div>
@@ -575,35 +576,36 @@ export const Product_deatail = (props) => {
     >           <Tab  class="nav-item" eventKey="section1" title="Variations"> 
                 <a class="nav-link active" id="variation-tab" data-toggle="tab" href="#variation" role="tab" aria-controls="variation" aria-selected="true">Variations</a>
                 
-
-
+ 
 
 
 
 
                 <div class="tab-pane fade show active" id="variation" role="tabpanel" aria-labelledby="variation-tab">
             <div id="accordion">
-            <div class="card">
+            {props.productDetails?.data.variation.map(data=>(  <div key={data.id} class="card">
                 <div class="card-header" id="headingOne">
                 <h5 class="mb-0">
                     <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                    Bun Selection*
+                    {data?.name} Selection*
                     </button>
                 </h5>
                 </div>
 
                 <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                 <div class="card-body ">
-                   <div class="selection_div">
+                {data?.variation_items.map(data=>(
+
+                   <div key={data.id} class="selection_div">
                    <div class="order_cancel">
                    <button><i class="fa fa-times" aria-hidden="true"></i></button>
                    </div>
                     <div class="order_img">
-                        <img src={bun_img} class="img-fluid" alt=""/>
+                        <img  src={ImageUrl + data.image} class="img-fluid" alt=""/>
                     </div>
                     <div class="order_name">
                        <div class="titleBox">
-                        <h3>Classic burger</h3>
+                        <h3> {data.title}</h3>
                        </div>
                     </div>
                     <div class="p_quantity">
@@ -613,48 +615,12 @@ export const Product_deatail = (props) => {
                         <h3>+$0</h3>
                     </div>
                    </div>
-                   <div class="selection_div">
-                   <div class="order_cancel">
-                   <button><i class="fa fa-times" aria-hidden="true"></i></button>
-                   </div>
-                    <div class="order_img">
-                        <img src={bun_img} class="img-fluid" alt=""/>
-                    </div>
-                    <div class="order_name">
-                       <div class="titleBox">
-                        <h3>Classic burger</h3>
-                       </div>
-                    </div>
-                    <div class="p_quantity">
-                        <input type="number" value="01" placeholder="01"/>
-                    </div>
-                    <div class="product_price ">
-                        <h3>+$0</h3>
-                    </div>
-                   </div>
-                   <div class="selection_div">
-                   <div class="order_cancel">
-                   <button><i class="fa fa-times" aria-hidden="true"></i></button>
-                   </div>
-                    <div class="order_img">
-                        <img src={bun_img} class="img-fluid" alt=""/>
-                    </div>
-                    <div class="order_name">
-                       <div class="titleBox">
-                        <h3>Classic burger</h3>
-                       </div>
-                    </div>
-                    <div class="p_quantity">
-                        <input type="number" value="01" placeholder="01"/>
-                    </div>
-                    <div class="product_price ">
-                        <h3>+$0</h3>
-                    </div>
-                   </div>
+                  ))}
+               
                 </div>
                 </div>
-            </div>
-            <div class="card">
+            </div>))}
+            {/* <div class="card">
                 <div class="card-header" id="headingTwo">
                 <h5 class="mb-0">
                     <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
@@ -663,8 +629,8 @@ export const Product_deatail = (props) => {
                 </h5>
                 </div>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-                <div class="card-body">
-                <div class="selection_div">
+                <div class="card-body"> 
+                 <div class="selection_div">
                    <div class="order_cancel">
                    <button><i class="fa fa-times" aria-hidden="true"></i></button>
                    </div>
@@ -673,7 +639,7 @@ export const Product_deatail = (props) => {
                     </div>
                     <div class="order_name">
                        <div class="titleBox">
-                        <h3>Classic burger</h3>
+                        <h3>fsd dg sdfg</h3>
                        </div>
                     </div>
                     <div class="p_quantity">
@@ -683,10 +649,11 @@ export const Product_deatail = (props) => {
                         <h3>+$0</h3>
                     </div>
                    </div>
+                  
 
             </div>
                 </div>
-            </div>
+            </div> */}
            
             </div>
        </div>
@@ -787,7 +754,7 @@ export const Product_deatail = (props) => {
                     <h3>Total Price</h3>
                 </div>
                 <div class="p_quantity">
-                       <h3>$99.00</h3>
+                       <h3>$ { props.productDetails?.data.price}</h3>
                     </div>
               </div>
               <div class="actionCart">

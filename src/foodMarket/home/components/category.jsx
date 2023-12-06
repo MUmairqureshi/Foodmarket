@@ -7,7 +7,6 @@ import recycle from '../../images/recycle.png'
 import Card from 'react-bootstrap/Card';
 
 
-
 import { Product_deatail } from '../../productDetail/product_detail'
 import { Nav } from 'react-bootstrap';
 
@@ -15,20 +14,30 @@ import React from 'react';
 import Slider from "react-slick";
 import { useRef } from "react";
 import menuOrder from '../../images/menuOrder.png'
+import { formatCurrencyString, useShoppingCart } from "use-shopping-cart"
+
 import burger from '../../images/burger.png'
-import { Menu_listing, Dietary_listing, Get_all_product, Get_all_product_detail } from '../../../components/services/catigories'
-import { useContext } from "react";
+import { Menu_listing, Dietary_listing, Get_all_product, Get_all_product_detail   , filterProduct} from '../../../components/services/catigories'
+// import { useContext } from "react";
 export function Category() {
 
-
+// Filter_product
 
     const [showModal, setShowModal] = useState(false);
     const [selectedProductId, setSelectedProductId] = useState(null);
     const [productDetails, setProductDetails] = useState(null);
 
+      
 
-
-
+const { addItem, cartDetails, incrementItem  ,decrementItem    } = useShoppingCart()
+const cartItems = Object.entries(cartDetails!).map(([_, product]) => product)
+const entries = [];
+console.log(product)
+// for (const id in cartDetails) {
+//   const entry = cartDetails[id];
+//   console.log(entry)
+// }
+// console.log(entry)
     const handleProductClick = async (productId) => {
         console.log(productId)
         // setSelectedProductId(productId);
@@ -56,22 +65,15 @@ export function Category() {
 
 
 
-    // const  [product_detail , setproduct_detail] = useState([])
+    const  [product_filter , setproduct_filter] = useState([])
 
-    //       useEffect(() => {
-    //         const fetchData = async () => {
-    //             try {
-    //                 const data = await Get_all_product_detail();
-    //                 setproduct_detail(data);
-    //             } catch (error) {
-    //                 console.error('Error fetching data:', error);
-    //             }
-    //         };
+          useEffect(() => {
+            
+            filterProduct
+            // fetchData();
+        }, []);
 
-    //         fetchData();
-    //     }, []);
-
-    //     console.log(product_detail)
+        // console.log(product_filter)
 
     const sliderRefs = useRef(null);
 
@@ -479,7 +481,7 @@ export function Category() {
                                                                             <span className="qunatingCount">  01</span>
                                                                             <button className="minus" type="button"   ><i className="fa fa-minus"></i></button>
 
-                                                                            <button className="plus" type="button"><i className="fa fa-plus"></i></button>
+                                                                            <button onClick={() => incrementItem(data?.id)} className="plus" type="button"><i className="fa fa-plus"></i></button>
                                                                         </div>
                                                                         <div className="addToCart">
 
