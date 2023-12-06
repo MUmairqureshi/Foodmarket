@@ -4,7 +4,9 @@ import mac from '../../images/mac.png'
 import cupcake from '../../images/cupcake.png'
 import cashBack from '../../images/cashBack.png'
 import recycle from '../../images/recycle.png'
-import Card from 'react-bootstrap/Card';
+import Card from 'react-bootstrap/Card'; 
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProducts, addToCart, incrementQuantity, decrementQuantity } from '../../../components/redux/actions';
 
 
 import { Product_deatail } from '../../productDetail/product_detail'
@@ -13,14 +15,14 @@ import { Nav } from 'react-bootstrap';
 import React from 'react';
 import Slider from "react-slick";
 import { useRef } from "react";
-import menuOrder from '../../images/menuOrder.png'
-import { formatCurrencyString, useShoppingCart } from "use-shopping-cart"
+import menuOrder from '../../images/menuOrder.png' 
 
 import burger from '../../images/burger.png'
 import { Menu_listing, Dietary_listing, Get_all_product, Get_all_product_detail   , filterProduct} from '../../../components/services/catigories'
 // import { useContext } from "react";
 export function Category() {
-
+    const cartItems = useSelector((state) => state.cart.items);
+console.log(cartItems)
 // Filter_product
 
     const [showModal, setShowModal] = useState(false);
@@ -28,16 +30,15 @@ export function Category() {
     const [productDetails, setProductDetails] = useState(null);
 
       
+ 
+    const dispatch = useDispatch();
+const products = useSelector((state) => state.products.products);
+    const loading = useSelector((state) => state.products.loading);
+  
+console.log ("Redux product " + products)
 
-const { addItem, cartDetails, incrementItem  ,decrementItem    } = useShoppingCart()
-const cartItems = Object.entries(cartDetails!).map(([_, product]) => product)
-const entries = [];
-console.log(product)
-// for (const id in cartDetails) {
-//   const entry = cartDetails[id];
-//   console.log(entry)
-// }
-// console.log(entry)
+
+
     const handleProductClick = async (productId) => {
         console.log(productId)
         // setSelectedProductId(productId);
@@ -66,12 +67,12 @@ console.log(product)
 
 
     const  [product_filter , setproduct_filter] = useState([])
-
-          useEffect(() => {
+    
+        //   useEffect(() => {
             
-            filterProduct
-            // fetchData();
-        }, []);
+        //     filterProduct
+        //     // fetchData();
+        // }, []);
 
         // console.log(product_filter)
 
@@ -139,7 +140,9 @@ console.log(product)
 
         fetchData();
     }, []);
-
+    useEffect(() => {
+        dispatch(fetchProducts());
+      }, [dispatch]);
 
 
     const [dietary_listing, setDietary_listing] = useState([]);
@@ -426,14 +429,14 @@ console.log(product)
                                             <Slider ref={sliderRef} {...settings}>
 
 
-                                                {all_product.data?.map(data => (
+                                                {products.map(data => (
                                                     <div className="row">
                                                         <Card className="mb-3" style={{ width: '16rem' }}>
                                                             <Nav.Link className="no-link-decoration" id='nav-link' style={{ textDecorationStyle: 'none' }} onClick={() => handleProductClick(data?.id)}>
                                                                 <div className="cardHeader">
                                                                     <div className="topMeta">
                                                                         <div className="tags">
-                                                                            <span>15%off</span>
+                                                                            <span>19%off</span>
                                                                         </div>
                                                                         <div className="tags wishList">
                                                                             <button className="button"><i className="fa fa-heart"></i></button>
@@ -478,14 +481,14 @@ console.log(product)
                                                                 <div className="cardFooter">
                                                                     <div className="cardAction">
                                                                         <div className="counterAction">
-                                                                            <span className="qunatingCount">  01</span>
-                                                                            <button className="minus" type="button"   ><i className="fa fa-minus"></i></button>
+                                                                            <span className="qunatingCount">  {data.quantity}</span>
+                                                                            <button className="minus" type="button"  onClick={() => dispatch(decrementQuantity(data.id))} ><i className="fa fa-minus"></i></button>
 
-                                                                            <button onClick={() => incrementItem(data?.id)} className="plus" type="button"><i className="fa fa-plus"></i></button>
+                                                                            <button className="plus"  onClick={() => dispatch(incrementQuantity(data.id))} type="button"><i className="fa fa-plus"></i></button>
                                                                         </div>
                                                                         <div className="addToCart">
 
-                                                                            <button type="button">Add To Cart</button>
+                                                                            <button type="button" onClick={() => dispatch(addToCart(data))} >  Add To Cart</button>
                                                                         </div>
                                                                     </div>
                                                                 </div>

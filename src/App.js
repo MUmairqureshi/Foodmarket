@@ -4,25 +4,15 @@ import { Aboutus } from './foodMarket/aboutUs/about_us'
 import { Header } from './foodMarket/Layout/header'
 import   Product_deatail  from './foodMarket/home/productdetail/index'
 import { Home } from './foodMarket/home/index' 
-// import { Provider } from 'react-redux'; 
-// import store from './components/redux/store';
-import { CartProvider } from 'use-shopping-cart'
+import { Provider } from 'react-redux'; 
+import store from './components/redux/store';
+
 
 function App() {
 
   return (
     <div className="App">
-        
-        <CartProvider
-    mode="payment"
-    cartMode="client-only"
- 
-    successUrl="stripe.com"
-    cancelUrl="twitter.com/dayhaysoos"
-    currency="USD"
-    allowedCountries={['US', 'GB', 'CA']}
-    billingAddressCollection={true}
-  >
+       <Provider store={store}>
       <div>
 
         <Header />
@@ -50,7 +40,7 @@ function App() {
 
       </div>
 
-      </CartProvider>,
+      </Provider>,
     </div>
   );
 }
