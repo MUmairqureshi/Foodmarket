@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react'
-import noodles from '../../images/noodles.png'
+ 
 import mac from '../../images/mac.png'
 import cupcake from '../../images/cupcake.png'
-import cashBack from '../../images/cashBack.png'
-import recycle from '../../images/recycle.png'
+ 
 import Card from 'react-bootstrap/Card'; 
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts, addToCart, incrementQuantity, decrementQuantity } from '../../../components/redux/actions';
-
+import {Cart} from '../../../components/redux/carts'
 
 import { Product_deatail } from '../../productDetail/product_detail'
 import { Nav } from 'react-bootstrap';
@@ -15,7 +14,7 @@ import { Nav } from 'react-bootstrap';
 import React from 'react';
 import Slider from "react-slick";
 import { useRef } from "react";
-import menuOrder from '../../images/menuOrder.png' 
+ 
 
 import burger from '../../images/burger.png'
 import { Menu_listing, Dietary_listing, Get_all_product, Get_all_product_detail   , filterProduct} from '../../../components/services/catigories'
@@ -478,6 +477,7 @@ console.log ("Redux product " + products)
                                                                         <h5 className="text-theme-primary font-weight-bold">${data.product_price}</h5>
                                                                     </div>
                                                                 </div>
+                                                                </Nav.Link>
                                                                 <div className="cardFooter">
                                                                     <div className="cardAction">
                                                                         <div className="counterAction">
@@ -492,7 +492,7 @@ console.log ("Redux product " + products)
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </Nav.Link>
+                                                       
                                                         </Card>
                                                     </div>
 
@@ -514,7 +514,8 @@ console.log ("Redux product " + products)
                     <Product_deatail productDetails={productDetails} show={showModal}
                         onHide={() => setShowModal(false)}
                     />
-                    <div className="col-md-3">
+                    <Cart/>
+                    {/* <div className="col-md-3">
                         <div className="homeCart bg-white shadow p-md-4 h-100">
                             <div className="notificationIcons mb-3">
                                 <button className="btn border-0 bg-transparent px-2" type="button">
@@ -587,62 +588,10 @@ console.log ("Redux product " + products)
                                             <p><span>+</span>$350</p>
                                         </div>
                                     </div>
-                                    <div className="orderCard flex-xl-nowrap flex-wrap mb-3">
-                                        <div className="orderItem flex-xl-nowrap flex-wrap">
-                                            <div className="orderThumnail">
-                                                <img src={menuOrder} alt="Menu Image" className="mw-100" />
-                                            </div>
-                                            <div className="orderInfo">
-                                                <p className="mb-0">Pepperoni</p>
-                                                <p className="mb-0 text-secondary">X1</p>
-                                            </div>
-                                        </div>
-                                        <div className="orderPrice">
-                                            <p><span>+</span>$350</p>
-                                        </div>
-                                    </div>
-                                    <div className="orderCard flex-xl-nowrap flex-wrap mb-3">
-                                        <div className="orderItem flex-xl-nowrap flex-wrap">
-                                            <div className="orderThumnail">
-                                                <img src={menuOrder} alt="Menu Image" className="mw-100" />
-                                            </div>
-                                            <div className="orderInfo">
-                                                <p className="mb-0">Pepperoni</p>
-                                                <p className="mb-0 text-secondary">X1</p>
-                                            </div>
-                                        </div>
-                                        <div className="orderPrice">
-                                            <p><span>+</span>$350</p>
-                                        </div>
-                                    </div>
-                                    <div className="orderCard flex-xl-nowrap flex-wrap mb-3">
-                                        <div className="orderItem flex-xl-nowrap flex-wrap">
-                                            <div className="orderThumnail">
-                                                <img src={menuOrder} alt="Menu Image" className="mw-100" />
-                                            </div>
-                                            <div className="orderInfo">
-                                                <p className="mb-0">Pepperoni</p>
-                                                <p className="mb-0 text-secondary">X1</p>
-                                            </div>
-                                        </div>
-                                        <div className="orderPrice">
-                                            <p><span>+</span>$350</p>
-                                        </div>
-                                    </div>
-                                    <div className="orderCard flex-xl-nowrap flex-wrap mb-3">
-                                        <div className="orderItem flex-xl-nowrap flex-wrap">
-                                            <div className="orderThumnail">
-                                                <img src={menuOrder} alt="Menu Image" className="mw-100" />
-                                            </div>
-                                            <div className="orderInfo">
-                                                <p className="mb-0">Pepperoni</p>
-                                                <p className="mb-0 text-secondary">X1</p>
-                                            </div>
-                                        </div>
-                                        <div className="orderPrice">
-                                            <p><span>+</span>$350</p>
-                                        </div>
-                                    </div>
+                                  
+                              
+                                   
+                                    
                                 </div>
                             </div>
                             <div className="serviceTax mb-3 border-top pt-3">
@@ -674,7 +623,7 @@ console.log ("Redux product " + products)
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </section>

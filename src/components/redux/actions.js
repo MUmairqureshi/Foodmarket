@@ -3,19 +3,28 @@ export const fetchProductsRequest = () => ({
     type: 'FETCH_PRODUCTS_REQUEST',
   });
   
-  export const fetchProductsSuccess = (products) => ({
-    type: 'FETCH_PRODUCTS_SUCCESS',
-    payload: products,
-  });
+
+  export const fetchProductsSuccess = (products) => { 
+    const productsWithDefaultQuantity = products.map(product => ({
+      ...product,
+      quantity: 0,  
+    }));
+    return {
+      type: 'FETCH_PRODUCTS_SUCCESS',
+      payload: productsWithDefaultQuantity,
+    };
+  };
   
   export const fetchProductsFailure = (error) => ({
     type: 'FETCH_PRODUCTS_FAILURE',
     payload: error,
   });
-  
+   
   export const addToCart = (product) => ({
+   
     type: 'ADD_TO_CART',
     payload: product,
+  
   });
   
   export const incrementQuantity = (productId) => ({
@@ -27,7 +36,10 @@ export const fetchProductsRequest = () => ({
     type: 'DECREMENT_QUANTITY',
     payload: productId,
   });
-  
+  export const removeFromCart = (productId) => ({
+    type: 'REMOVE_FROM_CART',
+    payload: productId,
+  });
   export const fetchProducts = () => {
     return async (dispatch) => {
       dispatch(fetchProductsRequest());

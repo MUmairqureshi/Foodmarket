@@ -1,4 +1,4 @@
-// productReducer.js
+// productReducer.js fix productReducer when add  quantity again in to product that add previous increment in the quantity not add again in add to card and add to card 
 const initialState = {
     products: [],
     loading: false,
