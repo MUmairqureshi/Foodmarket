@@ -12,8 +12,9 @@ export const Cart = () => {
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.items);
   const ImageUrl = "https://custom2.mystagingserver.site/food-stadium/public/"
-
-  return (
+const itm = cartItems?.map(data => data.product_price *data.quantity +10)
+console.log(itm)
+return (
     // <div>
     //   <h2>Cart</h2>
     //   <ul>
@@ -101,7 +102,7 @@ export const Cart = () => {
                         </div>
                         <div className="orderInfo">
                             <p className="mb-0">{item?.title}</p>
-                            <p className="mb-0 text-secondary">X1</p>
+                            <p className="mb-0 text-secondary">{item?.quantity}</p>
                         </div>
                     </div>
                     <div className="orderPrice">
@@ -132,7 +133,7 @@ export const Cart = () => {
                     <h5 className="mb-0">Total</h5>
                 </div>
                 <div className="totalPrice">
-                    <p className="mb-0">$810</p>
+                    <p className="mb-0">${itm}</p>
                 </div>
             </div>
         </div>
