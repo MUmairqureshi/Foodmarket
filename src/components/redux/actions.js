@@ -55,3 +55,5 @@ export const fetchProductsRequest = () => ({
     };
   };
   
+
+  // on add to card when user slect variation then create object in to add to card product ad add variation  when select with variation  variation come to variation array in to vatition and when increase quantity  update product and itsVARIATION price all object  
