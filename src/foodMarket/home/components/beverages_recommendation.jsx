@@ -5,9 +5,9 @@
 import {  Card } from 'react-bootstrap';
 import { useRef } from "react";
 import React from "react";
-import tacos from '../../images/tacos.png'
-import mac from '../../images/mac.png'
-import c1 from '../../images/c1.png'
+import tacos from '../../../assets/images/tacos.png'
+import mac from '../../../assets/images/mac.png'
+import c1 from '../../../assets/images/c1.png'
 import { Get_all_product } from '../../../components/services/catigories'
 import { useState, useEffect } from 'react'
 

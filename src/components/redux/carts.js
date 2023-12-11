@@ -1,8 +1,8 @@
 // Cart.js
  
-import menuOrder from '../../foodMarket/images/menuOrder.png'
-import cashBack from '../../foodMarket/images/cashBack.png'
-import recycle from '../../foodMarket/images/recycle.png'
+import menuOrder from '../../assets/images/menuOrder.png'
+import cashBack from '../../assets/images/cashBack.png'
+import recycle from '../../assets/images/recycle.png'
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeFromCart } from './actions';

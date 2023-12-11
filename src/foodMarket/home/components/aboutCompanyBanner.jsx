@@ -1,8 +1,8 @@
 
-import l1 from '../../images/l1.png'
+import l1 from '../../../assets/images/l1.png'
 
-import l3 from '../../images/l3.png'
-
+import l3 from '../../../assets/images/l3.png'
+// import dq from '../../../assets/images'
 import React from "react";
 
  

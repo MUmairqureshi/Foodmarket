@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
  
-import mac from '../../images/mac.png'
-import cupcake from '../../images/cupcake.png'
+import mac from '../../../assets/images/mac.png'
+import cupcake from '../../../assets/images/cupcake.png'
  
 import Card from 'react-bootstrap/Card'; 
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,7 +16,7 @@ import Slider from "react-slick";
 import { useRef } from "react";
  
 
-import burger from '../../images/burger.png'
+import burger from '../../../assets/images/burger.png'
 import { Menu_listing, Dietary_listing, Get_all_product, Get_all_product_detail   , filterProduct} from '../../../components/services/catigories'
 // import { useContext } from "react";
 export function Category() {
@@ -100,6 +100,32 @@ const products = useSelector((state) => state.products.products);
         speed: 500,
         slidesToShow: 6, // Number of items to show in a row
         slidesToScroll: 1,
+        responsive: [
+            {
+                breakpoint: 1024, // Medium devices (tablets, 768px and up)
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                  
+                },
+            },
+            {
+                breakpoint: 768, // Small devices (landscape phones, 576px and up)
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    rows: 1,
+                },
+            },
+            {
+                breakpoint: 576, // Extra small devices (portrait phones, 576px and down)
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 1,
+                    rows: 1,
+                },
+            },
+        ],
     };
 
  

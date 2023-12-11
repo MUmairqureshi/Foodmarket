@@ -9,7 +9,10 @@
 .text-theme-primary {
     color: var(--primaryColor);
 }
-
+input[type='checkbox'] {
+    height: 22px;
+    width: 25px;
+}
 body {
     font-family: var(--primaryFont);
     font-size: 14px;
@@ -63,23 +66,23 @@ li.nav-item a {
 /* home page  */
 
 /* .mainBanner {
-    background-image: url(../images/banner.png);
+    background-image: url(../../assets/images/banner.png);
     background-size: cover;
 }
  */
 
  .baner-1 {
-    background-image: url(../images/b1.png);
+    background-image: url(../../assets/images/b1.png);
     background-size: cover;
  }
 
  .baner-2 {
-    background-image: url(../images/b2.png);
+    background-image: url(../../assets/images/b2.png);
     background-size: cover;
  }
 
  .baner-3 {
-    background-image: url(../images/b3.png);
+    background-image: url(../../assets/images/b3.png);
     background-size: cover;
  }
  
@@ -798,7 +801,7 @@ section.choose {
 }
 
 .aboutCompanyBanner {
-    background-image: url(../images/footerBanner.png);
+    background-image: url(../../assets/images/footerBanner.png);
     padding: 70px 0;
     background-size: cover;
     text-align: center;
@@ -1119,8 +1122,8 @@ width: 50%;
     /* padding: 10px 12px; */
 }
 input[type='checkbox'] {
-    height: 17px;
-    width: 19px;
+    height: 22px;
+    width: 25px;
 }
 
  .p_quantity input {
@@ -1381,7 +1384,7 @@ div#accordion {
     width: 100%;
 }
 .aboutus_section {
-    background-image: url('../images/ab-bg2.png');
+    background-image: url('../../assets/images/ab-bg2.png');
     background-repeat: no-repeat;
     background-size: cover;
     height: 300px;
@@ -1531,4 +1534,10 @@ div#accordion {
  }
 
 
- 
+ @media (max-width: 786px) { 
+
+    .carouselArrows {
+        margin-bottom: 18px;
+        margin-top: 27px;
+    }
+}

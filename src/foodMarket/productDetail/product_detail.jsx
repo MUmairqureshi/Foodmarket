@@ -25,16 +25,17 @@ import CloseButton from 'react-bootstrap/CloseButton';
 
 
 // Subscription Module for 5-day Meals
-import user from '../images/user.png'
+import user from '../../assets/images/user.png'
+
 
 import { useState, useMemo  , useEffect} from 'react';
 
 
-import mac from '../images/mac.png'
+import mac from '../../assets/images/mac.png'
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts, addToCart, incrementvariationQuantity, decrementcariationQuantity } from '../../components/redux/actions';
 import '../css/style.css'
-import c1 from '../images/c1.png'
+import c1 from '../../assets/images/c1.png'
 
 
 
@@ -44,16 +45,50 @@ import { Tabs, Tab } from 'react-bootstrap';
 
 export const Product_deatail = (props) => {
     //   onHide
-    const datas = props.productDetails?.data.id
+    const datas = props.productDetails?.data
     console.log("datasid ", datas)
     const cartItems = useSelector((state) => state.cart.items);
-    const data = props.productDetails?.data.product_price
-    console.log(props)
+    const data = props.productDetails?.data
+    console.log(data)
     const dispatch = useDispatch();
     const [selectedVariations, setSelectedVariations] = useState([]);
+    console.log(selectedVariations?.variation_id)
+    const productId = parseFloat(props.productDetails?.data.id);
+    console.log(productId)
+    const handleVariationQuantityChange = (newQuantity) => {
+        // Assuming props.productDetails?.data is an object
+        const productId = parseFloat(props.productDetails?.data.id);
+      
+        // Check if the product id matches
+ 
+        if (productId === selectedVariations.product_id) {
+          // If variation exists, update its quantity
 
-    console.log(selectedVariations)
-
+            // if (variation.variation_id === selectedVariations.variation_id) {
+            //   return {
+            //     ...variation,
+            //     quantity: newQuantity,
+            //   };
+            // }
+                    // Optionally, update the selectedVariations state based on the new quantity
+           
+          setSelectedVariations((prevVariations) => ({
+            ...prevVariations,
+            quantity: newQuantity,
+            ...productDetails?.data,
+            quantity: newQuantity
+            
+          }));
+        
+      
+      
+          // Dispatch an action with the updated data
+          dispatch(incrementvariationQuantity(productId, selectedVariations.variation_id, newQuantity));
+      
+  
+        }
+      };
+      
 
     const ImageUrl = "https://custom2.mystagingserver.site/food-stadium/public/"
 
@@ -83,6 +118,10 @@ export const Product_deatail = (props) => {
 useEffect(() => {
     calculateTotalPrice();
   }, [selectedVariations, props.productDetails?.data.product_price]);
+
+  useEffect(() => {
+    handleVariationQuantityChange();
+  }, [ selectedVariations,  , props.productDetails?.data.id]);
 
 
 
@@ -130,15 +169,15 @@ useEffect(() => {
         setSelectedVariations({});
         // setProductQuantity(1);
     }
-    const handleVariationQuantityChange = (newQuantity) => {
-        // props.productDetails?.data.forEach(product => {
-        //   if (product.id === productId) {
-        //     product?.variation.forEach(variation => {
-        dispatch(incrementvariationQuantity(props.productDetails?.data.id, selectedVariations.variation_id , newQuantity));
-        // });
-        //   }
-        // });
-    };
+    // const handleVariationQuantityChange = (newQuantity) => {
+    //     // props.productDetails?.data.forEach(product => {
+    //     //   if (product.id === productId) {
+    //     //     product?.variation.forEach(variation => {
+    //     dispatch(incrementvariationQuantity(props.productDetails?.data.id, selectedVariations.variation_id , newQuantity));
+    //     // });
+    //     //   }
+    //     // });
+    // };
 
     const handleToggleSelection = (variationId, itemId, selected) => {
         if (selected) {
@@ -251,7 +290,7 @@ useEffect(() => {
                                                         <div class="card-body">
                                                             {data?.variation_items.map(item => (
                                                                 <div key={item.id} class="selection_div">
-                                                                    <div class="order_cancel">
+                                                                    <div class="">
                                                                         <input
                                                                             type="checkbox"
                                                                             onChange={(e) =>

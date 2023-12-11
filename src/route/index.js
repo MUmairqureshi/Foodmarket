@@ -1,24 +1,20 @@
 import React from "react";
 
-import {Card} from '../foodMarket/Card/index'
+import { Card } from '../foodMarket/Card/index'
 import { Header } from '../foodMarket/Layout/header'
 
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Link, BrowserRouter } from "react-router-dom";
 import Home from '../foodMarket/home/index'
-export function Rout (){
-    return(
-        <div>
-    <Router>
-    <Header />
- 
+export function Rout() {
+  return (
+    <div>
+      <BrowserRouter basename="/foodmarket">
+        <Header />
         <Routes>
-          <Route path="/home" element={<Home />} /> 
-          <Route path="/card" element={<Card />} /> 
-
+        <Route path="/" element={<Home />} />
+          <Route path="/card" element={<Card />} />
         </Routes>
-
-
-      </Router>
-        </div>
-    )
+      </BrowserRouter>
+    </div>
+  )
 }

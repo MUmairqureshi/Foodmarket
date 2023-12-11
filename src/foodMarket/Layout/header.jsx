@@ -41,7 +41,7 @@ export function Header() {
         <div className="row">
             <div className="col-md-9 offset-md-3">
                 <nav className="navbar navbar-expand-lg navbar-light">
-                        <Link className="navbar-brand" to="./home">Navbar</Link>       
+                        <Link className="navbar-brand" to="/">Logo here</Link>       
                     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
@@ -49,16 +49,16 @@ export function Header() {
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav mr-auto">
                             <li className="nav-item active">
-                                <a className="nav-link" href="#">Customize Your Menu </a>
+                                <Link className="nav-link" to="/">Customize Your Menu </Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" href="./aboutUs/about_us">About </Link>
+                                <Link className="nav-link" to="/">About </Link>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="../store/store.jsx">Shop By Location </a>
+                                <Link className="nav-link" to="/">Shop By Location </Link>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="../contact/contact-us.jsx">Contact Us </a>
+                                <Link className="nav-link" to="/">Contact Us </Link>
                             </li>
                         </ul>
                         <div className="form-inline my-2 my-lg-0 headerIcons">
@@ -66,7 +66,7 @@ export function Header() {
                                 <i className="fa fa-heart"></i>
                             </button>
                             <button type="button">
-                            <Link className="nav-link" to="./card"> <i className="fa fa-shopping-cart"></i></Link>
+                            <Link className="nav-link" to="/card"> <i className="fa fa-shopping-cart"></i></Link>
                                
                             </button>
                             <button type="button">

@@ -1,15 +1,15 @@
 
 import '../css/style.css'
-import m_img from '../images/m_img.png'
-import ab_bg from '../images/ab_bg.png'
-import filter from '../images/filter.png'
-import mac from '../images/mac.png'
-import ab_2 from '../images/ab_2.png'
+import m_img from '../../assets/images/m_img.png'
+import ab_bg from '../../assets/images/ab_bg.png'
+import filter from '../../assets/images/filter.png'
+import mac from '../../assets/images/mac.png'
+import ab_2 from '../../assets/images/ab_2.png'
  
 
-import clock_icon from '../images/clock_icon.png'
+import clock_icon from '../../assets/images/clock_icon.png'
 
-import c1 from '../images/c1.png'
+import c1 from '../../assets/images/c1.png'
  
 import { Form } from 'react-bootstrap'
 export function Aboutus() {

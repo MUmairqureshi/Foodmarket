@@ -1,8 +1,8 @@
 
 
-import checkout from '../../images/checkout.png' 
-// import package from '../../images/package.png' 
- import choose from '../../images/choose.png'
+import checkout from '../../../assets/images/checkout.png' 
+// import package from '../../../assets/images/package.png' 
+ import choose from '../../../assets/images/choose.png'
 export function Chooseus(){
     return(
 <div>

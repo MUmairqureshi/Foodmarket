@@ -50,7 +50,8 @@ const initialState = {
           product.id === action.payload.productId
             ? {
                 ...product,
-                variations: product.variations.map(variation =>
+                quantity: product.quantity + 1,
+                variation: product.variation.map(variation =>
                   variation.id === action.payload.variationId
                     ? { ...variation, quantity: action.payload.quantity }
                     : variation
@@ -69,10 +70,10 @@ const initialState = {
               product.id === action.payload.productId
                 ? {
                     ...product,
-                    quantity : quantity + 1 , 
+                    quantity : action.payload.quantity , 
                     variations: product.variations.map(variation =>
                       variation.id === action.payload.variationId
-                        ? { ...variation, quantity: variation.quantity + 1 }
+                        ? { ...variation, quantity: action.payload.quantity }
                         : variation
                     ),
                   }

@@ -10,7 +10,7 @@ import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts, addToCart, incrementQuantity, decrementQuantity } from '../../../components/redux/actions';
 import {  Card } from 'react-bootstrap';
-import mac from '../../images/mac.png'  
+import mac from '../../../assets/images/mac.png'  
 import {  Trending_product  , Get_all_product_detail} from '../../../components/services/catigories'
 
 export function Trending_dishes(){

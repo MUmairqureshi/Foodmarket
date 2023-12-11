@@ -33,7 +33,7 @@ export const fetchProductsRequest = () => ({
   });
   
   export const decrementQuantity = (productId) => ({
-    type: 'DECREMENT_VARIATION_QUANTITY',
+    type: 'DECREMENT_QUANTITY',
     payload: productId,
   });
 

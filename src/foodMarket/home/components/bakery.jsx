@@ -3,8 +3,8 @@ import { Button, Card } from 'react-bootstrap';
 
 import Slider from 'react-slick';  
 import  { useRef } from "react";
-import mac from '../../images/mac.png' 
-import c1 from '../../images/c1.png'
+import mac from '../../../assets/images/mac.png' 
+import c1 from '../../../assets/images/c1.png'
 import {  Get_all_product } from '../../../components/services/catigories'
 import { useState, useEffect } from 'react'
 export function Bakery(){

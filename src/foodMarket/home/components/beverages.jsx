@@ -4,8 +4,8 @@ import {  Card } from 'react-bootstrap';
 
 import { useRef } from "react";
 import Slider from 'react-slick';  
-import mac from '../../images/mac.png' 
-import c1 from '../../images/c1.png'
+import mac from '../../../assets/images/mac.png' 
+import c1 from '../../../assets/images/c1.png'
 import {  Get_all_product } from '../../../components/services/catigories'
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';

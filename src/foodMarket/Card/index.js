@@ -1,7 +1,7 @@
 import React from 'react'
-import product_extras1 from '../images/product_extras_1.png'
-import product1 from '../images/product_1.png'
-
+import product_extras1 from '../../assets/images/product_extras_1.png'
+import product1 from '../../assets/images//product_1.png'
+ 
 import { useDispatch, useSelector } from 'react-redux';
 export function Card() {
 

@@ -1,15 +1,15 @@
 import React from "react";
 
-import d3 from '../../images/d3.png'
-import di from '../../images/d1.png'
-import tacos from '../../images/tacos.png'
-import mac from '../../images/mac.png'
-import cashBack from '../../images/cashBack.png'
-import recycle from '../../images/recycle.png'
-import pizza from '../../images/pizza.png'
-import c1 from '../../images/c1.png'
-import menuOrder from '../../images/menuOrder.png'
-import d2 from '../../images/d2.png'
+import d3 from '../../../assets/images/d3.png'
+import di from '../../../assets/images/d1.png'
+import tacos from '../../../assets/images/tacos.png'
+import mac from '../../../assets/images/mac.png'
+import cashBack from '../../../assets/images/cashBack.png'
+import recycle from '../../../assets/images/recycle.png'
+import pizza from '../../../assets/images/pizza.png'
+import c1 from '../../../assets/images/c1.png'
+import menuOrder from '../../../assets/images/menuOrder.png'
+import d2 from '../../../assets/images/d2.png'
 
 
 export function Shakingdissert(){
