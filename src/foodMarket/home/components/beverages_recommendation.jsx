@@ -38,6 +38,7 @@ export function Beverages_Recommendations() {
         rows: 3,
         responsive: [
             {
+                infinite: true,
               breakpoint: 1024, // Medium devices (tablets, 768px and up)
               settings: {
                 slidesToShow: 2,
@@ -46,6 +47,7 @@ export function Beverages_Recommendations() {
               },
             },
             {
+                infinite: true,
               breakpoint: 768, // Small devices (landscape phones, 576px and up)
               settings: {
                 slidesToShow: 1,
@@ -54,6 +56,7 @@ export function Beverages_Recommendations() {
               },
             },
             {
+                infinite: true,
               breakpoint: 576, // Extra small devices (portrait phones, 576px and down)
               settings: {
                 slidesToShow: 1,

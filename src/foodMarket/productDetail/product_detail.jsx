@@ -1,19 +1,11 @@
-
-
-//   increment dec select different single  product variation to   onclick   come in variation_items array variation_items come in variation array
-// product variation increment dec and when onclick  select variation and  his quantity  
-// create object and when click on add to card send into card page add variation 
+ 
 
 
 
 
 
 
-
-
-
-
-// get total price of product and variation and add to card func add to card fun not perform in map
+ 
 // .fixed-item {
 //     position: absolute;
 //     top: 50%;
@@ -25,6 +17,7 @@
 
 
 
+import CloseButton from 'react-bootstrap/CloseButton';
 
 
 
@@ -34,7 +27,7 @@
 // Subscription Module for 5-day Meals
 import user from '../images/user.png'
 
-import { useState } from 'react';
+import { useState , useMemo  } from 'react';
 
 
 import mac from '../images/mac.png'
@@ -48,324 +41,24 @@ import c1 from '../images/c1.png'
 import Modal from 'react-bootstrap/Modal';
 import { Tabs, Tab } from 'react-bootstrap';
 
-export const Product_deatail = (props) => {
 
+export const Product_deatail = (props) => {
+    //   onHide
     const cartItems = useSelector((state) => state.cart.items);
-console.log(cartItems)
+    const data = props.productDetails?.data.product_price
+ console.log(props)
     const dispatch = useDispatch();
     const [selectedVariations, setSelectedVariations] = useState([]);
-    console.log(selectedVariations)
-    const [totalPrice, setTotalPrice] = useState(0);
-    console.log(totalPrice)
-    const propsdata = props.productDetails?.data
+   
 
-    const [quantity, setQuantity] = useState(props.productDetails?.data.quantity);
+ 
 
+    const ImageUrl = "https://custom2.mystagingserver.site/food-stadium/public/"
 
+    const [key, setKey] = useState('section1');
 
 
-
-
-
-
-    // const handleAddToCart = () => {
-    //     // Filter out variations with quantity > 0
-    //     const selectedVariationsWithQuantity = selectedVariations.filter(
-    //         (variation) => variation.quantity > 0
-    //     );
-
-    //     // Create a single object with selected variations
-    //     const selectedVariationsObject = {
-    //         product_id: propsdata.id,
-    //         variations: selectedVariationsWithQuantity.map((variation) => ({
-    //             variation_id: variation.id,
-    //             quantity: variation.quantity,
-    //         })),
-    //     };
-
-    //     // Dispatch the addToCart action with the selected variations object
-    //     dispatch(addToCart(selectedVariationsObject));
-
-    //     // Reset selectedVariations after adding to the cart
-    //     setSelectedVariations([]);
-    // };
-
-    // const handleQuantityChange = (variationId, newQuantity) => {
-    //     // Update the quantity in the state
-    //     setSelectedVariations((prevVariations) => {
-    //         const updatedVariations = prevVariations.map((prevVariation) =>
-    //             prevVariation.id === variationId ? { ...prevVariation, quantity: newQuantity } : prevVariation
-    //         );
-    //         return updatedVariations;
-    //     });
-    // };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // const handleAddToCart = () => {
-    //     const selectedVariationsWithQuantity = selectedVariations.filter(
-    //         (variation) => variation.quantity > 0
-    //     );
-
-    //     // Create a single object with selected variations
-    //     const selectedVariationsObject = {
-    //         product_id: propsdata.id,
-    //         variations: selectedVariationsWithQuantity.map((variation) => ({
-    //             variation_id: variation.id,
-    //             quantity: variation.quantity,
-    //         })),
-    //     };
-
-    //     // Dispatch the addToCart action with the selected variations object
-    //     dispatch(addToCart(selectedVariationsObject));
-
-    //     // Reset selectedVariations after adding to the cart
-    //     setSelectedVariations([]);
-    // };
-
-    // const handleQuantityChange = (variationId, newQuantity) => {
-    //     // Validate that newQuantity is a positive integer
-    //     const quantity = Number.isInteger(newQuantity) && newQuantity > 0 ? newQuantity : 0;
-
-    //     // Update the quantity in the state
-    //     setSelectedVariations((prevVariations) => {
-    //         const updatedVariations = prevVariations.map((prevVariation) =>
-    //             prevVariation.id === variationId ? { ...prevVariation, quantity } : prevVariation
-    //         );
-    //         return updatedVariations;
-    //     });
-    // };
-
-
-// when add item  and increment and resend in to card  not add again only  update quantity who add previously  
-
-
-
-
-
-// const handleAddToCart = () => {
-//     // Filter out variations with quantity > 0
-//     const selectedVariationsWithQuantity = selectedVariations.filter(
-//       (variation) => variation.quantity > 0
-//     );
-  
-//     // Create a single object with selected variations
-//     const selectedVariationsObject = {
-//       product_id: product.id,
-//       variations: selectedVariationsWithQuantity.map((variation) => ({
-//         variation_id: variation.variation_id,
-//         item_id: variation.item_id,
-//         quantity: variation.quantity,
-//       })),
-//     };
-  
-//     // Check if the variations already exist in the cart
-//     const existingVariations = cart.filter((cartItem) => cartItem.product_id === product.id);
-  
-//     if (existingVariations.length > 0) {
-//       // Update the quantity for existing variations
-//       const updatedCart = cart.map((cartItem) => {
-//         if (cartItem.product_id === product.id) {
-//           cartItem.variations.forEach((variation) => {
-//             const selectedVariation = selectedVariationsObject.variations.find(
-//               (selectedVariation) =>
-//                 selectedVariation.variation_id === variation.variation_id &&
-//                 selectedVariation.item_id === variation.item_id
-//             );
-  
-//             if (selectedVariation) {
-//               // Increment the quantity for existing variations
-//               variation.quantity += selectedVariation.quantity;
-//             }
-//           });
-//         }
-//         return cartItem;
-//       });
-  
-//       // Dispatch the addToCart action with the updated cart
-//       dispatch(addToCart(updatedCart));
-//     } else {
-//       // Dispatch the addToCart action with the selected variations object
-//       dispatch(addToCart([...cart, selectedVariationsObject]));
-//     }
-  
-//     // Reset selectedVariations after adding to the cart
-//     setSelectedVariations([]);
-//   };
-  
-
-
-
-
-
-
-
-
-
-
-
-    
-//   const handleAddToSelection = (variationId, itemId, quantity) => {
-//     // Find the selected variation
-//     const selectedVariation = props.productDetails?.data.variation.find((variation) => variation.id === variationId);
-
-//     // Find the selected variation item
-//     const selectedItem = selectedVariation.variation_items.find((item) => item.id === itemId);
-
-//     // Add the selected variation item to the list with the specified quantity
-//     setSelectedVariations((prevVariations) => [
-//       ...prevVariations,
-//       { variation_id: variationId, item_id: itemId, quantity, item: selectedItem },
-//     ]);
-//   };
-
-
-
-
-//   const handleAddToSelection = (variationId, itemId, quantity) => {
-//     // Ensure the quantity is not less than zero
-//     quantity = Math.max(0, quantity);
-  
-//     // Find the selected variation
-//     const selectedVariation = props.productDetails?.data.variation.find((variation) => variation.id === variationId);
-  
-//     // Find the selected variation item
-//     const selectedItem = selectedVariation.variation_items.find((item) => item.id === itemId);
-  
-//     // Add the selected variation item to the list with the specified quantity
-//     setSelectedVariations((prevVariations) => [
-//       ...prevVariations,
-//       { variation_id: variationId, item_id: itemId, quantity, item: selectedItem },
-//     ]);
-//   };
-
-
-
-
-
-const handleAddToSelection = (variationId, itemId, quantity) => {
-    // Ensure quantity is non-negative
-    if (quantity < 0) {
-      // You can handle this case, show an error message, or prevent adding to the selection
-      return;
-    }
-  
-    // Find the selected variation
-    const selectedVariation = props.productDetails?.data.variation.find((variation) => variation.id === variationId);
-  
-    // Find the selected variation item
-    const selectedItem = selectedVariation.variation_items.find((item) => item.id === itemId);
-  
-    // Add the selected variation item to the list with the specified quantity
-    setSelectedVariations((prevVariations) => [
-      ...prevVariations,
-      { variation_id: variationId, item_id: itemId, quantity, item: selectedItem },
-    ]);
-  };
-  
-
-//   const handleAddToCart = () => {
-//     // Filter out variations with quantity > 0
-//     const selectedVariationsWithQuantity = selectedVariations.filter(
-//       (variation) => variation.quantity > 0
-//     );
-
-//     // Create a single object with selected variations
-//     const selectedVariationsObject = {
-//       product_id: propsdata.id,
-//       variations: selectedVariationsWithQuantity.map((variation) => ({
-//         variation_id: variation.variation_id,
-//         item_id: variation.item_id,
-//         quantity: variation.quantity,
-//       })),
-//     };
-
-//     // Dispatch the addToCart action with the selected variations object
-//     dispatch(addToCart(selectedVariationsObject));
-
-//     // Reset selectedVariations after adding to the cart
-//     setSelectedVariations([]);
-//   };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-//   const handleAddToSelection = (variationId, quantity) => {
-//     // Find the selected variation
-//     const selectedVariation = propsdata.product_variation.map.find((variation) => variation.id === variationId);
-
-//     // Add the selected variation to the list with the specified quantity
-//     setSelectedVariations((prevVariations) => [
-//       ...prevVariations,
-//       { id: variationId, quantity, variation: selectedVariation },
-//     ]);
-//   };
-
-//   const handleAddToCart = () => {
-//     // Filter out variations with quantity > 0
-//     const selectedVariationsWithQuantity = selectedVariations.filter(
-//       (variation) => variation.quantity > 0
-//     );
-
-//     // Create a single object with selected variations
-//     const selectedVariationsObject = {
-//       product_id: propsdata.id,
-//       variations: selectedVariationsWithQuantity.map((variation) => ({
-//         variation_id: variation.id,
-//         quantity: variation.quantity,
-//       })),
-//     };
-
-//     // Dispatch the addToCart action with the selected variations object
-//     dispatch(addToCart(selectedVariationsObject));
-
-//     // Reset selectedVariations after adding to the cart
-//     setSelectedVariations([]);
-//   };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+ 
 
 
 
@@ -373,59 +66,68 @@ const handleAddToSelection = (variationId, itemId, quantity) => {
 
 
 const handleAddToCart = () => {
-    // Filter out variations with quantity > 0
-    const selectedVariationsWithQuantity = selectedVariations.filter(
-      (variation) => variation.quantity > 0
-    );
-  
-    // Create a single object with selected variations
     const selectedVariationsObject = {
-      product_id: propsdata.id,
-      variations: selectedVariationsWithQuantity.map((variation) => ({
-        variation_id: variation.variation_id,
-        item_id: variation.item_id,
-        quantity: variation.quantity,
-      })),
+      ...props.productDetails?.data,
+      quantity: 1,
+
+      variation: Object.values(selectedVariations),
     };
-  
-    // Check if the variations already exist in the cart
-    const existingVariations = cartItems.filter((cartItem) => cartItem.product_id === propsdata.id);
-  
-    if (existingVariations.length > 0) {
-      // Update the quantity for existing variations
-      const updatedCart = cartItems.map((cartItem) => {
-        if (cartItem.product_id === propsdata.id) {
-          cartItem.variations.forEach((variation) => {
-            const selectedVariation = selectedVariationsObject.variations.find(
-              (selectedVariation) =>
-                selectedVariation.variation_id === variation.variation_id &&
-                selectedVariation.item_id === variation.item_id
-            );
-  
-            if (selectedVariation) {
-              // Increment the quantity for existing variations
-              variation.quantity += selectedVariation.quantity;
-            }
-          });
-        }
-        return cartItem;
-      });
-  
-      // Dispatch the addToCart action with the updated cart
-      dispatch(addToCart(updatedCart));
-    } else {
-      // Dispatch the addToCart action with the selected variations object
-      dispatch(addToCart([...cartItems, selectedVariationsObject]));
-    }
-  
-    // Reset selectedVariations after adding to the cart
-    setSelectedVariations([]);
+
+    // const existingProductIndex = cartItems.findIndex(
+    //   (cartItem) => cartItem.product.id === props.productDetails?.data.id
+    // );
+    dispatch(addToCart(selectedVariationsObject));
+    // if (existingProductIndex !== -1) {
+    //   // Product already in cart, update variations or add new variations
+    // //   const updatedCart = [...cartItems];
+    // //   const existingProduct = updatedCart[existingProductIndex];
+
+    // //   updatedCart[existingProductIndex] = {
+    // //     ...existingProduct,
+    // //     variation: selectedVariations,
+    // //   };
+
+    // //   dispatch(addToCart(updatedCart));
+    // } else {
+    //   // Product not in cart, add it
+    //   dispatch(addToCart(selectedVariationsObject));
+    // }
+
+    // Reset selection and quantity after adding to the cart
+    setSelectedVariations({});
+    // setProductQuantity(1);
   };
 
-    const ImageUrl = "https://custom2.mystagingserver.site/food-stadium/public/"
 
-    const [key, setKey] = useState('section1');
+
+
+  const handleToggleSelection = (variationId, itemId, selected) => {
+    if (selected) {
+      const selectedItem = props.productDetails?.data.variation
+        .find((variation) => variation.id === variationId)
+        .variation_items.find((item) => item.id === itemId);
+
+      setSelectedVariations((prevVariations) => ({
+        ...prevVariations,
+        [variationId]: {
+          item_id: itemId,
+           ...selectedItem,
+           quantity: 1,
+        },
+      }));
+    } else {
+      setSelectedVariations((prevVariations) => {
+        const updatedVariations = { ...prevVariations };
+        delete updatedVariations[variationId];
+        return updatedVariations;
+      });
+    }
+  };
+
+
+//   console.log(calculateTotalPrice.toFixed(2))
     return (
+
         <Modal
             {...props}
             size="lg"
@@ -438,14 +140,19 @@ const handleAddToCart = () => {
                 <div class="container">
                     <div class="row">
 
-                        <Modal.Header closeButton className="col-md-12">
-                            <div id="contained-modal-title-vcenter" className="titleBox text-center">
-                                {/* style={{ backgroundColor: "#e776a2" }} */}
-                                <h1 >Subscription Module for 5-day Meals</h1>
-                                {/* <button type="button" className='btn-close' aria-label="Close" > 
-    <i className="bi bi-x-lg"></i></button> */}
-                            </div>
-                        </Modal.Header>
+                    <Modal.Header   className="col-md-12">
+        <div id="contained-modal-title-vcenter" className="titleBox text-center">
+          <h1>Subscription Module for 5-day Meals</h1>
+        </div>
+        {/* Close button in flex container */}
+        <div  id="contained-modal-title-vcenter" className="d-flex contained-modal-title-vcenter align-items-center text-center ">
+          <button type="button" className="btn-close  text-center " aria-label="Close" onClick={props.onHide}  >
+            {/* Optionally, you can use an iconcLOSE */}
+            {/* <i className="bi bi-x-lg"></i> */}
+            {/* <CloseButton />;x */}X
+          </button>
+        </div>
+      </Modal.Header>
 
                         <div class="col-md-5">
                             <div class="img_div">
@@ -490,58 +197,49 @@ const handleAddToCart = () => {
 
 
                                     <div class="tab-pane fade show active" id="variation" role="tabpanel" aria-labelledby="variation-tab">
-                                        <div id="accordion">
-                                            {props.productDetails?.data.variation.map(data => (
-                                                <div key={data.id} class="card">
-                                                    <div class="card-header" id="headingOne">
-                                                        <h5 class="mb-0">
-                                                            <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                                {data?.name} Selection*
-                                                            </button>
-                                                        </h5>
-                                                    </div>
+  <div id="accordion">
+    {props.productDetails?.data.variation.map(data => (
+      <div key={data?.id} class="card">
+        <div class="card-header" id={`heading${data?.id}`}>
+          <h5 class="mb-0">
+            <button class="btn btn-link" data-toggle="collapse" data-target={`#collapse${data?.id}`} aria-expanded="true" aria-controls={`collapse${data?.id}`}>
+              {data?.name} Selection*
+            </button>
+          </h5>
+        </div>
 
-                                                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-                                                        <div class="card-body ">
-                                                            {data?.variation_items.map(item => (
+        <div id={`collapse${data?.id}`} class="collapse" aria-labelledby={`heading${data?.id}`} data-parent="#accordion">
+          <div class="card-body">
+            {data?.variation_items.map(item => (
+              <div key={item.id} class="selection_div">
+                <div class="order_cancel">
+                  <input
+                    type="checkbox"
+                    onChange={(e) =>
+                      handleToggleSelection(data?.id, item?.id, e.target.checked)
+                    }
+                  />
+                </div>
+                <div class="order_img">
+                  <img src={ImageUrl + item?.image} class="img-fluid" alt="" />
+                </div>
+                <div class="order_name">
+                  <div class="titleBox">
+                    <h3> {item?.title}</h3>
+                  </div>
+                </div>
 
-                                                                <div key={item.id} class="selection_div">
-                                                                    <div class="order_cancel">
-                                                                        <button 
-                                                                          onClick={() =>
-                                                                            handleAddToSelection(data.id, item.id, parseInt(item.inputRef.value, 10))
-                                                                          }
-
-
-                                                                        ><i class="fa fa-times" aria-hidden="true"></i></button>
-                                                                    </div>
-                                                                    <div class="order_img">
-                                                                        <img src={ImageUrl + item.image} class="img-fluid" alt="" />
-                                                                    </div>
-                                                                    <div class="order_name">
-                                                                        <div class="titleBox">
-                                                                            <h3> {item.title}</h3>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="p_quantity">
-                                                                        <input  
-                                                                          type="number"  defaultValue="0" ref={(input) => (item.inputRef = input)} 
-                                                                        />
-                                                                    </div>
-                                                                    <div class="product_price ">
-                                                                        <h3>+$0</h3>
-                                                                    </div>
-                                                                </div>
-                                                            ))}
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            ))}
-
-
-                                        </div>
-                                    </div>
+                <div class="product_price ">
+                  <h3>${item?.price}</h3>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
 
 
 
@@ -603,12 +301,7 @@ const handleAddToCart = () => {
 
                                         </div>
                                     </div>
-
-
-
-
-
-                                </Tab>
+   </Tab>
                             </Tabs>
                             <div class="tab-content" id="myTabContent">
 
@@ -628,7 +321,9 @@ const handleAddToCart = () => {
                                     <h3>Quantity <br /> Special Instructions?</h3>
                                 </div>
                                 <div class="p_quantity">
-                                    <input type="number" value="01" placeholder="01" />
+                                    <input type="number"    
+      
+       />
                                 </div>
                             </div>
                             <div class="text_area">
@@ -639,7 +334,7 @@ const handleAddToCart = () => {
                                     <h3>Total Price</h3>
                                 </div>
                                 <div class="p_quantity">
-                                    <h3>$ {props.productDetails?.data.price}</h3>
+                                    <h3>$ {data}</h3>
                                 </div>
                             </div>
                             <div class="actionCart">

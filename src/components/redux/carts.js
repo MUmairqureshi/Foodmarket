@@ -101,7 +101,7 @@ export const Cart = () => {
                         </div>
                         <div className="orderInfo">
                             <p className="mb-0">{item?.title}</p>
-                            <p className="mb-0 text-secondary">X1</p>
+                            <p className="mb-0 text-secondary">{item?.quantity}</p>
                         </div>
                     </div>
                     <div className="orderPrice">

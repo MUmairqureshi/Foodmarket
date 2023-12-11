@@ -1,14 +1,45 @@
  
 import React from "react";
+import { Nav } from 'react-bootstrap';
+import { Product_deatail } from '../../productDetail/product_detail'
 
 import  { useRef } from "react";
  
 import Slider from 'react-slick';  
+import { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProducts, addToCart, incrementQuantity, decrementQuantity } from '../../../components/redux/actions';
 import {  Card } from 'react-bootstrap';
 import mac from '../../images/mac.png'  
-import {  Trending_product } from '../../../components/services/catigories'
-import { useState, useEffect } from 'react'
+import {  Trending_product  , Get_all_product_detail} from '../../../components/services/catigories'
+
 export function Trending_dishes(){
+    const dispatch = useDispatch();
+    const products = useSelector((state) => state.products?.products);
+        const loading = useSelector((state) => state.products.loading);
+        const [productDetails, setProductDetails] = useState(null);
+        const [showModal, setShowModal] = useState(false);
+
+
+        const handleProductClick = async (productId) => {
+            console.log(productId)
+            // setSelectedProductId(productId);
+            setShowModal(true);
+            try {
+                const response = await Get_all_product_detail(productId)
+                console.log('abc', response)
+                setProductDetails(response);
+                setShowModal(true);
+            } catch (error) {
+                console.error('Error fetching product details:', error);
+            }
+        };
+        // console.log(productDetails?.data)
+    
+        useEffect(() => {
+            dispatch(fetchProducts());
+          }, [dispatch]);
+    
 
     const sliderRef = useRef(null);
 
@@ -28,6 +59,7 @@ export function Trending_dishes(){
       slidesToScroll: 1,
       responsive: [
         {
+            infinite: true,
           breakpoint: 1024, // Medium devices (tablets, 768px and up)
           settings: {
             slidesToShow: 2,
@@ -36,6 +68,7 @@ export function Trending_dishes(){
           },
         },
         {
+            infinite: true,
           breakpoint: 768, // Small devices (landscape phones, 576px and up)
           settings: {
             slidesToShow: 1,
@@ -44,6 +77,7 @@ export function Trending_dishes(){
           },
         },
         {
+            infinite: true,
           breakpoint: 576, // Extra small devices (portrait phones, 576px and down)
           settings: {
             slidesToShow: 1,
@@ -99,10 +133,13 @@ export function Trending_dishes(){
                             <div className=" ">
                             <Slider  ref={sliderRef} {...settings}>
                                  
-                                  {trending_product.data?.map(data =>(
+                                  {products.map(data =>(
                                         <div className="row"> 
                                         <Card style={{ width: '22em' }}>
-                                        <div className="categoryCard shadow">
+                                   
+                                        <Nav.Link className="no-link-decoration" id='nav-link' style={{ textDecorationStyle: 'none' }} onClick={() => handleProductClick(data?.id)}>
+                                    
+                                        {/* <div className="categoryCard shadow"> */}
                                             <div className="cardHeader">
                                                 <div className="topMeta">
                                                     <div className="tags">
@@ -144,29 +181,33 @@ export function Trending_dishes(){
                                                 </div>
                                                 <div className="cardContent">
                                                     <h3>{data.title}</h3>
-                                                    <p>{data.description}</p>
+                                                    <p>{data.description.slice(0, 20)}</p>
                                                     <h5 className="text-theme-primary font-weight-bold">${data.product_price}</h5>
                                                 </div>
                                             </div>
+                                            </Nav.Link>
                                             <div className="cardFooter">
                                                 <div className="cardAction">
                                                     <div className="counterAction">
-                                                        <span className="qunatingCount">09</span>
-                                                        <button className="minus" type="button"><i className="fa fa-minus"></i></button>
+                                                        <span className="qunatingCount">{data.quantity}</span>
+                                                        <button className="minus" type="button" onClick={() => dispatch(decrementQuantity(data.id))}  ><i className="fa fa-minus"></i></button>
 
-                                                        <button className="plus" type="button"><i className="fa fa-plus"></i></button>
+                                                        <button className="plus" onClick={() => dispatch(incrementQuantity(data.id))} type="button"><i className="fa fa-plus"></i></button>
                                                     </div>
                                                     <div className="addToCart">
-                                                        <button type="button">Add To Cart</button>
+                                                        <button type="button"  onClick={() => dispatch(addToCart(data))}>Add To Cart</button>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        {/* </div> */}
                                 </Card>
                                 </div>  ))}
                                 
                                 
                                  </Slider>
+                                 <Product_deatail productDetails={productDetails} show={showModal}
+                        onHide={() => setShowModal(false)}
+                    />
                                    
                                    
                                    

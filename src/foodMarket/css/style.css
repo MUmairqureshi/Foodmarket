@@ -257,6 +257,7 @@ input[type="radio"]:checked {
     margin-right: 5px;
 }
 
+
 .categoryBox {
     background-color: #e776a2;
     padding: 10px;
@@ -1107,14 +1108,19 @@ width: 50%;
     width: 120px;
 }
 .selection_div .order_cancel {
-    border-radius: 10px;
+    border-radius: 4px;
     background-color: var(--primaryColor);
-    padding: 10px 12px;
+    padding: 5px 5px;
 }
+
 .selection_div .order_cancel button{
     border-radius: 6px;
     background-color: #fff;
     /* padding: 10px 12px; */
+}
+input[type='checkbox'] {
+    height: 17px;
+    width: 19px;
 }
 
  .p_quantity input {
@@ -1252,10 +1258,7 @@ div#accordion {
     border: 1px solid #000;
     background-color: #e9e9e9;
 }
-input[type='checkbox'] {
-    height: 12px;
-  
-}
+
 
 .contact_form .actionShipping {
     background-color: #3D3D3D;

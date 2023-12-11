@@ -1,9 +1,17 @@
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProducts, addToCart, incrementQuantity, decrementQuantity } from '../../../components/redux/actions';
 import {  Get_all_product } from '../../../components/services/catigories'
 import { useState, useEffect } from 'react'
 import { Card, Button } from 'react-bootstrap';
 
 import  { useRef } from "react";
 export function FavoriteseNear (){
+    const dispatch = useDispatch();
+    const products = useSelector((state) => state.products?.products);
+        const loading = useSelector((state) => state.products.loading);
+      
+    console.log ("Redux product favourites " + products)
+    
     const sliderRef = useRef(null);
 
     const next = () => {
@@ -36,6 +44,14 @@ export function FavoriteseNear (){
 
         fetchData();
     }, []);
+
+
+
+    useEffect(() => {
+        dispatch(fetchProducts());
+      }, [dispatch]);
+
+
 return(
     <div>
   <section className="favoriteseNear">
@@ -81,7 +97,7 @@ return(
                         <div className="carousel-inner">
                             <div className="carousel-item active">
                                 <div className="row">
-                                 {all_product.data?.map(data => ( 
+                                 {products.map(data => ( 
                                      <div className="col-md-4 col-xl-3 mb-3">
                                         <div className="favouriteCard">
                                             <div className="leftCard">
@@ -112,7 +128,7 @@ return(
                                                         <p className="deliveries">$2.99 Delivery <span>Fee 15-30</span></p>
                                                     </div>
                                                     <div className="favButton">
-                                                        <button type="button" className="primaryButton btn w-100">Place Order</button>
+                                                        <button type="button" onClick={() => dispatch(addToCart(data))} className="primaryButton btn w-100">Place Order</button>
                                                         <button type="button" className="primaryButton btn w-100">Book Seat</button>
                                                     </div>
                                                 </div>

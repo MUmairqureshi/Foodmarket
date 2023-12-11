@@ -8,13 +8,21 @@ import mac from '../../images/mac.png'
 import c1 from '../../images/c1.png'
 import {  Get_all_product } from '../../../components/services/catigories'
 import { useState, useEffect } from 'react'
-
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProducts, addToCart, incrementQuantity, decrementQuantity } from '../../../components/redux/actions';
 export function Beverages(){
 
      
 
-    
+    const dispatch = useDispatch();
+    const products = useSelector((state) => state.products?.products);
+        const loading = useSelector((state) => state.products.loading);
+        
 
+        useEffect(() => {
+            dispatch(fetchProducts());
+          }, [dispatch]);
+    
 
     const sliderRef = useRef(null);
 
@@ -27,13 +35,43 @@ export function Beverages(){
     };
 
     const settings = {
-
+        // dots: true,
         infinite: true,
         speed: 500,
         slidesToShow: 4,
         slidesToScroll: 1,
-        rows: 2,
-    };
+        responsive: [
+          {
+              infinite: true,
+            breakpoint: 1024, // Medium devices (tablets, 768px and up)
+            settings: {
+              slidesToShow: 2,
+              slidesToScroll: 1,
+              rows: 2,
+            },
+          },
+          {
+              infinite: true,
+            breakpoint: 768, // Small devices (landscape phones, 576px and up)
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1,
+              rows: 1,
+            },
+          },
+          {
+              infinite: true,
+            breakpoint: 576, // Extra small devices (portrait phones, 576px and down)
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1,
+              rows: 1,
+            },
+          },
+        ],
+      };
+       
+  
 
     const ImageUrl = "https://custom2.mystagingserver.site/food-stadium/public/"
     const [all_product, setAll_product] = useState([]);
@@ -95,7 +133,7 @@ export function Beverages(){
                             <div className="carousel-item active">
                             <Slider ref={sliderRef} {...settings}>
                              
-                                  {all_product.data?.map(data =>(
+                                  {products.map(data =>(
                                            <div className="row">
                                       <div key={data.id} className="col-md-3 mb-3">
                                         <Card style={{ width: '22em' }} className="categoryCard shadow">
@@ -151,10 +189,10 @@ export function Beverages(){
                                             <div className="cardFooter">
                                                 <div className="cardAction">
                                                     <div className="counterAction">
-                                                        <span className="qunatingCount">01</span>
-                                                        <button className="minus" type="button"><i className="fa fa-minus"></i></button>
+                                                        <span className="qunatingCount">{data.quantity}</span>
+                                                        <button className="minus" onClick={() => dispatch(decrementQuantity(data.id))} type="button"><i className="fa fa-minus"></i></button>
 
-                                                        <button className="plus" type="button"><i className="fa fa-plus"></i></button>
+                                                        <button className="plus" onClick={() => dispatch(incrementQuantity(data.id))} type="button"><i className="fa fa-plus"></i></button>
                                                     </div>
                                                     <div className="addToCart">
                                                         <button type="button">Add To Cart</button>
