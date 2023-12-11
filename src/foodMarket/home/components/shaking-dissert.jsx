@@ -12,9 +12,9 @@ import menuOrder from '../../images/menuOrder.png'
 import d2 from '../../images/d2.png'
 
 
-export function Shaking_dissert(){
+export function Shakingdissert(){
     <section className="desserts py-5">
-    <div className="container-fluid">
+    {/* <div className="container-fluid">
         <div className="row">
             <div className="col-md-12 mb-3">
                 <div className="titleBox text-center">
@@ -175,6 +175,9 @@ export function Shaking_dissert(){
         </div>
 
 
+    </div> */}
+    <div>
+        Hello
     </div>
 </section>
 

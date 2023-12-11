@@ -3,7 +3,7 @@ import { Get_all_catigories, Menu_listing, Dietary_listing, Get_all_product, Tre
 import { useState, useEffect } from 'react'
 import { Hero } from './components/hero'
 import { Category } from './components/category'
-import { Shaking_dissert } from './components/shaking-dissert'
+import { Shakingdissert } from './components/shaking-dissert'
 import { Trending_dishes } from './components/trending_dishes'
 import { FavoriteseNear } from './components/favoriteseNear'
 import { Bakery } from './components/bakery'
@@ -28,7 +28,7 @@ export function Home() {
             <Category />
 
             {/* <Category /> */}
-            <Shaking_dissert />
+            <Shakingdissert />
             <Trending_dishes />
 
             <FavoriteseNear />

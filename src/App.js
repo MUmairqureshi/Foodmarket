@@ -7,7 +7,7 @@ import { Home } from './foodMarket/home/index'
 import { Provider } from 'react-redux'; 
 import store from './components/redux/store';
 
-
+import {Rout} from './route/index'
 function App() {
 
   return (
@@ -15,7 +15,7 @@ function App() {
        <Provider store={store}>
       <div>
 
-        <Header />
+        {/* <Header /> */}
         {/* <Product_deatail/> */}
 {/* <YourComponent/> */}
         {/* <MyComponent/> */}
@@ -23,8 +23,8 @@ function App() {
 
 
 
-
-        <Home />
+<Rout/>
+        {/* <Home /> */}
 
 {/* <Product_deatail/> */}
 

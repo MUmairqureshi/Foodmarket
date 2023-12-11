@@ -34,14 +34,12 @@ console.log(cartItems)
 const products = useSelector((state) => state.products.products);
     const loading = useSelector((state) => state.products.loading);
   
-console.log ("Redux product " + products)
-
+ 
 
 
     const handleProductClick = async (productId) => {
         console.log(productId)
-        // setSelectedProductId(productId);
-        setShowModal(true);
+         setShowModal(true);
         try {
             const response = await Get_all_product_detail(productId)
             console.log('abc', response)
