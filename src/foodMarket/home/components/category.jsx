@@ -125,6 +125,7 @@ const products = useSelector((state) => state.products.products);
 
 
     const [all_product, setAll_product] = useState([]);
+    // console.log("allproduct" , all_product)
     useEffect(() => {
         const fetchData = async () => {
             try {

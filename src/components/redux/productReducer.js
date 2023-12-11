@@ -43,10 +43,62 @@ const initialState = {
               : product
           ),
         };
+        case 'UPDATE_VARIATION_QUANTITY':
+      return {
+        ...state,
+        products: state.products.map(product =>
+          product.id === action.payload.productId
+            ? {
+                ...product,
+                variations: product.variations.map(variation =>
+                  variation.id === action.payload.variationId
+                    ? { ...variation, quantity: action.payload.quantity }
+                    : variation
+                ),
+              }
+            : product
+        ),
+      };
+
+
+      // using sigle function update both variation product quantity
+        case 'INCREMENT_VARIATION_QUANTITY':
+          return {
+            ...state,
+            products: state.products.map(product =>
+              product.id === action.payload.productId
+                ? {
+                    ...product,
+                    quantity : quantity + 1 , 
+                    variations: product.variations.map(variation =>
+                      variation.id === action.payload.variationId
+                        ? { ...variation, quantity: variation.quantity + 1 }
+                        : variation
+                    ),
+                  }
+                : product
+            ),
+          };
+        case 'DECREMENT_VARIATION_QUANTITY':
+          return {
+            ...state,
+            products: state.products.map(product =>
+              product.id === action.payload.productId
+                ? {
+                    ...product,
+                    variations: product.variations.map(variation =>
+                      variation.id === action.payload.variationId
+                        ? { ...variation, quantity: Math.max(0, variation.quantity - 1) }
+                        : variation
+                    ),
+                  }
+                : product
+            ),
+          };
       default:
         return state;
     }
   };
   
   export default productReducer;
-  
+  // take input to user quantity

@@ -33,9 +33,25 @@ export const fetchProductsRequest = () => ({
   });
   
   export const decrementQuantity = (productId) => ({
+    type: 'DECREMENT_VARIATION_QUANTITY',
+    payload: productId,
+  });
+
+
+
+  export const incrementvariationQuantity = (productId) => ({
+    type: 'INCREMENT_VARIATION_QUANTITY',
+    payload: productId,
+  });
+
+
+
+  export const decrementcariationQuantity = (productId) => ({
     type: 'DECREMENT_QUANTITY',
     payload: productId,
   });
+
+
   export const removeFromCart = (productId) => ({
     type: 'REMOVE_FROM_CART',
     payload: productId,

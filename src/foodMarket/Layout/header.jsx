@@ -31,7 +31,7 @@
 
 import '../css/style.css'
 
-
+import {Link}  from    "react-router-dom";
  
 export function Header() {
   return (
@@ -41,7 +41,7 @@ export function Header() {
         <div className="row">
             <div className="col-md-9 offset-md-3">
                 <nav className="navbar navbar-expand-lg navbar-light">
-                        <a className="navbar-brand" href="#">Navbar</a>       
+                        <Link className="navbar-brand" to="./home">Navbar</Link>       
                     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
@@ -52,7 +52,7 @@ export function Header() {
                                 <a className="nav-link" href="#">Customize Your Menu </a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="../aboutUs/about_us.jsx">About </a>
+                                <Link className="nav-link" href="./aboutUs/about_us">About </Link>
                             </li>
                             <li className="nav-item">
                                 <a className="nav-link" href="../store/store.jsx">Shop By Location </a>
@@ -66,7 +66,7 @@ export function Header() {
                                 <i className="fa fa-heart"></i>
                             </button>
                             <button type="button">
-                            <a className="nav-link" href="../productDetail/product_detail.jsx"> <i className="fa fa-shopping-cart"></i></a>
+                            <Link className="nav-link" to="./card"> <i className="fa fa-shopping-cart"></i></Link>
                                
                             </button>
                             <button type="button">
