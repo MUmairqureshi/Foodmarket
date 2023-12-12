@@ -10,13 +10,17 @@ import mac from '../../../assets/images/mac.png'
 import c1 from '../../../assets/images/c1.png'
 import { Get_all_product } from '../../../components/services/catigories'
 import { useState, useEffect } from 'react'
-
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProducts, addToCart, incrementQuantity, decrementQuantity } from '../../../components/redux/actions';
 import Slider from 'react-slick';
 export function Beverages_Recommendations() {
 
 
 
-
+    const dispatch = useDispatch();
+const products = useSelector((state) => state.products.products);
+    const loading = useSelector((state) => state.products.loading);
+  console.log("productsides" , products) 
 
 
     const sliderRef = useRef(null);
@@ -100,7 +104,7 @@ export function Beverages_Recommendations() {
                             <div className="carousel-item active">
                             <Slider ref={sliderRef} {...settings}>
                              
-                                  {all_product.data?.map(data =>(
+                                  {products?.map(data =>(
                                            <div className="row">
                                       <div key={data.id} className="col-md-3 mb-3">
                                         <Card style={{ width: '22em' }} className="categoryCard shadow">
@@ -152,10 +156,10 @@ export function Beverages_Recommendations() {
                                             <div className="cardFooter">
                                                 <div className="cardAction">
                                                     <div className="counterAction">
-                                                        <span className="qunatingCount">01</span>
-                                                        <button className="minus" type="button"><i className="fa fa-minus"></i></button>
+                                                        <span className="qunatingCount">{data.quantity}</span>
+                                                        <button className="minus" onClick={decrementQuantity(data.id)}  type="button"><i className="fa fa-minus"></i></button>
 
-                                                        <button className="plus" type="button"><i className="fa fa-plus"></i></button>
+                                                        <button className="plus" onClick={incrementQuantity(data.id)} type="button"><i className="fa fa-plus"></i></button>
                                                     </div>
                                                     <div className="addToCart">
                                                         <button type="button">Add To Cart</button>

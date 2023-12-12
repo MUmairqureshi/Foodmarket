@@ -33,20 +33,20 @@ export function Card() {
     //   console.log("totalPriceForEachItem" , totalPriceForEachItem)
 
 
-    const totalCartPrice = cartItems?.reduce((total, product) => {
-        const productPrice = product.product_price || 0;
+    // const totalCartPrice = cartItems?.reduce((total, product) => {
+    //     const productPrice = product.product_price || 0;
       
-        // Calculate the total price for variations
-        const variationTotal = product.variation.reduce(
-          (variationSum, variation) => variationSum + (variation.price || 0),
-          0
-        );
+    //     // Calculate the total price for variations
+    //     const variationTotal = product.variation.reduce(
+    //       (variationSum, variation) => variationSum + (variation.price || 0),
+    //       0
+    //     );
       
-        // Add the product price and variation total to the overall total
-        return total + productPrice + variationTotal;
-      }, 0);
+    //     // Add the product price and variation total to the overall total
+    //     return total + productPrice + variationTotal;
+    //   }, 0);
       
-      console.log('Total Cart Price:', totalCartPrice);
+    //   console.log('Total Cart Price:', totalCartPrice);
     return (
         <div>
             <section className="product_detail">
@@ -181,7 +181,7 @@ export function Card() {
                                 <div className="cart_info">
                                     <div>
                                         <p>Sub Total:</p>
-                                        <p>${totalCartPrice}</p>
+                                        <p> 76</p>
                                     </div>
                                     <div>
                                         <p>Shipping:</p>
@@ -189,7 +189,7 @@ export function Card() {
                                     </div>
                                     <div>
                                         <p>Total:</p>
-                                        <p>${totalCartPrice}</p>
+                                        <p>$21</p>
                                     </div>
                                 </div>
                                 <div className="actionApply">

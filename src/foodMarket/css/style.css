@@ -35,6 +35,20 @@ li.nav-item a {
 }
 
 
+.carousel-control-next-icon, .carousel-control-prev-icon {
+    /* display: inline-block; */
+    /* width: 20px; */
+    height: 20px;
+    background: 50%/100% 100% no-repeat;
+}
+
+.categoryData {
+    /* display: flex; */
+    /* flex-direction: column; */
+    text-align: left !important;
+}
+
+
 .headerIcons {
     gap: 10px;
 }

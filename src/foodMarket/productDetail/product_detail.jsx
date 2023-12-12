@@ -25,13 +25,13 @@ import CloseButton from 'react-bootstrap/CloseButton';
 
 
 // Subscription Module for 5-day Meals
-import user from '../../assets/images/user.png' 
-import { useState, useMemo  , useEffect} from 'react';
+import user from '../../assets/images/user.png'
+import { useState, useMemo, useEffect } from 'react';
 
 
 import mac from '../../assets/images/mac.png'
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchProducts, addToCart, incrementvariationQuantity,    decrementcariationQuantity } from '../../components/redux/actions';
+import { fetchProducts, addToCart, incrementvariationQuantity , incrementQuantity, decrementcariationQuantity } from '../../components/redux/actions';
 import '../css/style.css'
 import c1 from '../../assets/images/c1.png'
 
@@ -43,6 +43,7 @@ import { Tabs, Tab } from 'react-bootstrap';
 
 export const Product_deatail = (props) => {
     //   onHide
+    console.log( "propsdataid" , props.productDetails?.data.id)
     const datas = props.productDetails?.data.id
     console.log("datasid ", datas)
     const cartItems = useSelector((state) => state.cart.items);
@@ -67,7 +68,7 @@ export const Product_deatail = (props) => {
     const [totalPrice, setTotalPrice] = useState(0);
 
     const calculateTotalPrice = () => {
-        let productPrice = parseFloat(props.productDetails?.data.product_price) ;
+        let productPrice = parseFloat(props.productDetails?.data.product_price);
         let variationPrice = 0;
 
         for (const variationId in selectedVariations) {
@@ -76,12 +77,12 @@ export const Product_deatail = (props) => {
         }
 
         const total = productPrice + variationPrice;
-        setTotalPrice(total); 
+        setTotalPrice(total);
     };
-    
-useEffect(() => {
-    calculateTotalPrice();
-  }, [selectedVariations, props.productDetails?.data.product_price]);
+
+    useEffect(() => {
+        calculateTotalPrice();
+    }, [selectedVariations, props.productDetails?.data.product_price]);
 
 
 
@@ -96,7 +97,7 @@ useEffect(() => {
         // const existingProductIndex = cartItems.findIndex(
         //   (cartItem) => cartItem.product.id === props.productDetails?.data.id
         // );
-        dispatch(addToCart(selectedVariationsObject));
+        dispatch(addToCart(selectedVariationsObject ));
 
         //   const handleProductQuantityChange = (productId, newQuantity) => {
         //     dispatch(decrementcariationQuantity(productId, newQuantity));
@@ -141,49 +142,47 @@ useEffect(() => {
 
 
 
-//     const handleVariationQuantityChange = (newQuantity) => {
-//         console.log(newQuantity)
-//         const productId = parseFloat(props.productDetails?.data.id);
-       
-//           // Update the quantity for the selected variation
-//         //   const updatedVariations = {
-//         //     ...selectedVariations,
-//         //     quantity: newQuantity,
-//         //   };
+    //     const handleVariationQuantityChange = (newQuantity) => {
+    //         console.log(newQuantity)
+    //         const productId = parseFloat(props.productDetails?.data.id);
 
-// console.log(selectedVariations)
+    //           // Update the quantity for the selected variation
+    //         //   const updatedVariations = {
+    //         //     ...selectedVariations,
+    //         //     quantity: newQuantity,
+    //         //   };
 
-//         // const updatedVariations = {
-//         //     ...selectedVariations,
-//         //     variations: selectedVariations?.map(variation => { 
-//         //       if (variation.variation_id === selectedVariations.variation_id) {
-//         //         return {
-//         //           ...variation,
-//         //           quantity: newQuantity,
-//         //         };
-//         //       }
-//         //       return variation;
-//         //     }),
-//         //   };
-      
-      
-//           // Update the quantity for the product
-//           const updatedProduct = {
-//             ...props.productDetails?.data,
-//             quantity: newQuantity,
-//           };
-      
-//           // Optionally, update the selectedVariations state based on the new quantity
-//         //   setSelectedVariations(updatedVariations);
-      
-//           // Dispatch an action with the updated data
-//           dispatch(incrementvariationQuantity(productId,  updatedProduct));
-      
-//           // You might also dispatch an action to update the product quantity if needed
-       
-//       };
+    // console.log(selectedVariations)
+
+    //         // const updatedVariations = {
+    //         //     ...selectedVariations,
+    //         //     variations: selectedVariations?.map(variation => { 
+    //         //       if (variation.variation_id === selectedVariations.variation_id) {
+    //         //         return {
+    //         //           ...variation,
+    //         //           quantity: newQuantity,
+    //         //         };
+    //         //       }
+    //         //       return variation;
+    //         //     }),
+    //         //   };
 
 
+    //           // Update the quantity for the product
+    //           const updatedProduct = {
+    //             ...props.productDetails?.data,
+    //             quantity: newQuantity,
+    //           };
+
+    //           // Optionally, update the selectedVariations state based on the new quantity
+    //         //   setSelectedVariations(updatedVariations);
+
+    //           // Dispatch an action with the updated data
+    //           dispatch(incrementvariationQuantity(productId,  updatedProduct));
+
+    //           // You might also dispatch an action to update the product quantity if needed
+
+    //       };
 
 
 
@@ -200,26 +199,41 @@ useEffect(() => {
 
 
 
-      const [newQuantity, setNewQuantity] = useState(1); // Initialize with a default value
 
-      const handleVariationQuantityChange = () => {
-        const productId = parseFloat(props.productDetails?.data.id);
-    
+
+    const [newQuantity, setNewQuantity] = useState(1); // Initialize with a default value
+
+    const handleVariationQuantityChange = () => {
+        const productId = parseFloat(props.productDetails?.data.id, 10);
+
         // Update the quantity for the product
         const updatedProduct = {
-          ...props.productDetails?.data,
-          quantity: newQuantity,
+            ...props.productDetails?.data,
+            quantity: newQuantity,
         };
-    
-        dispatch(incrementvariationQuantity(productId, updatedProduct));
- 
-      };
-    
-      const handleChangeQuantity = (e) => {
+        console.log(newQuantity, productId)
+        dispatch(incrementQuantity(productId));
+
+    };
+
+    // const handleChangeQuantity = (e) => {
+    //     const inputValue = e.target.value;
+    //     setNewQuantity(inputValue);
+    //     handleVariationQuantityChange();
+    // };
+
+    const handleChangeQuantity = (e) => {
         const inputValue = e.target.value;
-        setNewQuantity(inputValue); 
+        setNewQuantity(inputValue);
+    };
+    
+    const handleBlur = () => {
         handleVariationQuantityChange();
-      };
+    };
+    useEffect(() => {
+        handleVariationQuantityChange();
+    }, [  props.productDetails?.data.id]);
+
 
 
 
@@ -285,6 +299,7 @@ useEffect(() => {
                             <div class="store_content">
                                 <div class="titleBox mb-3">
                                     <h2>{props.productDetails?.data.title} </h2>
+                                    <button   onClick={() => dispatch(incrementQuantity(props.productDetails?.data.id))}></button>
                                 </div>
                                 <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever
                                     since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
@@ -443,13 +458,15 @@ useEffect(() => {
                                     <h3>Quantity <br /> Special Instructions?</h3>
                                 </div>
                                 <div class="p_quantity">
-                                <input
-        type="number"
-        id="quantity"
-        name="quantity"
-        value={newQuantity}
-        onChange={handleChangeQuantity}
-      />
+                                    <button onClick={handleVariationQuantityChange}>IncRease</button>
+                                    <input
+                                        type="number"
+                                        id="quantity"
+                                        name="quantity"
+                                        value={newQuantity}
+                                        onChange={handleChangeQuantity}
+                                        onBlur={handleBlur}
+                                    />
                                 </div>
                             </div>
                             <div class="text_area">

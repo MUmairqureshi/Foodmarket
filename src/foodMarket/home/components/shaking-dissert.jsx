@@ -13,8 +13,9 @@ import d2 from '../../../assets/images/d2.png'
 
 
 export function Shakingdissert(){
+    return(
     <section className="desserts py-5">
-    {/* <div className="container-fluid">
+    <div className="container-fluid">
         <div className="row">
             <div className="col-md-12 mb-3">
                 <div className="titleBox text-center">
@@ -175,10 +176,8 @@ export function Shakingdissert(){
         </div>
 
 
-    </div> */}
-    <div>
-        Hello
     </div>
+  
 </section>
 
-}
+)}

@@ -7,7 +7,6 @@ const initialState = {
   
   const productReducer = (state = initialState, action) => {
     
-    console.log("state" , state)
     switch (action.type) {
       case 'FETCH_PRODUCTS_REQUEST':
         return {
@@ -44,47 +43,108 @@ const initialState = {
               ? { ...product, quantity: Math.max(0, product.quantity - 1) }
               : product
           ),
-        };
-        case 'UPDATE_VARIATION_QUANTITY':
-      return {
-        ...state,
-        products: state.products.map(product =>
-          product.id === action.payload.productId
-            ? {
-                ...product,
-                quantity: product.quantity + 1,
-                variation: product.variation.map(variation =>
-                  variation.id === action.payload.variationId
-                    ? { ...variation, quantity: action.payload.quantity }
-                    : variation
-                ),
-              }
-            : product
-        ),
-      };
+        }; 
 
 
       // using sigle function update both variation product quantity
-      case 'INCREMENT_VARIATION_QUANTITY':
-        return {
-          ...state,
-          products: state.products.map(product =>
-            product.id === action.payload.productId
-              ? {
-                  ...product,
-                  quantity: action.payload.quantity,
-                  variations: product.variations.map(variation =>
-                    variation.id === action.payload.variationId
-                      ? {
-                          ...variation,
-                          quantity: action.payload.quantity,
-                        }
-                      : variation
-                  ),
-                }
-              : product
-          ),
-        };
+      // case 'INCREMENT_VARIATION_QUANTITY':
+      //   return {
+      //     ...state,
+      //     products: state.products.map(product =>
+      //       product.id === action.payload.productId
+      //         ? {
+      //             ...product,
+      //             quantity: action.payload.quantity,
+      //             variations: product.variations.map(variation =>
+      //               variation.id === action.payload.variationId
+      //                 ? {
+      //                     ...variation,
+      //                     quantity: action.payload.quantity,
+      //                   }
+      //                 : variation
+      //             ),
+      //           }
+      //         : product
+      //     ),
+      //   };
+
+  //     case 'INCREMENT_VARIATION_QUANTITY':
+  // const { productId, quantity } = action.payload;
+  // console.log("state productId", productId);
+  // console.log("state quantity", quantity);
+
+  // return {
+  //   ...state,
+  //   products: state.products?.map(product =>
+  //     product.id === productId
+  //       ? {
+  //           ...product,
+  //           quantity: quantity,
+  //         }
+  //       : product
+  //   ),
+
+  //   {  console.log(products)}
+  // };
+
+
+  case 'INCREMENT_VARIATION_QUANTITY':
+  const { productId, quantity } = action.payload;
+  console.log("state productId", productId);
+  console.log("state quantity", quantity);
+
+
+
+  return {
+    ...state,
+    products: state.products.map(product =>
+      product.id === productId
+        ? { ...product, quantity: product.quantity + 43 }
+        : product
+    ),
+  };
+  // const updatedProducts = state.products?.map(product =>
+  //   product.id == productId
+  //     ? {
+  //         ...product,
+  //         quantity: product.quantity + 21,
+  //       }
+  //     : product
+  // );
+
+  // console.log('pro', updatedProducts);
+
+  // return {
+  //   ...state,
+  //   products: updatedProducts,
+  // };
+
+
+
+
+//       case 'INCREMENT_VARIATION_QUANTITY':
+//   const { productId, quantity } = action.payload;
+//   console.log("satteproductId" , productId)
+// console.log("statequantity"  , quantity)
+//   return {
+//     ...state,
+//     products: state.products.map(product =>
+//       product.id === productId
+//         ? {
+//             ...product,
+//             quantity:  quantity,
+//             // variations: product.variations.map(variation =>
+//             //   variation.id === action.payload.variationId
+//             //     ? {
+//             //         ...variation,
+//             //         quantity: quantity,
+//             //       }
+//             //     : variation
+//             // ),
+//           }
+//         : product
+//     ),
+//   };
       
         case 'DECREMENT_VARIATION_QUANTITY':
           return {
