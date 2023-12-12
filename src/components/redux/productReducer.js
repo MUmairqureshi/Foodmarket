@@ -90,16 +90,15 @@ const initialState = {
 
   case 'INCREMENT_VARIATION_QUANTITY':
   const { productId, quantity } = action.payload;
-  console.log("state productId", productId);
-  console.log("state quantity", quantity);
-
 
 
   return {
     ...state,
     products: state.products.map(product =>
       product.id === productId
-        ? { ...product, quantity: product.quantity + 43 }
+        ? { ...product, quantity: quantity 
+        
+        }
         : product
     ),
   };

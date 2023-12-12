@@ -157,9 +157,9 @@ const products = useSelector((state) => state.products.products);
                                                 <div className="cardAction">
                                                     <div className="counterAction">
                                                         <span className="qunatingCount">{data.quantity}</span>
-                                                        <button className="minus" onClick={decrementQuantity(data.id)}  type="button"><i className="fa fa-minus"></i></button>
+                                                        <button className="minus" onClick={() => dispatch(decrementQuantity(data.id))}    type="button"><i className="fa fa-minus"></i></button>
 
-                                                        <button className="plus" onClick={incrementQuantity(data.id)} type="button"><i className="fa fa-plus"></i></button>
+                                                        <button className="plus"onClick={() => dispatch(incrementQuantity(data.id))}   type="button"><i className="fa fa-plus"></i></button>
                                                     </div>
                                                     <div className="addToCart">
                                                         <button type="button">Add To Cart</button>

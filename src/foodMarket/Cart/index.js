@@ -1,39 +1,67 @@
-import React from 'react'
+
+ 
+import React , {useState} from 'react'
 import product_extras1 from '../../assets/images/product_extras_1.png'
 import product1 from '../../assets/images/product_1.png'
-  
+  import {useEffect } from 'react'
  import mac from '../../assets/images/mac.png'
 import c1 from '../../assets/images/c1.png'
 import { useDispatch, useSelector } from 'react-redux';
-export function Card() {
-// const vae
-    const productquantity = (newquantity) =>{
-
-    }
-    const ImageUrl = "https://custom2.mystagingserver.site/food-stadium/public/"
+import { fetchProducts, addToCart, incrementvariationQuantity , incrementQuantity, decrementcariationQuantity } from '../../components/redux/actions';
+export function Cart() {
+ 
+    // Initialize with a default value
     const cartItems = useSelector((state) => state.cart.items);
-    console.log("Card", cartItems)
-    // const totalprice = cartItems?.map(data =>(
-    //     data.product_price, 
-    //     data.variation.map(item =>(
-    //         item.price
-    //     ))
-    // ))
-    // const totalPriceForEachItem = cartItems?.map(data => {
-    //     const productPrice = data.product_price || 0;
-    //     const variationPrice = data?.variation.reduce((total, item) => total + (item.price || 0), 0);
+    console.log("Card", cartItems) 
+     
+         const dispatch = useDispatch() 
+     
+
+    const calculateTotalPrice = (product) => {
+        const quantity = product.quantity || 0;  // Assuming there's a quantity property in your product data
+        const variationPrices = product.variation?.reduce((total, item) => total + item.price, 0) || 0;
       
-    //     const totalItemPrice = productPrice + variationPrice;
+        return (product.product_price + variationPrices) * quantity;
+      };
+      const calculateTotalquantity = (product) => {
+        const quantity = product.quantity || 0;  
+        const variationPrices = product.variation?.reduce((total, item) => total + item.quantity, 0) || 0;
       
-    //     return {
-    //       ...data,
-    //       totalItemPrice,
-    //     };
-    //   });
-    //   console.log("totalPriceForEachItem" , totalPriceForEachItem)
+        return product.quantity + variationPrices ;
+      };  
+ 
+    const ImageUrl = "https://custom2.mystagingserver.site/food-stadium/public/"
+
+    const [newQuantity, setNewQuantity] = useState(calculateTotalquantity(0)); // Set initialProduct to your default product
 
 
-    // const totalCartPrice = cartItems?.reduce((total, product) => {
+    const totalCartPrice = cartItems?.reduce((total, product) => {
+        const productPrice = product.product_price || 0;
+       
+        const variationTotal = product?.variation.reduce(
+          (variationSum, variation) => variationSum + (variation.price || 0),
+          0
+        );
+       
+        return total + productPrice + variationTotal;
+      }, 0);
+       
+ 
+
+
+    //   const handleChangeQuantity = (product , newQuantity) => {
+    //     const productId = product.id || 0;  // Assuming there's a quantity property in your product data
+    //     const variationIds = product.variation?.map((item) => item.id) || [];
+        
+
+    //     setNewQuantity(newQuantity);
+    //     handleVariationQuantityChange(productId ,variationIds ,   newQuantity);
+    //   };
+
+
+
+
+  // const totalCartPrice = cartItems?.reduce((total, product) => {
     //     const productPrice = product.product_price || 0;
       
     //     // Calculate the total price for variations
@@ -47,6 +75,50 @@ export function Card() {
     //   }, 0);
       
     //   console.log('Total Cart Price:', totalCartPrice);
+
+
+
+
+    const handleChangeQuantity = (product, newQuantity) => {
+        const productId = product.id || 0;
+        const variationIds = product.variation?.map((item) => item.id) || [];
+      
+        setNewQuantity(newQuantity);
+        handleVariationQuantityChange(productId, variationIds, newQuantity);
+      };
+      
+      
+      const handleVariationQuantityChange = (productId ,variationIds ,  newQuantity) => {
+        dispatch(incrementvariationQuantity(productId ,variationIds ,  newQuantity));
+      };
+      
+
+
+
+
+
+
+
+
+
+
+      
+    const handleAddToCart = () => {
+        // const selectedVariationsObject = {
+        //     ...props.productDetails?.data,
+        //     quantity: newQuantity,
+
+        //     variation: Object.values(selectedVariations),
+        // };
+
+ 
+        dispatch(addToCart( ));
+ 
+
+
+ 
+        // setSelectedVariations({}); 
+    }
     return (
         <div>
             <section className="product_detail">
@@ -91,10 +163,29 @@ export function Card() {
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td className="p_quantity align-middle" ><input   type="number"
+                                                <td className="p_quantity align-middle" >
+                                                {/* <input
+  type="number"
+  id={`quantity-${data.id}`}
+  name={`quantity-${data.id}`}
+  value={calculateTotalquantity(data)}
+  onChange={(e) => handleChangeQuantity(data, parseInt(e.target.value, 10))}
+ 
+/> */}
+
+
+<input
+  type="number"
+  id={`quantity-${data.id}`}
+  name={`quantity-${data.id}`}
+  value={calculateTotalquantity(data)} // Assuming newQuantity is the state variable
+  onChange={(e) => handleChangeQuantity(data, parseInt(e.target.value, 10))}
+/>
+                                                    {/* <input   type="number"
                                        
-                                        onChange={(e) => productquantity(parseInt(e.target.value, 10))} value={data.quantity} /></td>
-                                                <td className="p_price align-middle"><p>${data.product_price }</p></td>
+                                        onChange={(e) => productquantity(parseInt(e.target.value, 10))} value={data.quantity} /> */}
+                                        </td>
+                                                <td className="p_price align-middle"><p>${calculateTotalPrice(data)}</p></td>
                                             </tr>
                                         ))}
 
@@ -181,7 +272,7 @@ export function Card() {
                                 <div className="cart_info">
                                     <div>
                                         <p>Sub Total:</p>
-                                        <p> 76</p>
+                                        <p> ${totalCartPrice}</p>
                                     </div>
                                     <div>
                                         <p>Shipping:</p>
@@ -189,7 +280,7 @@ export function Card() {
                                     </div>
                                     <div>
                                         <p>Total:</p>
-                                        <p>$21</p>
+                                        <p>${totalCartPrice}</p>
                                     </div>
                                 </div>
                                 <div className="actionApply">

@@ -89,7 +89,7 @@ export const Product_deatail = (props) => {
     const handleAddToCart = () => {
         const selectedVariationsObject = {
             ...props.productDetails?.data,
-            quantity: 1,
+            quantity: newQuantity,
 
             variation: Object.values(selectedVariations),
         };
@@ -198,7 +198,41 @@ export const Product_deatail = (props) => {
 
 
 
-
+    // const handleVariationQuantityChange = (newQuantity) => {
+    //     const productId = parseFloat(props.productDetails?.data.id);
+      
+    //     // if (productId === selectedVariations.product_id) {
+    //       // Update the quantity for the selected variation within the array
+    //       const updatedVariations = {
+    //         ...selectedVariations,
+    //         variations: selectedVariations.variations.map(variation => {
+    //           // Assuming each variation has a unique identifier like 'variation_id'
+    //           if (variation.variation_id === selectedVariations.variation_id) {
+    //             return {
+    //               ...variation,
+    //               quantity: newQuantity,
+    //             };
+    //           }
+    //           return variation;
+    //         }),
+    //       };
+      
+    //       // Update the quantity for the product
+    //       const updatedProduct = {
+    //         ...props.productDetails?.data,
+    //         quantity: newQuantity,
+    //       };
+      
+    //       // Optionally, update the selectedVariations state based on the new quantity
+    //       setSelectedVariations(updatedVariations);
+      
+    //       // Dispatch an action with the updated data
+    //       dispatch(incrementvariationQuantity(productId, selectedVariations.variation_id, updatedVariations, updatedProduct));
+      
+    //       // You might also dispatch an action to update the product quantity if needed
+    //       // dispatch(updateProductQuantity(productId, newQuantity));
+    //     // }
+    //   };
 
 
     const [newQuantity, setNewQuantity] = useState(1); // Initialize with a default value
@@ -210,9 +244,8 @@ export const Product_deatail = (props) => {
         const updatedProduct = {
             ...props.productDetails?.data,
             quantity: newQuantity,
-        };
-        console.log(newQuantity, productId)
-        dispatch(incrementQuantity(productId));
+        }; 
+        dispatch(incrementvariationQuantity(productId ,  newQuantity));
 
     };
 
@@ -299,7 +332,7 @@ export const Product_deatail = (props) => {
                             <div class="store_content">
                                 <div class="titleBox mb-3">
                                     <h2>{props.productDetails?.data.title} </h2>
-                                    <button   onClick={() => dispatch(incrementQuantity(props.productDetails?.data.id))}></button>
+                                
                                 </div>
                                 <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever
                                     since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
@@ -457,8 +490,7 @@ export const Product_deatail = (props) => {
                                 <div class="titleBox">
                                     <h3>Quantity <br /> Special Instructions?</h3>
                                 </div>
-                                <div class="p_quantity">
-                                    <button onClick={handleVariationQuantityChange}>IncRease</button>
+                                <div class="p_quantity"> 
                                     <input
                                         type="number"
                                         id="quantity"
