@@ -1,13 +1,52 @@
 import React from 'react'
 import product_extras1 from '../../assets/images/product_extras_1.png'
-import product1 from '../../assets/images//product_1.png'
- 
+import product1 from '../../assets/images/product_1.png'
+  
+ import mac from '../../assets/images/mac.png'
+import c1 from '../../assets/images/c1.png'
 import { useDispatch, useSelector } from 'react-redux';
 export function Card() {
+// const vae
+    const productquantity = (newquantity) =>{
 
+    }
     const ImageUrl = "https://custom2.mystagingserver.site/food-stadium/public/"
     const cartItems = useSelector((state) => state.cart.items);
     console.log("Card", cartItems)
+    // const totalprice = cartItems?.map(data =>(
+    //     data.product_price, 
+    //     data.variation.map(item =>(
+    //         item.price
+    //     ))
+    // ))
+    // const totalPriceForEachItem = cartItems?.map(data => {
+    //     const productPrice = data.product_price || 0;
+    //     const variationPrice = data?.variation.reduce((total, item) => total + (item.price || 0), 0);
+      
+    //     const totalItemPrice = productPrice + variationPrice;
+      
+    //     return {
+    //       ...data,
+    //       totalItemPrice,
+    //     };
+    //   });
+    //   console.log("totalPriceForEachItem" , totalPriceForEachItem)
+
+
+    const totalCartPrice = cartItems?.reduce((total, product) => {
+        const productPrice = product.product_price || 0;
+      
+        // Calculate the total price for variations
+        const variationTotal = product.variation.reduce(
+          (variationSum, variation) => variationSum + (variation.price || 0),
+          0
+        );
+      
+        // Add the product price and variation total to the overall total
+        return total + productPrice + variationTotal;
+      }, 0);
+      
+      console.log('Total Cart Price:', totalCartPrice);
     return (
         <div>
             <section className="product_detail">
@@ -52,8 +91,10 @@ export function Card() {
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td className="p_quantity align-middle" ><input type="number" placeholder="01" value={data.quantity} /></td>
-                                                <td className="p_price align-middle"><p>${data.product_price}</p></td>
+                                                <td className="p_quantity align-middle" ><input   type="number"
+                                       
+                                        onChange={(e) => productquantity(parseInt(e.target.value, 10))} value={data.quantity} /></td>
+                                                <td className="p_price align-middle"><p>${data.product_price }</p></td>
                                             </tr>
                                         ))}
 
@@ -140,7 +181,7 @@ export function Card() {
                                 <div className="cart_info">
                                     <div>
                                         <p>Sub Total:</p>
-                                        <p>$250.00</p>
+                                        <p>${totalCartPrice}</p>
                                     </div>
                                     <div>
                                         <p>Shipping:</p>
@@ -148,7 +189,7 @@ export function Card() {
                                     </div>
                                     <div>
                                         <p>Total:</p>
-                                        <p>$250.00</p>
+                                        <p>${totalCartPrice}</p>
                                     </div>
                                 </div>
                                 <div className="actionApply">
@@ -174,12 +215,12 @@ export function Card() {
                                         </div>
                                     </div>
                                     <div className="cardImage">
-                                        <img src="../images/c1.png" alt="Category Image" className="mw-100" />
+                                        <img src={c1} alt="Category Image" className="mw-100" />
                                     </div>
 
                                     <div className="topMeta">
                                         <div className="companyLogo tags">
-                                            <button className="button"><img src="../images/mac.png" alt="MAc" /></button>
+                                            <button className="button"><img src={mac} alt="MAc" /></button>
                                         </div>
                                     </div>
 
@@ -236,12 +277,12 @@ export function Card() {
                                         </div>
                                     </div>
                                     <div className="cardImage">
-                                        <img src="../images/c1.png" alt="Category Image" className="mw-100" />
+                                        <img src={c1} alt="Category Image" className="mw-100" />
                                     </div>
 
                                     <div className="topMeta">
                                         <div className="companyLogo tags">
-                                            <button className="button"><img src="../images/mac.png" alt="MAc" /></button>
+                                            <button className="button"><img src={mac} alt="MAc" /></button>
                                         </div>
                                     </div>
 
@@ -298,12 +339,12 @@ export function Card() {
                                         </div>
                                     </div>
                                     <div className="cardImage">
-                                        <img src="../images/c1.png" alt="Category Image" className="mw-100" />
+                                        <img src={c1} alt="Category Image" className="mw-100" />
                                     </div>
 
                                     <div className="topMeta">
                                         <div className="companyLogo tags">
-                                            <button className="button"><img src="../images/mac.png" alt="MAc" /></button>
+                                            <button className="button"><img src={mac} alt="MAc" /></button>
                                         </div>
                                     </div>
 

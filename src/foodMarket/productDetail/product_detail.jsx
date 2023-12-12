@@ -25,15 +25,13 @@ import CloseButton from 'react-bootstrap/CloseButton';
 
 
 // Subscription Module for 5-day Meals
-import user from '../../assets/images/user.png'
-
-
+import user from '../../assets/images/user.png' 
 import { useState, useMemo  , useEffect} from 'react';
 
 
 import mac from '../../assets/images/mac.png'
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchProducts, addToCart, incrementvariationQuantity, decrementcariationQuantity } from '../../components/redux/actions';
+import { fetchProducts, addToCart, incrementvariationQuantity,    decrementcariationQuantity } from '../../components/redux/actions';
 import '../css/style.css'
 import c1 from '../../assets/images/c1.png'
 
@@ -45,50 +43,16 @@ import { Tabs, Tab } from 'react-bootstrap';
 
 export const Product_deatail = (props) => {
     //   onHide
-    const datas = props.productDetails?.data
+    const datas = props.productDetails?.data.id
     console.log("datasid ", datas)
     const cartItems = useSelector((state) => state.cart.items);
-    const data = props.productDetails?.data
-    console.log(data)
+    const data = props.productDetails?.data.product_price
+    console.log(props)
     const dispatch = useDispatch();
     const [selectedVariations, setSelectedVariations] = useState([]);
-    console.log(selectedVariations?.variation_id)
-    const productId = parseFloat(props.productDetails?.data.id);
-    console.log(productId)
-    const handleVariationQuantityChange = (newQuantity) => {
-        // Assuming props.productDetails?.data is an object
-        const productId = parseFloat(props.productDetails?.data.id);
-      
-        // Check if the product id matches
- 
-        if (productId === selectedVariations.product_id) {
-          // If variation exists, update its quantity
 
-            // if (variation.variation_id === selectedVariations.variation_id) {
-            //   return {
-            //     ...variation,
-            //     quantity: newQuantity,
-            //   };
-            // }
-                    // Optionally, update the selectedVariations state based on the new quantity
-           
-          setSelectedVariations((prevVariations) => ({
-            ...prevVariations,
-            quantity: newQuantity,
-            ...productDetails?.data,
-            quantity: newQuantity
-            
-          }));
-        
-      
-      
-          // Dispatch an action with the updated data
-          dispatch(incrementvariationQuantity(productId, selectedVariations.variation_id, newQuantity));
-      
-  
-        }
-      };
-      
+    console.log(selectedVariations)
+
 
     const ImageUrl = "https://custom2.mystagingserver.site/food-stadium/public/"
 
@@ -118,10 +82,6 @@ export const Product_deatail = (props) => {
 useEffect(() => {
     calculateTotalPrice();
   }, [selectedVariations, props.productDetails?.data.product_price]);
-
-  useEffect(() => {
-    handleVariationQuantityChange();
-  }, [ selectedVariations,  , props.productDetails?.data.id]);
 
 
 
@@ -179,6 +139,90 @@ useEffect(() => {
     //     // });
     // };
 
+
+
+//     const handleVariationQuantityChange = (newQuantity) => {
+//         console.log(newQuantity)
+//         const productId = parseFloat(props.productDetails?.data.id);
+       
+//           // Update the quantity for the selected variation
+//         //   const updatedVariations = {
+//         //     ...selectedVariations,
+//         //     quantity: newQuantity,
+//         //   };
+
+// console.log(selectedVariations)
+
+//         // const updatedVariations = {
+//         //     ...selectedVariations,
+//         //     variations: selectedVariations?.map(variation => { 
+//         //       if (variation.variation_id === selectedVariations.variation_id) {
+//         //         return {
+//         //           ...variation,
+//         //           quantity: newQuantity,
+//         //         };
+//         //       }
+//         //       return variation;
+//         //     }),
+//         //   };
+      
+      
+//           // Update the quantity for the product
+//           const updatedProduct = {
+//             ...props.productDetails?.data,
+//             quantity: newQuantity,
+//           };
+      
+//           // Optionally, update the selectedVariations state based on the new quantity
+//         //   setSelectedVariations(updatedVariations);
+      
+//           // Dispatch an action with the updated data
+//           dispatch(incrementvariationQuantity(productId,  updatedProduct));
+      
+//           // You might also dispatch an action to update the product quantity if needed
+       
+//       };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      const [newQuantity, setNewQuantity] = useState(1); // Initialize with a default value
+
+      const handleVariationQuantityChange = () => {
+        const productId = parseFloat(props.productDetails?.data.id);
+    
+        // Update the quantity for the product
+        const updatedProduct = {
+          ...props.productDetails?.data,
+          quantity: newQuantity,
+        };
+    
+        dispatch(incrementvariationQuantity(productId, updatedProduct));
+ 
+      };
+    
+      const handleChangeQuantity = (e) => {
+        const inputValue = e.target.value;
+        setNewQuantity(inputValue); 
+        handleVariationQuantityChange();
+      };
+
+
+
     const handleToggleSelection = (variationId, itemId, selected) => {
         if (selected) {
             const selectedItem = props.productDetails?.data.variation
@@ -227,7 +271,7 @@ useEffect(() => {
                                 <button type="button" className="btn-close  text-center " aria-label="Close" onClick={props.onHide}  >
                                     {/* Optionally, you can use an iconcLOSE */}
                                     {/* <i className="bi bi-x-lg"></i> */}
-                                    {/* <CloseButton />;x */}X
+                                    {/* <CloseButton />;xX */}X
                                 </button>
                             </div>
                         </Modal.Header>
@@ -399,11 +443,13 @@ useEffect(() => {
                                     <h3>Quantity <br /> Special Instructions?</h3>
                                 </div>
                                 <div class="p_quantity">
-                                    <input
-                                        type="number"
-                                        value={props.productDetails?.data.quantity}
-                                        onChange={(e) => handleVariationQuantityChange(parseInt(e.target.value, 10))}
-                                    />
+                                <input
+        type="number"
+        id="quantity"
+        name="quantity"
+        value={newQuantity}
+        onChange={handleChangeQuantity}
+      />
                                 </div>
                             </div>
                             <div class="text_area">

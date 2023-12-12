@@ -6,6 +6,8 @@ const initialState = {
   };
   
   const productReducer = (state = initialState, action) => {
+    
+    console.log("state" , state)
     switch (action.type) {
       case 'FETCH_PRODUCTS_REQUEST':
         return {
@@ -63,23 +65,27 @@ const initialState = {
 
 
       // using sigle function update both variation product quantity
-        case 'INCREMENT_VARIATION_QUANTITY':
-          return {
-            ...state,
-            products: state.products.map(product =>
-              product.id === action.payload.productId
-                ? {
-                    ...product,
-                    quantity : action.payload.quantity , 
-                    variations: product.variations.map(variation =>
-                      variation.id === action.payload.variationId
-                        ? { ...variation, quantity: action.payload.quantity }
-                        : variation
-                    ),
-                  }
-                : product
-            ),
-          };
+      case 'INCREMENT_VARIATION_QUANTITY':
+        return {
+          ...state,
+          products: state.products.map(product =>
+            product.id === action.payload.productId
+              ? {
+                  ...product,
+                  quantity: action.payload.quantity,
+                  variations: product.variations.map(variation =>
+                    variation.id === action.payload.variationId
+                      ? {
+                          ...variation,
+                          quantity: action.payload.quantity,
+                        }
+                      : variation
+                  ),
+                }
+              : product
+          ),
+        };
+      
         case 'DECREMENT_VARIATION_QUANTITY':
           return {
             ...state,
