@@ -46,7 +46,7 @@ export const fetchProductsRequest = () => ({
 
 
 
-  export const incrementvariationQuantity = (productId, quantity) => ({
+  export const incrementvariationQuantity = (productId, variationId , quantity) => ({
     type: 'INCREMENT_VARIATION_QUANTITY',
     payload: { productId, quantity },
   });

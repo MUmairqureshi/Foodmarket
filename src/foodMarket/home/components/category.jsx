@@ -21,7 +21,8 @@ import { Menu_listing, Dietary_listing, Get_all_product, Get_all_product_detail 
 // import { useContext } from "react";
 export function Category() {
     const cartItems = useSelector((state) => state.cart.items);
-console.log(cartItems)
+
+    
 // Filter_product
 
     const [showModal, setShowModal] = useState(false);
@@ -33,15 +34,17 @@ console.log(cartItems)
     const dispatch = useDispatch();
 const products = useSelector((state) => state.products.products);
     const loading = useSelector((state) => state.products.loading);
-  console.log("productsides" , products) 
+
+    
 
 
     const handleProductClick = async (productId) => {
-        console.log(productId)
+  
+        
          setShowModal(true);
         try {
             const response = await Get_all_product_detail(productId)
-            console.log('abc', response)
+        
             setProductDetails(response);
             setShowModal(true);
         } catch (error) {

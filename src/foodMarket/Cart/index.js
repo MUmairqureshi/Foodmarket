@@ -1,123 +1,143 @@
 
- 
-import React , {useState} from 'react'
+import { Nav } from 'react-bootstrap';
+import {Product_deatail} from '../productDetail/product_detail'
+
+import React, { useState } from 'react'
 import product_extras1 from '../../assets/images/product_extras_1.png'
 import product1 from '../../assets/images/product_1.png'
-  import {useEffect } from 'react'
- import mac from '../../assets/images/mac.png'
+import { useEffect } from 'react'
+import mac from '../../assets/images/mac.png'
 import c1 from '../../assets/images/c1.png'
+import {Get_all_product_detail} from '../../components/services/catigories'
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchProducts, addToCart, incrementvariationQuantity , incrementQuantity, decrementcariationQuantity } from '../../components/redux/actions';
+import { fetchProducts, addToCart, incrementvariationQuantity, incrementQuantity, decrementcariationQuantity } from '../../components/redux/actions';
 export function Cart() {
- 
-    // Initialize with a default value
+
     const cartItems = useSelector((state) => state.cart.items);
-    console.log("Card", cartItems) 
-     
-         const dispatch = useDispatch() 
-     
+    console.log("Card", cartItems)
+
+    const dispatch = useDispatch()
+
+
+
 
     const calculateTotalPrice = (product) => {
-        const quantity = product.quantity || 0;  // Assuming there's a quantity property in your product data
-        const variationPrices = product.variation?.reduce((total, item) => total + item.price, 0) || 0;
-      
-        return (product.product_price + variationPrices) * quantity;
-      };
-      const calculateTotalquantity = (product) => {
-        const quantity = product.quantity || 0;  
-        const variationPrices = product.variation?.reduce((total, item) => total + item.quantity, 0) || 0;
-      
-        return product.quantity + variationPrices ;
-      };  
+        const quantity = product.quantity || 0;
+
+        if (product.variation && Array.isArray(product.variation)) {
+            const variationPrices = product?.variation?.reduce((total, item) => {
+                // Check if each variation has a price property
+                const variationPrice = item.price || 0;
+                return total + variationPrice;
+            }, 0);
+
+            return (product.product_price + variationPrices) * quantity;
+        }
+        return product.product_price * quantity;
+    };
  
+
     const ImageUrl = "https://custom2.mystagingserver.site/food-stadium/public/"
 
-    const [newQuantity, setNewQuantity] = useState(calculateTotalquantity(0)); // Set initialProduct to your default product
+
+    // const totalCartPrice = cartItems?.reduce((total, product) => {
+    //     const productPrice = product.product_price || 0;
+
+    //     const variationTotal = product.variation?.reduce(
+    //         (variationSum, variation) => variationSum + (variation.price || 0),
+    //         0
+    //     );
+
+    //     return total + productPrice + variationTotal;
+    // }, 0);
+
 
 
     const totalCartPrice = cartItems?.reduce((total, product) => {
         const productPrice = product.product_price || 0;
-       
-        const variationTotal = product?.variation.reduce(
-          (variationSum, variation) => variationSum + (variation.price || 0),
+        const productQuantity = product.quantity || 1; // Assuming a default quantity of 1
+      
+        const variationTotal = product.variation?.reduce(
+          (variationSum, variation) => variationSum + (variation.price || 0) * variation.quantity,
           0
         );
-       
-        return total + productPrice + variationTotal;
+      
+        return total + productPrice * productQuantity + variationTotal;
       }, 0);
-       
- 
+      
 
 
-    //   const handleChangeQuantity = (product , newQuantity) => {
-    //     const productId = product.id || 0;  // Assuming there's a quantity property in your product data
-    //     const variationIds = product.variation?.map((item) => item.id) || [];
+
+
+      const [showModal, setShowModal] = useState(false);
+
+      const [productDetails, setProductDetails] = useState(null);
+
+
+
+
+    const handleVariationQuantityChange = (productId, variationIds, newQuantity) => {
+        dispatch(incrementvariationQuantity(productId, variationIds, newQuantity));
+    };
+
+
+
+    const handleProductClick = async (productId) => {
+  
         
-
-    //     setNewQuantity(newQuantity);
-    //     handleVariationQuantityChange(productId ,variationIds ,   newQuantity);
-    //   };
-
-
-
-
-  // const totalCartPrice = cartItems?.reduce((total, product) => {
-    //     const productPrice = product.product_price || 0;
+        setShowModal(true);
+       try {
+           const response = await Get_all_product_detail(productId)
       
-    //     // Calculate the total price for variations
-    //     const variationTotal = product.variation.reduce(
-    //       (variationSum, variation) => variationSum + (variation.price || 0),
-    //       0
-    //     );
-      
-    //     // Add the product price and variation total to the overall total
-    //     return total + productPrice + variationTotal;
-    //   }, 0);
-      
-    //   console.log('Total Cart Price:', totalCartPrice);
+           
+           setProductDetails(response);
+           setShowModal(true);
+       } catch (error) {
+           console.error('Error fetching product details:', error);
+       }
+   };
 
 
 
+    const [productQuantities, setProductQuantities] = useState({});
 
-    const handleChangeQuantity = (product, newQuantity) => {
-        const productId = product.id || 0;
-        const variationIds = product.variation?.map((item) => item.id) || [];
-      
-        setNewQuantity(newQuantity);
-        handleVariationQuantityChange(productId, variationIds, newQuantity);
-      };
-      
-      
-      const handleVariationQuantityChange = (productId ,variationIds ,  newQuantity) => {
-        dispatch(incrementvariationQuantity(productId ,variationIds ,  newQuantity));
-      };
-      
+console.log("productQuantities" , productQuantities)
+
+    const calculateTotalquantity = (product) => {
+        const quantity = product.quantity ;
+   
+        const variationPrices = product.variation?.reduce((total, item) => total + item.quantity, 0) || 0;
+
+        return quantity + variationPrices;
+    };
+
+    const handleChangeQuantity = (product, value) => {
+ 
+        setProductQuantities((prevQuantities) => ({
+          ...prevQuantities,
+          [product.id]: value,
+        }));
+
+        // handleVariationQuantityChange(product.id, product.variation?.map((item) => item.id) || [], updatedQuantity);
+    };
 
 
 
-
-
-
-
-
-
-
-      
     const handleAddToCart = () => {
         // const selectedVariationsObject = {
         //     ...props.productDetails?.data,
         //     quantity: newQuantity,
-
-        //     variation: Object.values(selectedVariations),
         // };
 
- 
-        dispatch(addToCart( ));
- 
+        // dispatch(addToCart(selectedVariationsObject));
 
 
- 
-        // setSelectedVariations({}); 
+
+        dispatch(addToCart());
+
+
+
+
     }
     return (
         <div>
@@ -140,6 +160,7 @@ export function Cart() {
                                             <tr>
                                                 <td>
                                                     {/* variation */}
+                                                    <Nav.Link className="no-link-decoration" id='nav-link' style={{ textDecorationStyle: 'none' }} onClick={() => handleProductClick(data?.id)}> 
                                                     <div className="product_discription ">
                                                         <div className="img_div mb-3">
                                                             <img src={ImageUrl + data?.feature_image} className="img-fluid" alt="" />
@@ -162,29 +183,20 @@ export function Cart() {
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    </Nav.Link>
                                                 </td>
                                                 <td className="p_quantity align-middle" >
-                                                {/* <input
-  type="number"
-  id={`quantity-${data.id}`}
-  name={`quantity-${data.id}`}
-  value={calculateTotalquantity(data)}
-  onChange={(e) => handleChangeQuantity(data, parseInt(e.target.value, 10))}
- 
-/> */}
-
-
-<input
-  type="number"
-  id={`quantity-${data.id}`}
-  name={`quantity-${data.id}`}
-  value={calculateTotalquantity(data)} // Assuming newQuantity is the state variable
-  onChange={(e) => handleChangeQuantity(data, parseInt(e.target.value, 10))}
-/>
+                                                <input
+            type="number"
+            id={`quantity-${data.id}`}
+            name={`quantity-${data.id}`}
+            value={productQuantities[data.id] || data.quantity} // Use the state value or default to data.quantity
+            onChange={(e) => handleChangeQuantity(data, parseInt(e.target.value, 10))}
+          />
                                                     {/* <input   type="number"
                                        
                                         onChange={(e) => productquantity(parseInt(e.target.value, 10))} value={data.quantity} /> */}
-                                        </td>
+                                                </td>
                                                 <td className="p_price align-middle"><p>${calculateTotalPrice(data)}</p></td>
                                             </tr>
                                         ))}
@@ -200,7 +212,7 @@ export function Cart() {
                                             </td>
                                             <td>
                                                 <div className="actionChange">
-                                                    <button type="button" className="btn primaryButton">Update Cart</button>
+                                                    <button type="button" onClick={handleAddToCart} className="btn primaryButton">Update Cart</button>
                                                 </div>
                                             </td>
                                         </tr>
@@ -212,6 +224,12 @@ export function Cart() {
                     </div>
                 </div>
             </section>
+            
+
+
+<Product_deatail productDetails={productDetails}  show={showModal}
+                        onHide={() => setShowModal(false)}
+                    />
 
             <section className="delivery_detail_section">
                 <div className="container">
