@@ -12,14 +12,13 @@ import {Get_all_product_detail} from '../../components/services/catigories'
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts, addToCart, incrementvariationQuantity, incrementQuantity, decrementcariationQuantity } from '../../components/redux/actions';
 export function Cart() {
-
+    const [productQuantities, setProductQuantities] = useState({});
     const cartItems = useSelector((state) => state.cart.items);
-    console.log("Card", cartItems)
 
     const dispatch = useDispatch()
 
 
-
+console.log("cartItems" , cartItems)
 
     const calculateTotalPrice = (product) => {
         const quantity = product.quantity || 0;
@@ -28,45 +27,34 @@ export function Cart() {
             const variationPrices = product?.variation?.reduce((total, item) => {
                 // Check if each variation has a price property
                 const variationPrice = item.price || 0;
-                return total + variationPrice;
+                return total + variationPrice ;
             }, 0);
 
-            return (product.product_price + variationPrices) * quantity;
+            return (product.product_price + variationPrices) * quantity ;
         }
-        return product.product_price * quantity;
+        return product.product_price * quantity  ;
     };
  
 
     const ImageUrl = "https://custom2.mystagingserver.site/food-stadium/public/"
-
-
-    // const totalCartPrice = cartItems?.reduce((total, product) => {
-    //     const productPrice = product.product_price || 0;
-
-    //     const variationTotal = product.variation?.reduce(
-    //         (variationSum, variation) => variationSum + (variation.price || 0),
-    //         0
-    //     );
-
-    //     return total + productPrice + variationTotal;
-    // }, 0);
-
-
+ 
 
     const totalCartPrice = cartItems?.reduce((total, product) => {
         const productPrice = product.product_price || 0;
         const productQuantity = product.quantity || 1; // Assuming a default quantity of 1
-      
-        const variationTotal = product.variation?.reduce(
-          (variationSum, variation) => variationSum + (variation.price || 0) * variation.quantity,
-          0
-        );
+        
+        // Ensure that variation is an array before attempting to reduce
+        const variationTotal = Array.isArray(product.variation)
+          ? product.variation.reduce(
+              (variationSum, variation) => variationSum + (variation.price || 0) * (variation.quantity || 1),
+              0
+            )
+          : 0;
       
         return total + productPrice * productQuantity + variationTotal;
       }, 0);
       
-
-
+       
 
 
       const [showModal, setShowModal] = useState(false);
@@ -99,9 +87,8 @@ export function Cart() {
 
 
 
-    const [productQuantities, setProductQuantities] = useState({});
-
-console.log("productQuantities" , productQuantities)
+  
+ 
 
     const calculateTotalquantity = (product) => {
         const quantity = product.quantity ;
@@ -112,12 +99,16 @@ console.log("productQuantities" , productQuantities)
     };
 
     const handleChangeQuantity = (product, value) => {
+        console.log("product" , product.id)
+        console.log("value" , value)
  
         setProductQuantities((prevQuantities) => ({
           ...prevQuantities,
           [product.id]: value,
         }));
+        
 
+        incrementvariationQuantity( product ,value )
         // handleVariationQuantityChange(product.id, product.variation?.map((item) => item.id) || [], updatedQuantity);
     };
 
@@ -139,6 +130,39 @@ console.log("productQuantities" , productQuantities)
 
 
     }
+
+
+
+
+
+    
+
+
+
+
+    const handleQuantityChange = (newQuantity) => {
+        // const productId = parseFloat(props.productDetails?.data.id);
+      
+        // const selectedVariationsObject = {
+        //     ...props.productDetails?.data,
+        //     quantity: newQuantity,
+
+        //     // variation: Object.values(selectedVariations),
+        //     variation: Object.values(selectedVariations).map(variation => ({
+        //         ...variation,
+        //         quantity: newQuantity,
+        //     })),
+        
+           
+        // };
+ 
+        //   setSelectedVariations(updatedVariations);
+       
+          dispatch(incrementvariationQuantity(  productId  , newQuantity));
+      
+ 
+      };
+
     return (
         <div>
             <section className="product_detail">
@@ -168,8 +192,10 @@ console.log("productQuantities" , productQuantities)
                                                         <div className="product_detail">
                                                             <div className="titleBox text-left ">
                                                                 <h3>{data.title}</h3>
+
                                                             </div>
                                                             <p>Order are expected to ship <br /> within 7-10 days</p>
+ 
                                                             <div className="product_detail_extras">
                                                                 {data.variation?.map(item => (
 
@@ -184,6 +210,8 @@ console.log("productQuantities" , productQuantities)
                                                         </div>
                                                     </div>
                                                     </Nav.Link>
+
+
                                                 </td>
                                                 <td className="p_quantity align-middle" >
                                                 <input
@@ -197,7 +225,7 @@ console.log("productQuantities" , productQuantities)
                                        
                                         onChange={(e) => productquantity(parseInt(e.target.value, 10))} value={data.quantity} /> */}
                                                 </td>
-                                                <td className="p_price align-middle"><p>${calculateTotalPrice(data)}</p></td>
+                                                <td className="p_price align-middle"><p>${calculateTotalPrice(data) }</p></td>
                                             </tr>
                                         ))}
 
@@ -212,7 +240,7 @@ console.log("productQuantities" , productQuantities)
                                             </td>
                                             <td>
                                                 <div className="actionChange">
-                                                    <button type="button" onClick={handleAddToCart} className="btn primaryButton">Update Cart</button>
+                                                    <button type="button"   className="btn primaryButton">Update Cart</button>
                                                 </div>
                                             </td>
                                         </tr>
@@ -301,9 +329,9 @@ console.log("productQuantities" , productQuantities)
                                         <p>${totalCartPrice}</p>
                                     </div>
                                 </div>
-                                <div className="actionApply">
+                                {/* <div className="actionApply">
                                     <button type="button" className="btn couponButton">Proceesd To Checkout</button>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                     </div>

@@ -45,10 +45,7 @@ export const Product_deatail = (props) => {
     const datas = props.productDetails?.data.id
 
     const cartItems = useSelector((state) => state.cart.items);
-  
-
-
-    
+   
 
 
  
@@ -95,7 +92,7 @@ const handleChangeQuantity = (e) => {
 
     
     const [totalPrice, setTotalPrice] = useState(0);
-  
+  console.log("totalPrice" , totalPrice)
      
     const calculateTotalPrice = () => {
         let productPrice = parseFloat(props.productDetails?.data.product_price);
@@ -223,32 +220,32 @@ const handleChangeQuantity = (e) => {
 
 
 
-    const handleVariationQuantityChange = (newQuantity) => {
+    const handleQuantityChange = (newQuantity) => {
         const productId = parseFloat(props.productDetails?.data.id);
       
-        const selectedVariationsObject = {
-            ...props.productDetails?.data,
-            quantity: newQuantity,
+        // const selectedVariationsObject = {
+        //     ...props.productDetails?.data,
+        //     quantity: newQuantity,
 
-            // variation: Object.values(selectedVariations),
-            variation: Object.values(selectedVariations).map(variation => ({
-                ...variation,
-                quantity: newQuantity,
-            })),
+        //     // variation: Object.values(selectedVariations),
+        //     variation: Object.values(selectedVariations).map(variation => ({
+        //         ...variation,
+        //         quantity: newQuantity,
+        //     })),
         
            
-        };
+        // };
  
         //   setSelectedVariations(updatedVariations);
        
-          dispatch(incrementvariationQuantity(selectedVariationsObject , newQuantity));
+          dispatch(incrementvariationQuantity(  productId  , newQuantity));
       
  
       };
 
 
     const [newQuantity, setNewQuantity] = useState(1); // Initialize with a default value
-
+console.log("newQuantity" ,newQuantity)
     // const handleVariationQuantityChange = () => {
     //     const productId = parseFloat(props.productDetails?.data.id, 10);
 
@@ -512,7 +509,7 @@ const handleChangeQuantity = (e) => {
                                     <h3>Total Price</h3>
                                 </div>
                                 <div class="p_quantity">
-                                    <h3>$ {totalPrice}</h3>
+                                    <h3>$ {totalPrice *newQuantity}</h3>
                                 </div>
                             </div>
                             <div class="actionCart">
