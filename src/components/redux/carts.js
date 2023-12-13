@@ -13,6 +13,18 @@ export const Cart = () => {
   const cartItems = useSelector((state) => state.cart.items);
   const ImageUrl = "https://custom2.mystagingserver.site/food-stadium/public/"
 
+
+  
+  const totalCartPrice = cartItems?.reduce((total, product) => {
+    const productPrice = product.product_price || 0;
+    const productQuantity = product.quantity || 1; // Assuming a default quantity of 1
+    
+    // Ensure that variation is an array before attempting to reduce
+   
+  
+    return total + productPrice * productQuantity + 10 ;
+  }, 0);
+   
   return (
     // <div>
     //   <h2>Cart</h2>
@@ -132,7 +144,7 @@ export const Cart = () => {
                     <h5 className="mb-0">Total</h5>
                 </div>
                 <div className="totalPrice">
-                    <p className="mb-0">$810</p>
+                    <p className="mb-0">${totalCartPrice}</p>
                 </div>
             </div>
         </div>
