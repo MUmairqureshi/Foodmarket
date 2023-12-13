@@ -23,7 +23,16 @@
 }
 section.bakery .card-title {
   margin-top: 20px;
+  font-size: 18px;
+  text-transform: capitalize;
+  margin-bottom: 5px;
 }
+
+
+.offerButton {
+  margin-top: 10px;
+}
+
 
 .stores .form-check {
   font-size: 13px;
