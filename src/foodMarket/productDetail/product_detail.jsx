@@ -29,7 +29,7 @@ import { useState, useMemo, useEffect } from 'react';
 
 import mac from '../../assets/images/mac.png'
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchProducts, addToCart, incrementvariationQuantity , incrementQuantity, decrementcariationQuantity } from '../../components/redux/actions';
+import { fetchProducts, addToCart, incrementVariationQuantity , incrementQuantity, decrementcariationQuantity } from '../../components/redux/actions';
 import '../css/style.css'
 import c1 from '../../assets/images/c1.png'
 
@@ -47,7 +47,7 @@ export const Product_deatail = (props) => {
     const cartItems = useSelector((state) => state.cart.items);
    
 
-
+console.log("props.productDetails?.data" , props.productDetails?.data)
  
 
 
@@ -79,7 +79,7 @@ const handleChangeQuantity = (e) => {
     const [selectedVariations, setSelectedVariations] = useState([]);
 
 
-    
+    console.log("selectedVariations" , selectedVariations)
 
     const ImageUrl = "https://custom2.mystagingserver.site/food-stadium/public/"
 
@@ -94,35 +94,43 @@ const handleChangeQuantity = (e) => {
     const [totalPrice, setTotalPrice] = useState(0);
   console.log("totalPrice" , totalPrice)
      
+
+    
+
     const calculateTotalPrice = () => {
-        let productPrice = parseFloat(props.productDetails?.data.product_price);
+        let productPrice = parseFloat(props.productDetails?.data.product_price) || 0;
         let variationPrice = 0;
-
+    
         for (const variationId in selectedVariations) {
-            const variation = selectedVariations[variationId];
-            variationPrice += parseFloat(variation.price) * variation.quantity;
+            const variationArray = selectedVariations[variationId];
+    
+            // Calculate the total price for all items in the variation array
+            const variationTotal = variationArray.reduce((acc, item) => {
+                return acc + parseFloat(item.price) || 0;
+            }, 0);
+    
+            variationPrice += variationTotal;
         }
-
+    
         const total = productPrice + variationPrice;
         setTotalPrice(total);
     };
+    
 
     useEffect(() => {
         calculateTotalPrice();
     }, [selectedVariations, props.productDetails?.data.product_price]);
-
+console.log("totalPrice" , totalPrice)
 
 
     const handleAddToCart = () => {
         props.onHide()
         const selectedVariationsObject = {
             ...props.productDetails?.data,
-            quantity: newQuantity,
-
-            // variation: Object.values(selectedVariations),
+            quantity: newQuantity, 
             variation: Object.values(selectedVariations).map(variation => ({
                 ...variation,
-                quantity: newQuantity,
+                stock: newQuantity,
             })),
         
            
@@ -130,84 +138,12 @@ const handleChangeQuantity = (e) => {
 
         dispatch(addToCart(selectedVariationsObject ));
  
-
-
-        // if (existingProductIndex !== -1) {
-        //   // Product already in cart, update variations or add new variations
-        // //   const updatedCart = [...cartItems];
-        // //   const existingProduct = updatedCart[existingProductIndex];
-
-        // //   updatedCart[existingProductIndex] = {
-        // //     ...existingProduct,
-        // //     variation: selectedVariations,
-        // //   };
-
-        // //   dispatch(addToCart(updatedCart));
-        // } else {
-        //   // Product not in cart, add it
-        //   dispatch(addToCart(selectedVariationsObject));
-        // }
-
-        // Reset selection and quantity after adding to the cart
+ 
         setSelectedVariations({});
-        // setProductQuantity(1);
+  
+
+
     }
-    // const handleVariationQuantityChange = (newQuantity) => {
-    //     // props.productDetails?.data.forEach(product => {
-    //     //   if (product.id === productId) {
-    //     //     product?.variation.forEach(variation => {
-    //     dispatch(incrementvariationQuantity(props.productDetails?.data.id, selectedVariations.variation_id , newQuantity));
-    //     // });
-    //     //   }
-    //     // });
-    // };
-
-
-
-    //     const handleVariationQuantityChange = (newQuantity) => {
-    //         console.log(newQuantity)
-    //         const productId = parseFloat(props.productDetails?.data.id);
-
-    //           // Update the quantity for the selected variation
-    //         //   const updatedVariations = {
-    //         //     ...selectedVariations,
-    //         //     quantity: newQuantity,
-    //         //   };
-
-    // console.log(selectedVariations)
-
-    //         // const updatedVariations = {
-    //         //     ...selectedVariations,
-    //         //     variations: selectedVariations?.map(variation => { 
-    //         //       if (variation.variation_id === selectedVariations.variation_id) {
-    //         //         return {
-    //         //           ...variation,
-    //         //           quantity: newQuantity,
-    //         //         };
-    //         //       }
-    //         //       return variation;
-    //         //     }),
-    //         //   };
-
-
-    //           // Update the quantity for the product
-    //           const updatedProduct = {
-    //             ...props.productDetails?.data,
-    //             quantity: newQuantity,
-    //           };
-
-    //           // Optionally, update the selectedVariations state based on the new quantity
-    //         //   setSelectedVariations(updatedVariations);
-
-    //           // Dispatch an action with the updated data
-    //           dispatch(incrementvariationQuantity(productId,  updatedProduct));
-
-    //           // You might also dispatch an action to update the product quantity if needed
-
-    //       };
-
-
-
 
 
 
@@ -222,23 +158,10 @@ const handleChangeQuantity = (e) => {
 
     const handleQuantityChange = (newQuantity) => {
         const productId = parseFloat(props.productDetails?.data.id);
-      
-        // const selectedVariationsObject = {
-        //     ...props.productDetails?.data,
-        //     quantity: newQuantity,
-
-        //     // variation: Object.values(selectedVariations),
-        //     variation: Object.values(selectedVariations).map(variation => ({
-        //         ...variation,
-        //         quantity: newQuantity,
-        //     })),
-        
-           
-        // };
- 
-        //   setSelectedVariations(updatedVariations);
        
-          dispatch(incrementvariationQuantity(  productId  , newQuantity));
+ 
+       
+          dispatch(incrementVariationQuantity(  productId  , newQuantity));
       
  
       };
@@ -246,59 +169,51 @@ const handleChangeQuantity = (e) => {
 
     const [newQuantity, setNewQuantity] = useState(1); // Initialize with a default value
 console.log("newQuantity" ,newQuantity)
-    // const handleVariationQuantityChange = () => {
-    //     const productId = parseFloat(props.productDetails?.data.id, 10);
+   
 
-    //     // Update the quantity for the product
-    //     const updatedVariationId = selectedVariations?.map(filteredVariation => filteredVariation.variation_id);
-    //     // .filter(variation => variation.variation_id === selectedVariations.variation_id)
-
-
-          
-    //     const updatedProduct = {
-    //         ...props.productDetails?.data,
-    //         quantity: newQuantity,
-    //     }; 
-    //     dispatch(incrementvariationQuantity(productId , updatedVariationId, newQuantity));
-
-    // };
- 
-    
-    // const handleBlur = () => {
-    //     handleVariationQuantityChange();
-    // };
-    // useEffect(() => {
-    //     handleVariationQuantityChange();
-    // }, [  props.productDetails?.data.id]);
 
 
 
 
     const handleToggleSelection = (variationId, itemId, selected) => {
-        if (selected) {
+        setSelectedVariations((prevVariations) => {
+          if (selected) {
             const selectedItem = props.productDetails?.data.variation
-                .find((variation) => variation.id === variationId)
-                .variation_items.find((item) => item.id === itemId);
-
-            setSelectedVariations((prevVariations) => ({
-                ...prevVariations,
-                [variationId]: {
-                    item_id: itemId,
-                    ...selectedItem,
-                    quantity: 1,
-                },
-            }));
-        } else {
-            setSelectedVariations((prevVariations) => {
-                const updatedVariations = { ...prevVariations };
+              .find((variation) => variation.id === variationId)
+              .variation_items.find((item) => item.id === itemId);
+      
+            const updatedVariations = {
+              ...prevVariations,
+              [variationId]: [
+                ...(prevVariations[variationId] || []), // Previous items for the same variationId
+                { item_id: itemId, ...selectedItem },
+              ],
+            };
+      
+            return updatedVariations;
+          } else {
+            const updatedVariations = { ...prevVariations };
+      
+            // Only remove the specific item from the array, not the entire array
+            if (updatedVariations[variationId]) {
+              updatedVariations[variationId] = updatedVariations[variationId].filter(
+                (item) => item.item_id !== itemId
+              );
+      
+              // Remove the variationId entry if the array becomes empty
+              if (updatedVariations[variationId].length === 0) {
                 delete updatedVariations[variationId];
-                return updatedVariations;
-            });
-        }
-    };
+              }
+            }
+      
+            return updatedVariations;
+          }
+        });
+      };
+      
 
-
-    //   console.log(calculateTotalPrice.toFixed(2))
+ 
+ 
     return (
 
         <Modal
@@ -379,6 +294,7 @@ console.log("newQuantity" ,newQuantity)
                                                             <button class="btn btn-link" data-toggle="collapse" data-target={`#collapse${data?.id}`} aria-expanded="true" aria-controls={`collapse${data?.id}`}>
                                                                 {data?.name} Selection*
                                                             </button>
+
                                                         </h5>
                                                     </div>
 

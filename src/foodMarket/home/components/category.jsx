@@ -7,7 +7,7 @@ import Card from 'react-bootstrap/Card';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts, addToCart, incrementQuantity, decrementQuantity } from '../../../components/redux/actions';
 import {Cart} from '../../../components/redux/carts'
-
+import { Increment, Decrement, Remove } from '../../../redux/hook'
 import { Product_deatail } from '../../productDetail/product_detail'
 import { Nav } from 'react-bootstrap';
 
@@ -20,8 +20,8 @@ import burger from '../../../assets/images/burger.png'
 import { Menu_listing, Dietary_listing, Get_all_product, Get_all_product_detail   , filterProduct} from '../../../components/services/catigories'
 // import { useContext } from "react";
 export function Category() {
-    const cartItems = useSelector((state) => state.cart.items);
-
+//     const cartItems = useSelector((state) => state.cart.items);
+// console.log("cartItemscatigory" ,cartItems )
     
 // Filter_product
 
@@ -189,7 +189,7 @@ const products = useSelector((state) => state.products.products);
 
 
 
-
+console.log("all_productqty" , all_product)
      
 
     
@@ -455,7 +455,7 @@ const products = useSelector((state) => state.products.products);
                                             <Slider ref={sliderRef} {...settings}>
 
 
-                                                {products.map(data => (
+                                                {products?.map(data => (
                                                     <div className="row">
                                                         <Card className="mb-3" style={{ width: '16rem' }}>
                                                             <Nav.Link className="no-link-decoration" id='nav-link' style={{ textDecorationStyle: 'none' }} onClick={() => handleProductClick(data?.id)}>
@@ -508,10 +508,10 @@ const products = useSelector((state) => state.products.products);
                                                                 <div className="cardFooter">
                                                                     <div className="cardAction">
                                                                         <div className="counterAction">
-                                                                            <span className="qunatingCount">  {data.quantity}</span>
+                                                                            <span className="qunatingCount">  {data.stock}</span>
                                                                             <button className="minus" type="button"  onClick={() => dispatch(decrementQuantity(data.id))} ><i className="fa fa-minus"></i></button>
 
-                                                                            <button className="plus"  onClick={() => dispatch(incrementQuantity(data.id))} type="button"><i className="fa fa-plus"></i></button>
+                                                                            <button className="plus"  onClick={() => dispatch(Increment(data))} type="button"><i className="fa fa-plus"></i></button>
                                                                         </div>
                                                                         <div className="addToCart">
 

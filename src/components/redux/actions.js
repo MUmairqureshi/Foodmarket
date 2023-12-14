@@ -7,7 +7,7 @@ export const fetchProductsRequest = () => ({
   export const fetchProductsSuccess = (products) => { 
     const productsWithDefaultQuantity = products.map(product => ({
       ...product,
-      quantity: 1,  
+
     }));
     return {
       type: 'FETCH_PRODUCTS_SUCCESS',
@@ -23,7 +23,7 @@ export const fetchProductsRequest = () => ({
   export const addToCart = (product) => ({
    
     type: 'ADD_TO_CART',
-    payload: product,
+   payload: product,
   
   });
   
@@ -40,11 +40,17 @@ export const fetchProductsRequest = () => ({
  
 
 
-  export const incrementvariationQuantity = (product, value ) => ({
-    type: 'INCREMENT_VARIATION_QUANTITY',
-    payload:  {product , value},
-  });
+  // export const incrementvariationQuantity = (product ) => ({
+  //   type: 'INCREMENT_VARIATION_QUANTITY',
+  //   payload: product 
+  // });
 
+
+
+  export const incrementVariationQuantity = (product) => ({
+    type: 'INCREMENT_VARIATION_QUANTITY',
+    payload: product,
+  });
 
   export const decrementcariationQuantity = (productId) => ({
     type: 'DECREMENT_QUANTITY',

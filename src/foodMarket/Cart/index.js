@@ -1,6 +1,6 @@
 
 import { Nav } from 'react-bootstrap';
-import {Product_deatail} from '../productDetail/product_detail'
+import { Product_deatail } from '../productDetail/product_detail'
 
 import React, { useState } from 'react'
 import product_extras1 from '../../assets/images/product_extras_1.png'
@@ -8,18 +8,23 @@ import product1 from '../../assets/images/product_1.png'
 import { useEffect } from 'react'
 import mac from '../../assets/images/mac.png'
 import c1 from '../../assets/images/c1.png'
-import {Get_all_product_detail} from '../../components/services/catigories'
+import { Get_all_product_detail } from '../../components/services/catigories'
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchProducts, addToCart, incrementvariationQuantity, incrementQuantity, decrementcariationQuantity } from '../../components/redux/actions';
+import { fetchProducts, addToCart, incrementQuantity, decrementcariationQuantity } from '../../components/redux/actions';
 export function Cart() {
-    const [productQuantities, setProductQuantities] = useState({});
+    const [qty, setQty] = useState(1)
+     const [productQuantities, setProductQuantities] = useState({});
     const cartItems = useSelector((state) => state.cart.items);
-
+console.log("cartItems" , cartItems?.[0].variation?.[0]?.[0].title)
     const dispatch = useDispatch()
 
+ 
 
-console.log("cartItems" , cartItems)
 
+
+    const handleIncrementQuantity = (productId) => {
+        dispatch(incrementQuantity(productId));
+    };
     const calculateTotalPrice = (product) => {
         const quantity = product.quantity || 0;
 
@@ -27,88 +32,91 @@ console.log("cartItems" , cartItems)
             const variationPrices = product?.variation?.reduce((total, item) => {
                 // Check if each variation has a price property
                 const variationPrice = item.price || 0;
-                return total + variationPrice ;
+                return total + variationPrice;
             }, 0);
 
-            return (product.product_price + variationPrices) * quantity ;
+            return (product.product_price + variationPrices) * quantity;
         }
-        return product.product_price * quantity  ;
+        return product.product_price * quantity;
     };
- 
+
 
     const ImageUrl = "https://custom2.mystagingserver.site/food-stadium/public/"
- 
+
 
     const totalCartPrice = cartItems?.reduce((total, product) => {
         const productPrice = product.product_price || 0;
         const productQuantity = product.quantity || 1; // Assuming a default quantity of 1
-        
+
         // Ensure that variation is an array before attempting to reduce
         const variationTotal = Array.isArray(product.variation)
-          ? product.variation.reduce(
-              (variationSum, variation) => variationSum + (variation.price || 0) * (variation.quantity || 1),
-              0
+            ? product.variation.reduce(
+                (variationSum, variation) => variationSum + (variation.price || 0) * (variation.quantity || 1),
+                0
             )
-          : 0;
-      
+            : 0;
+
         return total + productPrice * productQuantity + variationTotal;
-      }, 0);
-      
-       
-
-
-      const [showModal, setShowModal] = useState(false);
-
-      const [productDetails, setProductDetails] = useState(null);
+    }, 0);
 
 
 
 
-    const handleVariationQuantityChange = (productId, variationIds, newQuantity) => {
-        dispatch(incrementvariationQuantity(productId, variationIds, newQuantity));
-    };
+    const [showModal, setShowModal] = useState(false);
+
+    const [productDetails, setProductDetails] = useState(null);
+
+
+
+
+    // const handleVariationQuantityChange = (productId, variationIds, newQuantity) => {
+    //     dispatch(incrementQuantity(productId, variationIds, newQuantity));
+    // };
 
 
 
     const handleProductClick = async (productId) => {
-  
-        
+
+
         setShowModal(true);
-       try {
-           const response = await Get_all_product_detail(productId)
-      
-           
-           setProductDetails(response);
-           setShowModal(true);
-       } catch (error) {
-           console.error('Error fetching product details:', error);
-       }
-   };
+        try {
+            const response = await Get_all_product_detail(productId)
+
+
+            setProductDetails(response);
+            setShowModal(true);
+        } catch (error) {
+            console.error('Error fetching product details:', error);
+        }
+    };
 
 
 
-  
- 
+
+
 
     const calculateTotalquantity = (product) => {
-        const quantity = product.quantity ;
-   
+        // setQty(product + 1)
+        console.log("product qty", product)
+        const quantity = product.quantity;
+
         const variationPrices = product.variation?.reduce((total, item) => total + item.quantity, 0) || 0;
 
         return quantity + variationPrices;
     };
 
     const handleChangeQuantity = (product, value) => {
-        console.log("product" , product.id)
-        console.log("value" , value)
- 
-        setProductQuantities((prevQuantities) => ({
-          ...prevQuantities,
-          [product.id]: value,
-        }));
-        
+        setQty(value)
+        console.log("product", product.id)
+        console.log("value", value)
 
-        incrementvariationQuantity( product ,value )
+        setProductQuantities((prevQuantities) => ({
+            ...prevQuantities,
+            [product.id]: value,
+        }));
+
+
+        incrementQuantity(product, value)
         // handleVariationQuantityChange(product.id, product.variation?.map((item) => item.id) || [], updatedQuantity);
     };
 
@@ -135,14 +143,14 @@ console.log("cartItems" , cartItems)
 
 
 
-    
+
 
 
 
 
     const handleQuantityChange = (newQuantity) => {
         // const productId = parseFloat(props.productDetails?.data.id);
-      
+
         // const selectedVariationsObject = {
         //     ...props.productDetails?.data,
         //     quantity: newQuantity,
@@ -152,16 +160,16 @@ console.log("cartItems" , cartItems)
         //         ...variation,
         //         quantity: newQuantity,
         //     })),
-        
-           
+
+
         // };
- 
+
         //   setSelectedVariations(updatedVariations);
-       
-          dispatch(incrementvariationQuantity(  productId  , newQuantity));
-      
- 
-      };
+
+        dispatch(incrementQuantity(productId, newQuantity));
+
+
+    };
 
     return (
         <div>
@@ -184,7 +192,7 @@ console.log("cartItems" , cartItems)
                                             <tr>
                                                 <td>
                                                     {/* variation */}
-                                                    <Nav.Link className="no-link-decoration" id='nav-link' style={{ textDecorationStyle: 'none' }} onClick={() => handleProductClick(data?.id)}> 
+                                                    {/* <Nav.Link className="no-link-decoration" id='nav-link' style={{ textDecorationStyle: 'none' }} onClick={() => handleProductClick(data?.id)}>  */}
                                                     <div className="product_discription ">
                                                         <div className="img_div mb-3">
                                                             <img src={ImageUrl + data?.feature_image} className="img-fluid" alt="" />
@@ -195,9 +203,12 @@ console.log("cartItems" , cartItems)
 
                                                             </div>
                                                             <p>Order are expected to ship <br /> within 7-10 days</p>
- 
+                                                            <button onClick={() => handleIncrementQuantity(data.id)}> increment </button>
+                                                            <p>
+                                                                {data.stock}
+                                                            </p>
                                                             <div className="product_detail_extras">
-                                                                {data.variation?.map(item => (
+                                                                {data?.variation?.map(item => (
 
                                                                     <div className="first_extra d-flex align-items-center">
                                                                         <div className="img_div">
@@ -209,23 +220,23 @@ console.log("cartItems" , cartItems)
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    </Nav.Link>
+                                                    {/* </Nav.Link> */}
 
 
                                                 </td>
                                                 <td className="p_quantity align-middle" >
-                                                <input
-            type="number"
-            id={`quantity-${data.id}`}
-            name={`quantity-${data.id}`}
-            value={productQuantities[data.id] || data.quantity} // Use the state value or default to data.quantity
-            onChange={(e) => handleChangeQuantity(data, parseInt(e.target.value, 10))}
-          />
+                                                    <input
+                                                        type="number"
+                                                        id={`quantity-${data.id}`}
+                                                        name={`quantity-${data.id}`}
+                                                        value={productQuantities[data.id] || data.quantity} // Use the state value or default to data.quantity
+                                                        onChange={(e) => handleChangeQuantity(data, parseInt(e.target.value, 10))}
+                                                    />
                                                     {/* <input   type="number"
                                        
                                         onChange={(e) => productquantity(parseInt(e.target.value, 10))} value={data.quantity} /> */}
                                                 </td>
-                                                <td className="p_price align-middle"><p>${calculateTotalPrice(data) }</p></td>
+                                                <td className="p_price align-middle"><p>${calculateTotalPrice(data) * qty}</p></td>
                                             </tr>
                                         ))}
 
@@ -240,7 +251,7 @@ console.log("cartItems" , cartItems)
                                             </td>
                                             <td>
                                                 <div className="actionChange">
-                                                    <button type="button"   className="btn primaryButton">Update Cart</button>
+                                                    <button type="button" className="btn primaryButton">Update Cart</button>
                                                 </div>
                                             </td>
                                         </tr>
@@ -252,12 +263,12 @@ console.log("cartItems" , cartItems)
                     </div>
                 </div>
             </section>
-            
 
 
-<Product_deatail productDetails={productDetails}  show={showModal}
-                        onHide={() => setShowModal(false)}
-                    />
+
+            <Product_deatail productDetails={productDetails} show={showModal}
+                onHide={() => setShowModal(false)}
+            />
 
             <section className="delivery_detail_section">
                 <div className="container">
