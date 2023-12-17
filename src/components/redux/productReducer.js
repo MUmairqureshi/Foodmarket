@@ -50,16 +50,16 @@ const productReducer = (state = initialState, action) => {
 
 
 
-      case 'INCREMENT_VARIATION_QUANTITY':
-        // console.log("productId", product) = action.payload;
-        return {
-          ...state,
-          products: state.products.map(product =>
-            product.id === action.payload
-              ? { ...product, quantity: product.quantity + 1 }
-              : product
-          ),
-        };
+      // case 'INCREMENT_VARIATION_QUANTITY':
+      //   // console.log("productId", product) = action.payload;
+      //   return {
+      //     ...state,
+      //     products: state.products.map(product =>
+      //       product.id === action.payload
+      //         ? { ...product, quantity: product.quantity + 1 }
+      //         : product
+      //     ),
+      //   };
     
       // const { product: targetProduct, value } = action.payload;
         // return {
