@@ -6,6 +6,7 @@ import recycle from '../../assets/images/recycle.png'
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeFromCart } from './actions';
+import { Link } from 'react-router-dom';
 
 export const Cart = () => { 
 
@@ -15,16 +16,50 @@ export const Cart = () => {
 
 
   
-  const totalCartPrice = cartItems?.reduce((total, product) => {
-    const productPrice = product.product_price || 0;
-    const productQuantity = product.quantity || 1; // Assuming a default quantity of 1
+//   const totalCartPrice = cartItems?.reduce((total, product) => {
+//     const productPrice = product.product_price || 0;
+//     const productQuantity = product.quantity || 1; // Assuming a default quantity of 1
     
-    // Ensure that variation is an array before attempting to reduce
+//     // Ensure that variation is an array before attempting to reduce
    
   
-    return total + productPrice * productQuantity + 10 ;
-  }, 0);
+//     return total + productPrice * productQuantity + 10 ;
+//   }, 0);
+
+
+
+// const totalCartPrice = cartItems?.reduce((total, product) => {
+//     const productPrice = product.product_price || 0;
+//     const productQuantity = product.quantity || 1; // Assuming a default quantity of 1
+
+//     // Ensure that variation is an array before attempting to reduce
+//     const variationTotal = Array.isArray(product.variation)
+//         ? product.variation.reduce(
+//             (variationSum, variation) => variationSum + (variation.price || 0) * (variation.quantity || 1),
+//             0
+//         )
+//         : 0;
+
+//     return total + productPrice * productQuantity + variationTotal + 10 ;
+// }, 0);
    
+
+
+const totalCartPrice = cartItems?.reduce((total, product) => {
+    const productPrice = product.product_price || 0;
+    const productQuantity = product.quantity || 1; // Assuming a default quantity of 1
+
+    // Ensure that variation is an array before attempting to reduce
+    const variationTotal = Array.isArray(product.variation)
+        ? product.variation.reduce(
+            (variationSum, variation) => variationSum + (variation.price || 0) * (variation.quantity || 1),
+            0
+        )
+        : 0;
+
+    return total + productPrice * productQuantity + variationTotal;
+}, 0) + 10; 
+
   return (
     // <div>
     //   <h2>Cart</h2>
@@ -153,7 +188,7 @@ export const Cart = () => {
                 <button type="button" className="primaryButton btn w-100 "> <span className="metaDollar">$</span>Have a Coupon code? <i className="fa fa-chevron-right"></i></button>
             </div>
             <div className="checkoutBtn">
-                <button type="button" className="primaryButton btn w-100"> Checkout</button>
+                <Link  to="/cart"  className="primaryButton btn w-100"> Checkout</Link>
             </div>
         </div>
     </div>

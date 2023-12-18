@@ -508,10 +508,10 @@ console.log("all_productqty" , all_product)
                                                                 <div className="cardFooter">
                                                                     <div className="cardAction">
                                                                         <div className="counterAction">
-                                                                            <span className="qunatingCount">  {data.stock}</span>
+                                                                            <span className="qunatingCount">  {data.quantity}</span>
                                                                             <button className="minus" type="button"  onClick={() => dispatch(decrementQuantity(data.id))} ><i className="fa fa-minus"></i></button>
 
-                                                                            <button className="plus"  onClick={() => dispatch(Increment(data))} type="button"><i className="fa fa-plus"></i></button>
+                                                                            <button className="plus"  onClick={() => dispatch(incrementQuantity(data.id))} type="button"><i className="fa fa-plus"></i></button>
                                                                         </div>
                                                                         <div className="addToCart">
 

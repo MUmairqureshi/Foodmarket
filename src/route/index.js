@@ -12,7 +12,7 @@ export function Rout() {
         <Header />
         <Routes>
         <Route path="/" element={<Home />} />
-          <Route path="/card" element={<Cart />} />
+          <Route path="/cart" element={<Cart />} />
         </Routes>
       </BrowserRouter>
     </div>

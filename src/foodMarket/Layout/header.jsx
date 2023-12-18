@@ -66,7 +66,7 @@ export function Header() {
                                 <i className="fa fa-heart"></i>
                             </button>
                             <button type="button">
-                            <Link className="nav-link" to="/card"> <i className="fa fa-shopping-cart"></i></Link>
+                            <Link className="nav-link" to="/cart"> <i className="fa fa-shopping-cart"></i></Link>
                                
                             </button>
                             <button type="button">
