@@ -137,40 +137,62 @@ export const Product_deatail = (props) => {
 
 
     const [selectedVariationId, setSelectedVariationId] = useState(null);
-
-
-
-
-
+ 
 
 
 
     const handleToggleSelection = (variationId, itemId, selected) => {
-        if (selected) {
+        setSelectedVariations((prevVariations) => {
+          const updatedVariations = { ...prevVariations };
+      
+          if (selected) {
             const selectedItem = props.productDetails?.data.variation
-                .find((variation) => variation.id === variationId)
-                .variation_items.find((item) => item.id === itemId);
-
-            setSelectedVariations((prevVariations) => ({
-                ...prevVariations,
-                [variationId]: {
-                    item_id: itemId,
-                    ...selectedItem,
-                    quantity: 1,
-                },
-            }));
-
+              .find((variation) => variation.id === variationId)
+              .variation_items.find((item) => item.id === itemId);
+      
+            updatedVariations[variationId] = {
+              item_id: itemId,
+              ...selectedItem,
+              quantity: 1,
+            };
+      
             setSelectedVariationId(itemId);
-        } else {
-            setSelectedVariations((prevVariations) => {
-                const updatedVariations = { ...prevVariations };
-                delete updatedVariations[variationId];
-                return updatedVariations;
-            });
-
+          } else {
+            delete updatedVariations[variationId];
             setSelectedVariationId(null);
-        }
-    };
+          }
+      
+          return updatedVariations;
+        });
+      };
+      
+
+    // const handleToggleSelection = (variationId, itemId, selected) => {
+    //     if (selected) {
+    //         const selectedItem = props.productDetails?.data.variation
+    //             .find((variation) => variation.id === variationId)
+    //             .variation_items.find((item) => item.id === itemId);
+
+    //         setSelectedVariations((prevVariations) => ({
+    //             ...prevVariations,
+    //             [variationId]: {
+    //                 item_id: itemId,
+    //                 ...selectedItem,
+    //                 quantity: 1,
+    //             },
+    //         }));
+
+    //         setSelectedVariationId(itemId);
+    //     } else {
+    //         setSelectedVariations((prevVariations) => {
+    //             const updatedVariations = { ...prevVariations };
+    //             delete updatedVariations[variationId];
+    //             return updatedVariations;
+    //         });
+
+    //         setSelectedVariationId(null);
+    //     }
+    // };
     // useEffect(() => {
     //     // Initialize selected variations based on cart items
     //     const initialSelectedVariations = {};
@@ -514,9 +536,7 @@ export const Product_deatail = (props) => {
                             {/* Close button in flex container */}
                             <div id="contained-modal-title-vcenter" className="d-flex contained-modal-title-vcenter align-items-center text-center ">
                                 <button type="button" className="btn-close  text-center " aria-label="Close" onClick={props.onHide}  >
-                                    {/* Optionally, you can use an iconcLOSE */}
-                                    {/* <i className="bi bi-x-lg"></i> */}
-                                    {/* <CloseButton />;xX */}X
+                                   X
                                 </button>
                             </div>
                         </Modal.Header>
@@ -587,7 +607,25 @@ export const Product_deatail = (props) => {
                                                                             onChange={(e) =>
                                                                                 handleToggleSelection(data?.id, item?.id, e.target.checked)
                                                                             }
+                                                                            // checked={cartItems?.variation?.some(cartVariation => cartVariation.id === item.id)}
+                                                                            // checked={cartItems?.variation?.includes(item.id)}
+                                                                            checked={cartItems?.variation?.some((cartVariation) => cartVariation.id === data?.id && cartVariation.item_id === item.id  && cartVariation.variation_id === item.variation_id)}
+
+
                                                                         />
+
+
+{/* 
+<input
+        type="radio"
+        name={`variation_${data?.id}`}
+        onChange={(e) => handleToggleSelection(data?.id, item?.id, e.target.checked)}
+        checked={
+          cartItems?.variation_items?.some(
+            (cartVariation) => cartVariation.id === data?.id && cartVariation.item_id === item.id
+          )
+        }
+      /> */}
                                                                     </div>
                                                                     <div className="order_img">
                                                                         <img src={ImageUrl + item?.image} className="img-fluid" alt="" />

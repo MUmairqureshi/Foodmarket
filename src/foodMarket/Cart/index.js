@@ -8,7 +8,7 @@ import mac from '../../assets/images/mac.png'
 import c1 from '../../assets/images/c1.png'
 import { Get_all_product_detail } from '../../components/services/catigories'
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchProducts, addToCart, incrementvariationQuantity, decrementcariationQuantity } from '../../components/redux/actions';
+import { fetchProducts, addToCart, incrementvariationQuantity, removeFromCart } from '../../components/redux/actions';
 export function Cart() {
     const [qty, setQty] = useState(1)
     const [productQuantities, setProductQuantities] = useState({});
@@ -18,11 +18,7 @@ export function Cart() {
 
 
 
-
-
-    const handleIncrementQuantity = (productId) => {
-        dispatch(incrementQuantity(productId));
-    };
+ 
     const calculateTotalPrice = (product) => {
         const quantity = product.quantity || 0;
 
@@ -133,16 +129,28 @@ export function Cart() {
                                             <tr>
                                                 <td>
                                                     {/* variation */}
-                                                    <Nav.Link className="no-link-decoration" id='nav-link' style={{ textDecorationStyle: 'none' }} onClick={() => handleProductClick(data?.id)}>
+                                                    {/* <Nav.Link className="no-link-decoration" id='nav-link' style={{ textDecorationStyle: 'none' }} onClick={() => handleProductClick(data?.id)}> */}
                                                         <div className="product_discription ">
                                                             <div className="img_div mb-3">
                                                                 <img src={ImageUrl + data?.feature_image} className="img-fluid" alt="" />
                                                                
                                                                
                                                     <Nav.Link className="no-link-decoration" id='nav-link' style={{ textDecorationStyle: 'none' }} onClick={() => handleProductClick(data?.id)}>
-                                                         <i class="fa-solid fa-pen-to-square"></i>
+                                                      
+                                                        <i class="fa-solid fa-pen-to-square"></i>
+                                                     
+                                                        <i class="fa-solid fa-pen-to-square"></i>
+
+
                                                          </Nav.Link> 
-                                                            </div>
+                                                         <button onClick={() => dispatch(removeFromCart(data.id))}>
+        X
+      </button>
+                                                         {/* <button type="button" className="btn-close  text-center " aria-label="Close"   >
+                                   X
+                                </button>                               */}
+                                                
+                                                           </div>
                                                             <div className="product_detail">
                                                                 <div className="titleBox text-left ">
                                                                     <h3>{data?.title}</h3>
@@ -162,7 +170,7 @@ export function Cart() {
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </Nav.Link>
+                                                    {/* </Nav.Link> */}
 
 
                                                 </td>
