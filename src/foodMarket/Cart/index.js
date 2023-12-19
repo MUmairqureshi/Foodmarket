@@ -24,7 +24,7 @@ export function Cart() {
 
         if (product.variation && Array.isArray(product.variation)) {
             const variationPrices = product?.variation?.reduce((total, item) => {
-                // Check if each variation has a price property
+                 
                 const variationPrice = item.price || 0;
                 return total + variationPrice;
             }, 0);

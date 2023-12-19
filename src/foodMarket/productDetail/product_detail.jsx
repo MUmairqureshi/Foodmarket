@@ -46,6 +46,37 @@ export const Product_deatail = (props) => {
     }, [cartItems, props]);
 
 
+
+    // useEffect(() => {
+    //     const productId = props.productDetails?.data.id;
+    //     const productqty = props.productDetails?.data.quantity;
+    //     // Calculate the total quantity for the specific product
+    //     const totalProductQuantity = cartItems
+    //       .filter((item) => item.id === productId )
+    //       .reduce((total, item) => total + item.quantity , 1);
+      
+    //     // Set the initial quantity to the calculated total if it's greater than 0
+    //     setNewQuantity(totalProductQuantity > 0 ? totalProductQuantity : 0);
+    //   }, [cartItems, props]);
+      
+
+    
+    useEffect(() => {
+        const productId = props.productDetails?.data.id;
+        const productqty = props.productDetails?.data.quantity;
+        // Calculate the total quantity for the specific product
+        const totalProductQuantity = cartItems
+          .filter((item) => item.id === productId )
+          .reduce((total, item) => total + item.quantity , 1);
+      
+        // Set the initial quantity to the calculated total if it's greater than 0
+        setNewQuantity(totalProductQuantity > 0 ? totalProductQuantity : 0);
+      }, [cartItems, props]);
+      
+
+
+     
+      
     const handleChangeQuantity = (e) => {
         const inputValue = e.target.value;
         setNewQuantity(inputValue);
@@ -121,9 +152,6 @@ console.log("selectedVariations" , selectedVariations)
     // }
 
 
- 
-
-
 
 
     const handleAddToCart = () => {
@@ -141,11 +169,11 @@ console.log("selectedVariations" , selectedVariations)
         console.log("existingCartItem", existingCartItem);
       
         if (existingCartItem) {
-        //   Product already in cart, update quantity and add variations
+            
           const updatedCartItem = {
             ...existingCartItem,
             quantity: newQuantity,
-            variation: Array.from(new Set([...existingCartItem.variation, ...selectedVariationsObject])),
+            variation:selectedVariationsObject,
           };
       
           console.log("updatedCartItem", updatedCartItem);
@@ -163,99 +191,10 @@ console.log("selectedVariations" , selectedVariations)
       };
 
 
-    // const handleAddToCart = () => {
-    //     props.onHide();
-      
-    //     const selectedVariationsObject = Object.values(selectedVariations).map((variation) => ({
-    //       ...variation,
-    //       quantity: newQuantity,
-    //     }));
-      
-    //     const existingCartItem = cartItems?.find(
-    //       (cartVariation) => cartVariation.id === props.productDetails?.data?.id
-    //     );
-      
-    //     console.log("existingCartItem", existingCartItem);
-      
-    //     if (existingCartItem) {
-    //       // Product already in cart, update quantity and add variations
-    //       const updatedCartItem = {
-    //         ...existingCartItem,
-    //         quantity: existingCartItem.quantity + newQuantity,
-    //         variation: Array.from(new Set([...existingCartItem.variation, ...selectedVariationsObject])),
-    //       };
-      
-    //       console.log("updatedCartItem", updatedCartItem);
-    //       dispatch(updateCartItem(updatedCartItem));
-    //     } else {
-    //       // Product not in cart, add it with variations
-    //       const newCartItem = {
-    //         ...props.productDetails?.data,
-    //         quantity: newQuantity,
-    //         variation: selectedVariationsObject,
-    //       };
-      
-    //       dispatch(addToCart(newCartItem));
-    //     }
-    //   };
 
 
 
 
-    // const handleAddToCart = () => {
-    //     props.onHide();
-      
-    //     const selectedVariationsObject = Object.values(selectedVariations).map((variation) => ({
-    //       ...variation,
-    //       quantity: newQuantity,
-    //     }));
-      
-    //     const existingCartItemIndex = cartItems.findIndex(
-    //       (cartVariation) => cartVariation.id === props.productDetails?.data?.id
-    //     );
-      
-    //     if (existingCartItemIndex !== -1) {
-    //       // Product already in cart, update quantity for existing variations
-    //       const existingCartItem = cartItems[existingCartItemIndex];
-    //       const updatedCartItem = {
-    //         ...existingCartItem,
-    //         quantity: existingCartItem.quantity + newQuantity,
-    //         variation: existingCartItem.variation.map((existingVariation) => {
-    //           const matchingSelectedVariation = selectedVariationsObject.find(
-    //             (selectedVariation) => selectedVariation.id === existingVariation.id
-    //           );
-      
-    //           return matchingSelectedVariation
-    //             ? { ...existingVariation, quantity: existingVariation.quantity + matchingSelectedVariation.quantity }
-    //             : existingVariation;
-    //         }),
-    //       };
-      
-    //       dispatch(updateCartItem(updatedCartItem));
-    //     } else {
-    //       // Product not in cart, add it with variations
-    //       const newCartItem = {
-    //         ...props.productDetails?.data,
-    //         quantity: newQuantity,
-    //         variation: selectedVariationsObject,
-    //       };
-      
-    //       dispatch(addToCart(newCartItem));
-    //     }
-    //   };
-      
-      
-      
-
-
-
-
-
-
-
-
-
-// corect this with already product in addtocart then select variation  variation go to the cart
     const handleQuantityChange = (newQuantity) => {
         const productId = parseFloat(props.productDetails?.data.id);
 
@@ -515,7 +454,7 @@ console.log("selectedVariations" , selectedVariations)
                                         type="number"
                                         id="quantity"
                                         name="quantity"
-                                        value={newQuantity}
+                                        value={ newQuantity}
                                         onChange={handleChangeQuantity}
                                     />
                                 </div>

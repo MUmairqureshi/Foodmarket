@@ -90,7 +90,7 @@ const cartReducer = (state = initialState, action) => {
       ? {
           ...item,
           quantity: updatedCartItem.quantity,
-          variation: [...new Set([...item.variation, ...updatedCartItem.variation])],
+          variation: updatedCartItem.variation,
         }
       : item
   );
