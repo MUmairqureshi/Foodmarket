@@ -18,7 +18,7 @@ export function Cart() {
 
 
 
- 
+
     const calculateTotalPrice = (product) => {
         const quantity = product.quantity || 0;
 
@@ -41,7 +41,7 @@ export function Cart() {
     const totalCartPrice = cartItems?.reduce((total, product) => {
         const productPrice = product.product_price || 0;
         const productQuantity = product.quantity || 1; // Assuming a default quantity of 1
-    
+
         // Ensure that variation is an array before attempting to reduce
         const variationTotal = Array.isArray(product.variation)
             ? product.variation.reduce(
@@ -49,9 +49,9 @@ export function Cart() {
                 0
             )
             : 0;
-    
+
         return total + productPrice * productQuantity + variationTotal;
-    }, 0) + 10; 
+    }, 0) + 10;
 
     const [showModal, setShowModal] = useState(false);
 
@@ -90,9 +90,9 @@ export function Cart() {
 
 
     const handleChangeQuantity = (productid, newQuantity) => {
-        console.log("newQuantity", newQuantity) 
+        console.log("newQuantity", newQuantity)
         dispatch(incrementvariationQuantity(productid, newQuantity));
- 
+
         setProductQuantities((prevQuantities) => ({
             ...prevQuantities,
             [productid]: newQuantity,
@@ -130,46 +130,42 @@ export function Cart() {
                                                 <td>
                                                     {/* variation */}
                                                     {/* <Nav.Link className="no-link-decoration" id='nav-link' style={{ textDecorationStyle: 'none' }} onClick={() => handleProductClick(data?.id)}> */}
-                                                        <div className="product_discription ">
-                                                            <div className="img_div mb-3">
-                                                                <img src={ImageUrl + data?.feature_image} className="img-fluid" alt="" />
-                                                               
-                                                               
-                                                    <Nav.Link className="no-link-decoration" id='nav-link' style={{ textDecorationStyle: 'none' }} onClick={() => handleProductClick(data?.id)}>
-                                                      
-                                                        <i class="fa-solid fa-pen-to-square"></i>
-                                                     
-                                                        <i class="fa-solid fa-pen-to-square"></i>
+                                                    <div className="product_discription ">
+                                                    <div className="img_div mb-3" style={{ display: 'flex', alignItems: 'center' }}>
+  <img src={ImageUrl + data?.feature_image} className="img-fluid" alt="" />
 
+  <Nav.Link className="no-link-decoration" id='nav-link' style={{ textDecorationStyle: 'none' }} onClick={() => handleProductClick(data?.id)}>
+    <i className="fa-solid fa-pen-to-square"></i>
+  </Nav.Link>
 
-                                                         </Nav.Link> 
-                                                         <button onClick={() => dispatch(removeFromCart(data.id))}>
-        X
-      </button>
-                                                         {/* <button type="button" className="btn-close  text-center " aria-label="Close"   >
+  {/* <button onClick={() => dispatch(removeFromCart(data.id))}>
+    X
+  </button> */}
+    <div id="contained-modal-title-vcenter" className="d-flex contained-modal-title-vcenter align-items-center text-center ">
+                                <button type="button" className="btn-close  text-center " aria-label="Close" onClick={() => dispatch(removeFromCart(data.id))}  >
                                    X
-                                </button>                               */}
-                                                
-                                                           </div>
-                                                            <div className="product_detail">
-                                                                <div className="titleBox text-left ">
-                                                                    <h3>{data?.title}</h3>
+                                </button>
+                            </div>
+</div>
+                                                        <div className="product_detail">
+                                                            <div className="titleBox text-left ">
+                                                                <h3>{data?.title}</h3>
 
-                                                                </div>
-                                                                <p>Order are expected to ship <br /> within 7-10 days</p>
-                                                                <div className="product_detail_extras">
-                                                                    {data.variation?.map(item => (
+                                                            </div>
+                                                            <p>Order are expected to ship <br /> within 7-10 days</p>
+                                                            <div className="product_detail_extras">
+                                                                {data.variation?.map(item => (
 
-                                                                        <div className="first_extra d-flex align-items-center">
-                                                                            <div className="img_div">
-                                                                                <img src={ImageUrl + item?.image} className="img=-fluid" alt="" />
-                                                                            </div>
-                                                                            <p>{item?.title} : <span> ${item.price}</span></p>
-                                                                        </div>))}
+                                                                    <div className="first_extra d-flex align-items-center">
+                                                                        <div className="img_div">
+                                                                            <img src={ImageUrl + item?.image} className="img=-fluid" alt="" />
+                                                                        </div>
+                                                                        <p>{item?.title} : <span> ${item.price}</span></p>
+                                                                    </div>))}
 
-                                                                </div>
                                                             </div>
                                                         </div>
+                                                    </div>
                                                     {/* </Nav.Link> */}
 
 
