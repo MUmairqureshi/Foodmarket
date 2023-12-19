@@ -131,28 +131,24 @@ export function Cart() {
                                                     {/* variation */}
                                                     {/* <Nav.Link className="no-link-decoration" id='nav-link' style={{ textDecorationStyle: 'none' }} onClick={() => handleProductClick(data?.id)}> */}
                                                     <div className="product_discription ">
-                                                    <div className="img_div mb-3" style={{ display: 'flex', alignItems: 'center' }}>
-  <img src={ImageUrl + data?.feature_image} className="img-fluid" alt="" />
+                                                        <div className="img_div mb-3" style={{ display: 'flex', alignItems: 'center' }}>
+                                                            <img src={ImageUrl + data?.feature_image} className="img-fluid" alt="" />
 
-  <Nav.Link className="no-link-decoration" id='nav-link' style={{ textDecorationStyle: 'none' }} onClick={() => handleProductClick(data?.id)}>
-    <i className="fa-solid fa-pen-to-square"></i>
-  </Nav.Link>
+                                                          
 
-  {/* <button onClick={() => dispatch(removeFromCart(data.id))}>
-    X
-  </button> */}
-    <div id="contained-modal-title-vcenter" className="d-flex contained-modal-title-vcenter align-items-center text-center ">
-                                <button type="button" className="btn-close  text-center " aria-label="Close" onClick={() => dispatch(removeFromCart(data.id))}  >
-                                   X
-                                </button>
-                            </div>
-</div>
+                                                           
+                                                          
+                                                        </div>
                                                         <div className="product_detail">
                                                             <div className="titleBox text-left ">
                                                                 <h3>{data?.title}</h3>
 
                                                             </div>
-                                                            <p>Order are expected to ship <br /> within 7-10 days</p>
+                                                            <p className='d-flex justify-content-start'>Order are expected to ship <br /> within 7-10 days 
+                                                            <Nav.Link className="no-link-decoration" id='nav-link' style={{ textDecorationStyle: 'none' }} onClick={() => handleProductClick(data?.id)}>
+                                                                <i className="fa-solid fa-pen-to-square"></i>
+                                                            </Nav.Link>
+                                                            </p>
                                                             <div className="product_detail_extras">
                                                                 {data.variation?.map(item => (
 
@@ -182,7 +178,22 @@ export function Cart() {
                                        
                                         onChange={(e) => productquantity(parseInt(e.target.value, 10))} value={data.quantity} /> */}
                                                 </td>
-                                                <td className="p_price align-middle"><p>${calculateTotalPrice(data) * qty}</p></td>
+                                                <td className="p_price align-middle">
+                                                    
+                                                    <div className=' d-flex align-items-center justify-content-between'>
+
+                                                    <p >${calculateTotalPrice(data) * qty} </p>
+                                                    <div id="contained-modal-title-vcenter" className="d-flex contained-modal-title-vcenter align-items-center text-center ">
+                                                                <button type="button" className="btn-close  text-center " aria-label="Close" onClick={() => dispatch(removeFromCart(data.id))}  >
+                                                                    X
+                                                                </button>
+                                                            </div>
+
+
+                                                    </div>
+                                              
+                                                </td>
+                                             
                                             </tr>
                                         ))}
 

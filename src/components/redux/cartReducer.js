@@ -3,23 +3,44 @@ const initialState = {
   items: [],
 };
 
+
+// const updatedItems = state.items.map((item, index) =>
+// index === existingProductIndex ? { ...item, quantity: item.quantity + quantity, variation: [...item.variation, ...variation] } : item
+// );
+
+// return {
+// ...state,
+// items: updatedItems,
+// };
+
 const cartReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'ADD_TO_CART':
+      const quantity = action.payload
+      console.log("quantity" , quantity)
       const existingProductIndex = state.items.findIndex((item) => item.id === action.payload.id);
-    
+
       if (existingProductIndex !== -1) {
         // Product already in cart, replace quantity
         const updatedItems = state.items.map((item, index) =>
           index === existingProductIndex ? { ...item, quantity: action.payload.quantity } : item
         );
-    
+
         return {
           ...state,
           items: updatedItems,
         };
+
+
+      //   const updatedItems = state.items.map((item, index) =>
+      //   index === existingProductIndex ? { ...item, quantity: item.quantity + action.payload.quantity, variation: [...item.variation, ...action.payload.variation] } : item
+      // );
+  
+      return {
+        ...state,
+        items: updatedItems,
+      };
       } else {
-        // Product not in cart, add it
         return {
           ...state,
           items: [...state.items, { ...action.payload }],
@@ -27,8 +48,8 @@ const cartReducer = (state = initialState, action) => {
       }
     case 'INCREMENT_QUANTITY_VA':
       const { productId, newQuantity } = action.payload;
-      console.log("productId" ,  productId)
-      console.log("newQuantity" ,  newQuantity)
+      console.log("productId", productId)
+      console.log("newQuantity", newQuantity)
       return {
         ...state,
         items: state.items.map((item) =>
@@ -36,16 +57,50 @@ const cartReducer = (state = initialState, action) => {
         ),
       };
 
-      case 'REMOVE_FROM_CART':
-        const  removedProductId  = action.payload;
-        console.log('Removing product with ID:', removedProductId);
-        const updatedItems = state.items.filter(item => item.id !== removedProductId);
-        console.log('Updated items:', updatedItems);
-        return {
-          ...state,
-          items: updatedItems,
-        };
+    case 'REMOVE_FROM_CART':
+      const removedProductId = action.payload;
+      console.log('Removing product with ID:', removedProductId);
+      const removeItems = state.items.filter(item => item.id !== removedProductId);
+      console.log('Updated items:', removeItems);
+      return {
+        ...state,
+        items: removeItems,
+      };
 
+    // case 'UPDATE_CART_ITEM':
+    //   const updatedCartItem = action.payload;
+    //   console.log("updatedCartItem" , updatedCartItem)
+    //   const updatedItems = state.items.map((item) =>
+    //     item.id === updatedCartItem.id
+    //       ? { ...item, ...updatedCartItem, variation: [...item.variation, ...updatedCartItem.variation] }
+    //       : item
+    //   );
+    
+    //   return {
+    //     ...state,
+    //     items: updatedItems,
+    //   };
+
+
+
+    case 'UPDATE_CART_ITEM':
+  const updatedCartItem = action.payload;
+  const updatedItems = state.items.map((item) =>
+    item.id === updatedCartItem.id
+      ? {
+          ...item,
+          quantity: updatedCartItem.quantity,
+          variation: [...new Set([...item.variation, ...updatedCartItem.variation])],
+        }
+      : item
+  );
+
+  return {
+    ...state,
+    items: updatedItems,
+  };
+
+    
     default:
       return state;
   }

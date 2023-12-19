@@ -104,6 +104,7 @@ const products = useSelector((state) => state.products.products);
         slidesToScroll: 1,
         responsive: [
             {
+                infinite: true,
                 breakpoint: 1024, // Medium devices (tablets, 768px and up)
                 settings: {
                     slidesToShow: 2,
@@ -112,6 +113,7 @@ const products = useSelector((state) => state.products.products);
                 },
             },
             {
+                infinite: true,
                 breakpoint: 768, // Small devices (landscape phones, 576px and up)
                 settings: {
                     slidesToShow: 1,
@@ -120,6 +122,7 @@ const products = useSelector((state) => state.products.products);
                 },
             },
             {
+                infinite: true,
                 breakpoint: 576, // Extra small devices (portrait phones, 576px and down)
                 settings: {
                     slidesToShow: 3,
@@ -204,24 +207,30 @@ console.log("all_productqty" , all_product)
         rows: 2,
         responsive: [
             {
+                infinite: true,
                 breakpoint: 1024, // Medium devices (tablets, 768px and up)
                 settings: {
+                    infinite: true,
                     slidesToShow: 2,
                     slidesToScroll: 1,
                     rows: 2,
                 },
             },
             {
+                infinite: true,
                 breakpoint: 768, // Small devices (landscape phones, 576px and up)
                 settings: {
+                    infinite: true,
                     slidesToShow: 1,
                     slidesToScroll: 1,
                     rows: 1,
                 },
             },
             {
+                infinite: true,
                 breakpoint: 576, // Extra small devices (portrait phones, 576px and down)
                 settings: {
+                    infinite: true,
                     slidesToShow: 1,
                     slidesToScroll: 1,
                     rows: 1,
