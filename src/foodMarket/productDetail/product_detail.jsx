@@ -27,7 +27,8 @@ import { Tabs, Tab } from 'react-bootstrap';
 export const Product_deatail = (props) => {
 
 
-    const datas = props.productDetails?.data.id
+    const datas = props.productDetails?.data
+    console.log("datas" , datas)
 
     const cartItems = useSelector((state) => state.cart.items);
     console.log("cartItems", cartItems)
@@ -347,7 +348,7 @@ console.log("selectedVariations" , selectedVariations)
 
                                                                             // checked={selectedItemsObj && selectedItemsObj[`${data?.id}_${item?.id}`]}
 
-
+ 
                                                                         />
                                                                         
 

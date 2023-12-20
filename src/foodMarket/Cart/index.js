@@ -6,14 +6,21 @@ import React, { useState } from 'react'
 import { useEffect } from 'react'
 import mac from '../../assets/images/mac.png'
 import c1 from '../../assets/images/c1.png'
-import { Get_all_product_detail } from '../../components/services/catigories'
+import { Get_all_product_detail, Order_Placed } from '../../components/services/catigories'
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts, addToCart, incrementvariationQuantity, removeFromCart } from '../../components/redux/actions';
 export function Cart() {
+
+    const [zipcode, setZipcode] = useState()
+
+    const [coupon, setCoupon] = useState()
+    const [message, setMessage] = useState('')
+
     const [qty, setQty] = useState(1)
     const [productQuantities, setProductQuantities] = useState({});
     const cartItems = useSelector((state) => state.cart.items);
-    // console.log("cartItems", cartItems?.[0].variation?.[0]?.[0].title)
+    console.log("cartItems", cartItems)
+
     const dispatch = useDispatch()
 
 
@@ -24,7 +31,7 @@ export function Cart() {
 
         if (product.variation && Array.isArray(product.variation)) {
             const variationPrices = product?.variation?.reduce((total, item) => {
-                 
+
                 const variationPrice = item.price || 0;
                 return total + variationPrice;
             }, 0);
@@ -42,7 +49,6 @@ export function Cart() {
         const productPrice = product.product_price || 0;
         const productQuantity = product.quantity || 1; // Assuming a default quantity of 1
 
-        // Ensure that variation is an array before attempting to reduce
         const variationTotal = Array.isArray(product.variation)
             ? product.variation.reduce(
                 (variationSum, variation) => variationSum + (variation.price || 0) * (variation.quantity || 1),
@@ -108,6 +114,112 @@ export function Cart() {
     const handleIncrement = (productId) => {
         dispatch(incrementvariationQuantity(productId));
     };
+
+
+
+
+    const [applycoupon, setApplycoupon] = useState()
+
+
+    const handleCouponChange = (e) => {
+        setCoupon(e.target.value);
+    };
+
+    const applyCoupon = () => {
+        setApplycoupon(coupon)
+        console.log(`Applying coupon: ${coupon}`);
+    };
+    console.log('applycoupon', applycoupon)
+
+    const handleZipcodeChange = (e) => {
+        setZipcode(e.target.value);
+    };
+
+    const handleMessageChange = (e) => {
+        setMessage(e.target.value);
+    };
+
+
+
+
+    //     const placeOrder = async () => {
+
+    //         const data = {
+    //             sub_total: totalCartPrice,
+    //             total: totalCartPrice,
+    //             zipcode: zipcode,
+    //             message: message,
+    //             products: cartItems,
+    //             discount : 32,
+    //             coupon_code : coupon
+
+    //         }
+
+    //         try {
+    //             const response = await Order_Placed(data)
+    //    console.log("Success " , response )
+
+    //         } catch (error) {
+    //             console.error('Error fetching product details:', error);
+    //         }
+    //     };
+
+
+    // const placeOrder = async () => {
+    //     const data = {
+    //       sub_total: totalCartPrice,
+    //       total: totalCartPrice,
+    //       zipcode: zipcode,
+    //       message: message,
+    //       products: cartItems,
+    //       discount: 32,
+    //       coupon_code: applycoupon,
+    //     };
+
+    //     try {
+    //       const response = await Order_Placed(data);
+
+    //       if (response.ok) {
+    //         const jsonData = await response.json();
+    //         console.log("Success ", jsonData); 
+    //       } else {
+
+    //         console.error('Error in placing order:', response.status);
+    //       }
+    //     } catch (error) {
+    //       console.error('Error in placing order:', error);
+    //     }
+    //   };
+
+    const placeOrder = async () => {
+        const data = {
+            sub_total: totalCartPrice,
+            total: totalCartPrice,
+            zipcode: zipcode,
+            message: message,
+            products: cartItems,
+            discount: 32,
+            coupon_code: applycoupon,
+        };
+
+        try {
+            const response = await Order_Placed(data);
+
+            //   if (response && response.ok) {
+            const jsonData = await response.json();
+            console.log("Success ", jsonData);
+            // Handle the successful response here
+            //   } else {
+            console.error('Error in placing order:', response && response.status);
+            // Handle the error here
+            //   }
+        } catch (error) {
+            console.error('Error in placing order:', error);
+            // Handle the error here
+        }
+    };
+    //   placeOrder();
+
     return (
         <div>
             <section className="product_detail">
@@ -134,20 +246,20 @@ export function Cart() {
                                                         <div className="img_div mb-3" style={{ display: 'flex', alignItems: 'center' }}>
                                                             <img src={ImageUrl + data?.feature_image} className="img-fluid" alt="" />
 
-                                                          
 
-                                                           
-                                                          
+
+
+
                                                         </div>
                                                         <div className="product_detail">
                                                             <div className="titleBox text-left ">
                                                                 <h3>{data?.title}</h3>
 
                                                             </div>
-                                                            <p className='d-flex justify-content-start'>Order are expected to ship <br /> within 7-10 days 
-                                                            <Nav.Link className="no-link-decoration" id='nav-link' style={{ textDecorationStyle: 'none' }} onClick={() => handleProductClick(data?.id)}>
-                                                                <i className="fa-solid fa-pen-to-square"></i>
-                                                            </Nav.Link>
+                                                            <p className='d-flex justify-content-start'>Order are expected to ship <br /> within 7-10 days
+                                                                <Nav.Link className="no-link-decoration" id='nav-link' style={{ textDecorationStyle: 'none' }} onClick={() => handleProductClick(data?.id)}>
+                                                                    <i className="fa-solid fa-pen-to-square"></i>
+                                                                </Nav.Link>
                                                             </p>
                                                             <div className="product_detail_extras">
                                                                 {data.variation?.map(item => (
@@ -179,21 +291,21 @@ export function Cart() {
                                         onChange={(e) => productquantity(parseInt(e.target.value, 10))} value={data.quantity} /> */}
                                                 </td>
                                                 <td className="p_price align-middle">
-                                                    
+
                                                     <div className=' d-flex align-items-center justify-content-between'>
 
-                                                    <p >${calculateTotalPrice(data) * qty} </p>
-                                                    <div id="contained-modal-title-vcenter" className="d-flex contained-modal-title-vcenter align-items-center text-center ">
-                                                                <button type="button" className="btn-close  text-center " aria-label="Close" onClick={() => dispatch(removeFromCart(data.id))}  >
-                                                                    X
-                                                                </button>
-                                                            </div>
+                                                        <p >${calculateTotalPrice(data) * qty} </p>
+                                                        <div id="contained-modal-title-vcenter" className="d-flex contained-modal-title-vcenter align-items-center text-center ">
+                                                            <button type="button" className="btn-close  text-center " aria-label="Close" onClick={() => dispatch(removeFromCart(data.id))}  >
+                                                                X
+                                                            </button>
+                                                        </div>
 
 
                                                     </div>
-                                              
+
                                                 </td>
-                                             
+
                                             </tr>
                                         ))}
 
@@ -222,7 +334,6 @@ export function Cart() {
             </section>
 
 
-
             <Product_deatail productDetails={productDetails} show={showModal}
                 onHide={() => setShowModal(false)}
             />
@@ -232,6 +343,9 @@ export function Cart() {
                     <div className="row">
                         <div className="col-md-12 mb-5">
 
+
+
+
                             <div className="delivery_detail d-flex gap-10 flex-lg-nowrap flex-wrap justify-content-between">
                                 <div className="delivery_content">
                                     <div className="titleBox text-left ">
@@ -239,30 +353,50 @@ export function Cart() {
                                     </div>
                                     <p>Hint: if this is a gift, enter your recipient’s ZIP!</p>
                                     <div className="delivery_info">
-                                        <input type="text" placeholder="484892" className="form-control" />
+                                        <input
+                                            type="text"
+                                            placeholder="484892"
+                                            className="form-control"
+                                            value={zipcode}
+                                            onChange={handleZipcodeChange}
+                                        />
                                         <i className="fa fa-map-marker" aria-hidden="true"></i>
                                     </div>
                                 </div>
+
                                 <div className="delivery_content">
                                     <div className="titleBox text-left ">
                                         <h3>Delivery Date*</h3>
                                     </div>
                                     <p>Choose an arrival date for order</p>
                                     <div className="delivery_info">
-                                        <input type="date" placeholder="20/10/23" className="form-control" />
+                                        <input
+                                            type="date"
+                                            placeholder="20/10/23"
+                                            className="form-control"
+                                            onChange={(e) => setMessage(e.target.value)}
+                                        />
                                         <i className="fa fa-calendar" aria-hidden="true"></i>
                                     </div>
                                 </div>
+
                                 <div className="delivery_content">
                                     <div className="titleBox text-left ">
                                         <h3>Gift Message</h3>
                                     </div>
                                     <p>Choose an arrival date for order</p>
                                     <div className="delivery_info">
-                                        <input type="text" placeholder="Write Message" className="form-control" />
+                                        <input
+                                            type="text"
+                                            placeholder="Write Message"
+                                            className="form-control"
+                                            value={message}
+                                            onChange={(e) => setMessage(e.target.value)}
+                                        />
                                         <i className="fa fa-comments" aria-hidden="true"></i>
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                         <div className="col-md-4 mb-4">
@@ -271,10 +405,18 @@ export function Cart() {
                                     <h3>Apply Coupon</h3>
                                 </div>
                                 <div className="coupon_code">
-                                    <input type="text" placeholder="coupon Code" className="form-control" />
+
+                                    {/* <input type="text" placeholder="coupon Code" className="form-control" onChange={(e) => setCoupon(e.target.value)} /> */}
+                                    <input
+                                        type="text"
+                                        placeholder="coupon Code"
+                                        className="form-control"
+                                        value={coupon}
+                                        onChange={handleCouponChange}
+                                    />
                                 </div>
                                 <div className="actionApply">
-                                    <button type="button" className="btn couponButton">Apply Coupon</button>
+                                    <button type="button" className="btn couponButton" onClick={applyCoupon}>Apply Coupon</button>
                                 </div>
                             </div>
                         </div>
@@ -297,15 +439,15 @@ export function Cart() {
                                         <p>${totalCartPrice}</p>
                                     </div>
                                 </div>
-                                {/* <div className="actionApply">
-                                    <button type="button" className="btn couponButton">Proceesd To Checkout</button>
-                                </div> */}
+                                <div className="actionApply">
+                                    <button type="button" className="btn couponButton" onClick={placeOrder}>Proceesd To Checkout</button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
-            <section className="mt-5 mb-3">
+            {/* <section className="mt-5 mb-3">
                 <div className="container">
                     <div className="row">
                         <div className="col-md-4">
@@ -496,7 +638,7 @@ export function Cart() {
                         </div>
                     </div>
                 </div>
-            </section>
+            </section> */}
 
 
             <section className="footer">

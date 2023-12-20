@@ -1,5 +1,6 @@
  
 const url = 'https://custom2.mystagingserver.site/food-stadium'
+ 
 // https://custom2.mystagingserver.site/food-stadiumpublic/api/all_product
 
 export const Get_all_product = async() => {
@@ -197,3 +198,70 @@ export const Trending_product = async () => {
   }
 }
 
+
+
+
+
+// export const Order_Placed = async () => {
+//   try {
+//     const res = await fetch(`${url}/public/api/order_placed`, {
+//       method: "Post",
+      
+//   });
+//     const data = await res.json();
+//     return data;
+//   } catch (error) {
+//     console.log('Error in getting all products (service) =>', error)
+//   }
+// }
+
+
+// export const Order_Placed = async (postData) => {
+//   console.log("postData" , postData)
+//   try {
+//     const res = await fetch(`${url}/public/api/order_placed`, {
+//       method: "POST",
+//       headers: {
+//         'Content-Type': 'application/json', 
+//       },
+//       body: JSON.stringify(postData),
+//     });
+
+//     const data = await res.json();
+//     return data;
+//     console.log("success" , data)
+//   } catch (error) {
+//     console.log('Error in placing order (service) =>', error);
+//   }
+// };
+
+
+
+export const Order_Placed = async (postData) => {
+  console.log("postData", postData);
+  try {
+    const res = await fetch('https://custom2.mystagingserver.site/food-stadium/public/api/order_placed', {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(postData),
+    });
+
+    const data = await res.json();
+    console.log("success", data.data);
+    return data;
+  } catch (error) {
+    console.log('Error in placing order (service) =>', error);
+    throw error; // Rethrow the error to handle it in the calling code
+  }
+};
+
+
+
+// const postData = {
+//   // Your data here
+// };
+
+// const result = await Order_Placed(postData);
+// console.log(result);
