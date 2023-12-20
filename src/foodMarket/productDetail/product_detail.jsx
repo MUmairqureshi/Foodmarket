@@ -242,14 +242,37 @@ console.log("selectedVariations" , selectedVariations)
         });
       };
       
-      const selectedItemsObj = cartItems?.variation?.reduce((acc, cartVariation) => {
-        acc[`${cartVariation.id}_${cartVariation.item_id}`] = true;
-        return acc;
-    }, {});
+    //   const itmdata = cartItems?.variation;
+    //   console.log("itmdata", itmdata);
+      
+    //   const isItemChecked = (variationId, itemId) => {
+    //       console.log("variationId", variationId);
+    //       console.log("itemId", itemId);
+      
+    //       const foundItem = itmdata?.find(cartVariation => cartVariation.id === itemId);
+    //       console.log("foundItem", foundItem);
+    //       return foundItem;
+    //   };
 
 
-// console.log("selectedItemsObj" , selectedItemsObj)
-    return (
+
+const isItemChecked = (variationId, itemId) => {
+    console.log("variationId", variationId);
+    console.log("itemId", itemId);
+
+    // Check if cartItems is defined and not null
+    const isItemInCart = cartItems?.variation?.map(cartVariation => cartVariation.id).includes(itemId);
+    console.log("isItemInCart", isItemInCart);
+
+    // Additional logic based on variationId if needed
+    // For example, if you need to check for a specific variation
+
+    // Return a boolean indicating whether the item is found or not
+    return isItemInCart;
+};
+
+
+     return (
 
         <Modal
             {...props}
@@ -335,7 +358,21 @@ console.log("selectedVariations" , selectedVariations)
                                                             {data?.variation_items?.map((item) => 
                                                                 <div key={item.id} className="selection_div">
                                                                     <div className="">
-                                                                        <input
+                                                                    {/* <input
+                type="radio"
+                name={`variation_${data?.id}`}
+                onChange={(e) => handleToggleSelection(data?.id, item?.id, e.target.checked)}
+                checked={isItemChecked(data?.id, item?.id)}
+              /> */}
+
+                  {/* <input
+        type="radio"
+        name={`variation_${data?.id}_${item?.id}`} 
+        onChange={(e) => handleToggleSelection(data?.id, item?.id, e.target.checked)}
+        checked={isItemChecked(data?.id, item?.id)}
+    />      */}
+
+ <input
                                                                             type="radio"
                                                                             name={`variation_${data?.id}`}
                                                                             onChange={(e) =>
@@ -345,7 +382,7 @@ console.log("selectedVariations" , selectedVariations)
                                                                             //  checked={cartItems?.variation?.includes(item.id) ? true : false}
                                                                             // checked={cartItems?.variation?.some((cartVariation) => cartVariation.id === data?.id && cartVariation.item_id === item.id)}
                                                       
-
+                                                                            // checked={isItemChecked(data?.id, item?.id)}
                                                                             // checked={selectedItemsObj && selectedItemsObj[`${data?.id}_${item?.id}`]}
 
  
