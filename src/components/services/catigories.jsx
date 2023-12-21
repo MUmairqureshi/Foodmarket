@@ -247,9 +247,9 @@ export const Order_Placed = async (postData) => {
       },
       body: JSON.stringify(postData),
     });
-
+console.log("res" , res)
     const data = await res.json();
-    console.log("success", data.data);
+    console.log("success", data.message);
     return data;
   } catch (error) {
     console.log('Error in placing order (service) =>', error);
