@@ -28,8 +28,8 @@ export const Product_deatail = (props) => {
 
 
     const datas = props.productDetails?.data
-    
-console.log("datas" , datas)
+
+    console.log("datas", datas)
     const cartItems = useSelector((state) => state.cart.items);
     console.log("cartItems", cartItems)
 
@@ -95,7 +95,7 @@ console.log("datas" , datas)
     const dispatch = useDispatch();
     const [selectedVariations, setSelectedVariations] = useState({});
 
-   
+
 
 
     const ImageUrl = "https://custom2.mystagingserver.site/food-stadium/public/"
@@ -167,7 +167,7 @@ console.log("datas" , datas)
             (cartVariation) => cartVariation.id === props.productDetails?.data?.id
         );
 
-      
+
 
         if (existingCartItem) {
 
@@ -177,10 +177,10 @@ console.log("datas" , datas)
                 variation: selectedVariationsObject,
             };
 
-         
+
             dispatch(updateCartItem(updatedCartItem));
         } else {
-             const newCartItem = {
+            const newCartItem = {
                 ...props.productDetails?.data,
                 quantity: newQuantity,
                 variation: selectedVariationsObject,
@@ -241,25 +241,18 @@ console.log("datas" , datas)
         });
     };
 
-    // const itmdata = cartItems?.variation;
-    // console.log("itmdata", itmdata);
-
-    // const isItemChecked = (variationId, itemId) => {
-    //     console.log("variationId", variationId);
-    //     console.log("itemId", itemId);
-    //     const itmdatasata = cartItems?.variation?.forEach(element => {
-    //         map
-    //     });(cartVariation => cartVariation.id)
-    //     console.log("itmdatasata" , itmdatasata)
-    //     const foundItem = itmdata?.find(cartVariation => cartVariation.id === itemId);
-    //     console.log("foundItem", foundItem);
-    //     return foundItem;
-    // };
-
-
-
     const itmdata = cartItems?.variation;
-     
+    console.log("itmdata", itmdata);
+
+    const isItemChecked = (variationId, itemId) => {
+console.log("variationId" , variationId)
+console.log("itemId" , itemId)
+    };
+
+
+
+    // const itmdata = cartItems?.variation;
+
 
     // const isItemChecked = (variationId, itemId) => {
     //     console.log("variationId", variationId);
@@ -268,27 +261,26 @@ console.log("datas" , datas)
     //     // Use map() instead of forEach()
 
     //     const checkcartitems = cartItems?.reduce((total, product) => {
-    
+
     //         const variationitems = Array?.isArray(product.variation)
-    //              product?.variation?.reduce(
+    //              product?.variation?.some(
     //                 (variationSum, variation) => product.id === variationId   &&  variation.id === itemId 
-                 
+
     //             )
     //             console.log("checkcartitemsproduct" , product)
     //             console.log("variationitems" , variationitems)
     //             return variationitems
-     
+
     //      });
 
-    //     // const itmdatasata = cartItems?.variation?.map(cartVariation => cartVariation.id);
-    //     // console.log("itmdatasata", itmdatasata);
+        // const itmdatasata = cartItems?.variation?.map(cartVariation => cartVariation.id);
+        // console.log("itmdatasata", itmdatasata);
 
-    //     // const foundItem = itmdata?.find(cartVariation => cartVariation.id === itemId);
-    //     // console.log("foundItem", foundItem);
-    //     return checkcartitems;
+        // const foundItem = itmdata?.find(cartVariation => cartVariation.id === itemId);
+        // console.log("foundItem", foundItem);
+        // return checkcartitems;?
     // };
     // in the cartitems come array in the array come variation in the variation array come variation_items thencheck with variation_items === itemId?
- 
 
 
 
@@ -296,21 +288,6 @@ console.log("datas" , datas)
 
 
 
-
-    // const isItemChecked = (variationId, itemId) => {
-    //     console.log("variationId", variationId);
-    //     console.log("itemId", itemId);
-
-    //     // Check if cartItems is defined and not null
-    //     const isItemInCart = cartItems?.variation?.find(cartVariation => cartVariation.id).includes(itemId);
-    //     console.log("isItemInCart", isItemInCart);
-
-    //     // Additional logic based on variationId if needed
-    //     // For example, if you need to check for a specific variation
-
-    //     // Return a boolean indicating whether the item is found or not
-    //     return isItemInCart;
-    // };
 
 
 
@@ -319,25 +296,25 @@ console.log("datas" , datas)
     // const isItemChecked = (variationId, itemId) => {
     //     console.log("variationId", variationId);
     //     console.log("itemId", itemId);
-    
+
     //     // Use reduce() to check if the item is present in cartItems
     //     const checkcartitems = cartItems?.reduce((foundItem, product) => {
     //         const variationItem = product.variation?.some(variation =>  variation.variation_items?.some(variationItem => 
     //             product.id === variationId  &&    variationItem.id === itemId
     //             )
     //         );
-    
+
     //         console.log("variationItem", variationItem);
     //         return variationItem ? product : foundItem;
     //     }, null);
-    
+
     //     return checkcartitems;
     // };
 
     // const isItemChecked = (variationId, itemId) => {
     //     console.log("variationId", variationId);
     //     console.log("itemId", itemId);
-    
+
     //     // Use reduce() to check if the item is present in cartItems
     //     const checkcartitems = cartItems?.reduce((foundItem, product) => {
     //         const variationItem = product.variation?.find(variation =>
@@ -345,82 +322,43 @@ console.log("datas" , datas)
     //                 variationItem.id === itemId
     //             )
     //         );
-    
+
     //         console.log("variationItem", variationItem);
     //         return variationItem !== undefined && product.id === variationId ? product : foundItem;
     //     }, null);
-    
+
     //     return checkcartitems;
-    // };
-    // const isItemChecked = (variationId, itemId) => {
-    //     console.log("variationId", variationId);
-    //     console.log("itemId", itemId);
-    
-    //     // Use find() to check if the item is present in cartItems 
-    //     const checkcartitems = cartItems?.some(product => {
-    //         const variationItem = product?.variation?.find(variation =>
-    //             Array.isArray(variation?.variation_items) && variation?.variation_items.some(variationItem =>
-    //                 variationItem.id  === itemId
-                     
-    //             )
-    //         );
-    
-    //         console.log("Product ID:", product.id, "Variation Item:", variationItem);
-    //         return variationItem && product?.id === variationId;
-    //     });
-    
-    //     console.log("checkcartitems", checkcartitems);
-    //     return checkcartitems || null;
     // };
     
 
-    const isItemChecked = (variationId, itemId) => {
-        console.log("variationId", variationId);
-        console.log("itemId", itemId);
-    
-        // Use some() to check if the item is present in cartItems
-        const checkcartitems = cartItems?.some(product => {
-            const variationItem = product?.variation?.find(variation =>
-                Array.isArray(variation?.variation_items) && variation.variation_items?.some(variationItem =>
-                    variationItem.id === itemId
-                )
-            );
-    
-            console.log("variation?.id:", variation && variation.id, "Variation Item:", variationItem);
-            return variationItem && variation && variation.id === variationId;
-        });
-    
-        console.log("checkcartitems", checkcartitems);
-        return checkcartitems ?? null;
-    };
+    // const isItemChecked = (variationId, itemId) => {
+    //     console.log("variationId", variationId);
+    //     console.log("itemId", itemId);
+
+    //     // Use some() to check if the item is present in cartItems
+    //     const checkcartitems = cartItems?.some(product => {
+    //         // Declare variation outside of the find function
+    //         let variation;
+
+    //         const variationItem = product?.variation?.reduce(variationObj => {
+    //             variation = variationObj;  // Assign variationObj to the outer variable
+    //             return Array.isArray(variationObj?.variation_items) && variationObj.variation_items?.some(variationItem =>
+    //                 variationItem.id === itemId
+    //             );
+    //         });
+
+    //         console.log("variation?.id:", variation && variation.id, "Variation Item:", variationItem);
+    //         return variationItem && variation && variation.id === variationId;
+    //     });
+
+    //     console.log("checkcartitems", checkcartitems);
+    //     return checkcartitems ?? null;
+    // };
+
+
+
  
 
-
-
-    // const isItemChecked = (variationId, itemId) => {
-    //     console.log("variationId", variationId);
-    //     console.log("itemId", itemId);
-    
-    //     const checkcartitems = cartItems?.some((foundItem, product) => {
-    //         const variationItem    = Array?.isArray(product.variation)
-    //              product?.variation?.variation_items?.some(
-    //                 (variationSum, variation) => product.id === variationId   &&  variation.id === itemId 
-                 
-    //             )
-    //         // const variationItem = Array.isArray(product.variation) && product?.variation.reduce(variation => product.id === variationId   &&  variation.id === itemId );
-    // // product.id === variationId   &&  variation.id === itemId 
-    //         // if (product.id === variationId && variationItem) {
-    //         //     console.log("checkcartitemsproduct", product);
-    //         //     console.log("variationItem", variationItem);
-    //         //     return product; // Return the found item
-    //         // }
-    // console.log("variationItem" , variationItem)
-    //         return variationItem || foundItem;
-    //     }, null);
-    
-    //     return checkcartitems;
-    // };
-    
 
 
     return (
@@ -523,23 +461,47 @@ console.log("datas" , datas)
         checked={isItemChecked(data?.id, item?.id)}
     />      */}
 
-                                                                        <input
+                                                                        {/* <input
                                                                             type="radio"
                                                                             name={`variation_${data?.id}`}
                                                                             onChange={(e) =>
                                                                                 handleToggleSelection(data?.id, item?.id, e.target.checked)
                                                                             }
-                                                                            // checked={cartItems?.variation?.some(cartVariation => cartVariation.id === item.id)}
-                                                                            //  checked={cartItems?.variation?.includes(item.id) ? true : false}
-                                                                            // checked={cartItems?.variation?.some((cartVariation) => cartVariation.id === data?.id && cartVariation.item_id === item.id)}
+                                                                            // checked={cartItems?.vari?ation?.some(cartVariation =>  cartVariation.id === item.id)}
+                                                                             // checked={cartItems?.variation?.some((cartVariation) => cartVariation.id === data?.id && cartVariation.item_id === item.id)}
 
-                                                                            checked={isItemChecked(data?.id, item?.id)}
+                                                                            // checked={isItemChecked(data?.id, item?.id)}
                                                                         // checked={selectedItemsObj && selectedItemsObj[`${data?.id}_${item?.id}`]}
 
 
-                                                                        />
+                                                                        /> */}
+                                                                     
+                                                                     <input
+    type="radio"
+    name={`variation_${data?.id}`}
+    onChange={(e) => handleToggleSelection(data?.id, item?.id, e.target.checked)}
+    checked={(() => {
+        const isChecked = cartItems?.some(product => {
+            const hasVariation = product?.variation?.some(variation => {
+                const hasVariationItems = Array.isArray(variation?.variation_items) &&
+                    variation.variation_items?.some(variationItem => variationItem.id === item.id);
 
+                console.log("Product ID:", product?.id, "Variation ID:", variation?.id, "Has Variation Items:", hasVariationItems);
 
+                return hasVariationItems;
+            });
+
+            console.log("Product ID:", product?.id, "Has Variation:", hasVariation);
+
+            return hasVariation || product;
+        });
+
+        console.log("Is Checked:", isChecked);
+
+        return isChecked || item;
+    })()}
+/>
+                                                                        {console.log("Data:", data, " data id :", data.id, "Item ID:", item?.id)}
 
                                                                     </div>
                                                                     <div className="order_img">

@@ -1,6 +1,6 @@
 import React , {useState , useEffect} from "react";
 
-import { Menu_listing } from '../../../components/services/catigories'
+import { Menu_listing , Dietary_listing , filterProducts} from '../../../components/services/catigories'
 export function Menue(){
 
      
@@ -8,6 +8,32 @@ export function Menue(){
     const [mainmenu, setMainmenu] = useState([]);
     const [minPrice, setMinPrice] = useState('');
     const [maxPrice, setMaxPrice] = useState('');
+
+
+
+
+    const [filter_listing, setFilter_listing] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const res = await fetch('https://custom2.mystagingserver.site/food-stadium/public/api/filter_product/?category_id=2&menu_id=3&dietary_id=1&min_price=300&max_price=304', {
+                    method: 'GET',
+                  });
+                  const data = await res.json();
+               console.log("filterdata" , data)
+                setFilter_listing(data);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+console.log("filter_listing" , filter_listing)
+
+
 
     const [dietary_listing, setDietary_listing] = useState([]);
 

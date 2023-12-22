@@ -10,7 +10,6 @@ export function FavoriteseNear (){
     const products = useSelector((state) => state.products?.products);
         const loading = useSelector((state) => state.products.loading);
       
-    console.log ("Redux product favourites " + products)
     
     const sliderRef = useRef(null);
 

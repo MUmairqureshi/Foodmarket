@@ -17,8 +17,6 @@ import { Get_help } from './components/get_help'
 
 // Menu
 export function Home() {
-
-
     return (
         <div className="">
 

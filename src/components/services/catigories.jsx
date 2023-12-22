@@ -17,29 +17,50 @@ export const Get_all_product = async() => {
   }
   // ${url}/public/api/filter_product/?category_id=1&menu_id=3&dietary_id=1&min_price=20&max_price=40
 }
-// 
-export const filterProducts = async (url, categoryID, menuID, dietaryID, minPrice, maxPrice) => {
-  try {
-    const apiUrl = `${url}/public/api/filter_product/?category_id=${categoryID}&menu_id=${menuID}&dietary_id=${dietaryID}&min_price=${minPrice}&max_price=${maxPrice}`;
+// ${url}/public/api/filter_product/?category_id=${categoryID}&menu_id=${menuID}&dietary_id=${dietaryID}&min_price=${minPrice}&max_price=${maxPrice}
+// export const filterProducts = async (url, categoryID, menuID, dietaryID, minPrice, maxPrice) => {
+//   try {
+//     const apiUrl = `${url}/public/api/filter_product/?category_id=1&menu_id=3&dietary_id=1&min_price=20&max_price=40`;
   
-    console.log(apiUrl)
-    const response = await fetch(apiUrl, {
+//     console.log(apiUrl)
+//     const response = await fetch(apiUrl, {
+//       method: 'GET',
+//     });
+
+//     if (!response.ok) {
+//       throw new Error(`HTTP error! Status: ${response.status}`);
+//     }
+
+//     const data = await response.json();
+// console.log("filterdata " , data)
+//     return data;
+//   } catch (error) {
+//     console.error('Error in filtering products =>', error);
+//     throw error;  
+//   }
+// };
+
+
+
+
+
+export const filterProducts = async (productId) => {
+  console.log(productId)
+  try {
+    const res = await fetch('https://custom2.mystagingserver.site/food-stadium/public/api/filter_product/?category_id=2&menu_id=3&dietary_id=1&min_price=300&max_price=304', {
       method: 'GET',
     });
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-
-    const data = await response.json();
-
+    const data = await res.json();
+ console.log("filterdata" , data)
     return data;
   } catch (error) {
-    console.error('Error in filtering products =>', error);
-    throw error;  
+    console.log('Error in getting all products (service) =>', error)
   }
-};
- 
+}
+
+
+
+
 
 
 export const Get_all_product_detail = async (productId) => {

@@ -20,7 +20,7 @@ export function Beverages_Recommendations() {
     const dispatch = useDispatch();
 const products = useSelector((state) => state.products.products);
     const loading = useSelector((state) => state.products.loading);
-  console.log("productsides" , products) 
+ 
 
 
     const sliderRef = useRef(null);
