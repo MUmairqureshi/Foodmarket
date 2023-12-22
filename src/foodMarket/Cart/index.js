@@ -192,13 +192,13 @@ console.log("cartItems" , cartItems)
     //     }
     //   };
     const data = {
-        sub_total: 21,
-        total: 21,
-        zipcode: 21,
-        message: "axas",
-        products : cartItems ,
-        discount: 32,
-        coupon_code: 12,
+        sub_total: totalCartPrice,
+              total: totalCartPrice,
+              zipcode: zipcode,
+              message: message,
+              products: cartItems,
+              discount: 32,
+              coupon_code: applycoupon,
     };
 
  

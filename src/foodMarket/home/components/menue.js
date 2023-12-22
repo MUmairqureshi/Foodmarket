@@ -1,6 +1,6 @@
 import React , {useState , useEffect} from "react";
-
-import { Menu_listing , Dietary_listing } from '../../../components/services/catigories'
+import {Link} from 'react-router-dom'
+import { Menu_listing , Dietary_listing  , filterProducts} from '../../../components/services/catigories'
 export function Menue(){
 
      
@@ -36,6 +36,106 @@ export function Menue(){
 
         fetchData();
     }, []);
+    const [filter, setFilter] = useState([]);
+    const [selectedMenuId, setSelectedMenuId] = useState(null);
+  
+ 
+
+ 
+ 
+    
+  useEffect(() => {
+    const fetchData = async () => {
+        console.log("selectedMenuId"  , selectedMenuId)
+      try {
+         const data = await filterProducts(selectedMenuId);
+        console.log("filterdata" , menuIDdata)
+        setFilter(data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, [selectedMenuId]); // 
+
+  const handleMenuClick = (menuId) => { 
+    console.log("menuId" , menuId)
+    setSelectedMenuId(menuId);
+  };
+ 
+
+
+
+
+//   const filterProducts = async ({ url, categoryID, menuID, dietaryID, minPrice, maxPrice , selectedMenuId }) => {
+//     console.log("menuID", selectedMenuId);
+//     try {
+//       const apiUrl = `https://custom2.mystagingserver.site/food-stadium/public/api/filter_product/?category_id=${null}&menu_id=${selectedMenuId}&dietary_id=${null}&min_price=${null}&max_price=${null}`;
+    
+//       console.log(apiUrl);
+//       const response = await fetch(apiUrl, {
+//         method: 'GET',
+//       });
+  
+//       if (!response.ok) {
+//         throw new Error(`HTTP error! Status: ${response.status}`);
+        
+
+//       }
+  
+//       const data = await response.json();
+//       setFilter(data);
+//       return data;
+//     } catch (error) {
+//       console.error('Error in filtering products =>', error);
+//       throw error;  
+//     }
+//   };
+ 
+//   console.log("filter"  , filter)
+ 
+
+
+//   const filterProducts = async ({ url, categoryID, menuID, dietaryID, minPrice, maxPrice }) => {
+//     console.log("menuID", menuID);
+//     try {
+//       const apiUrl = `${url}/public/api/filter_product/?category_id=${categoryID}&menu_id=${menuID}&dietary_id=${dietaryID}&min_price=${minPrice}&max_price=${maxPrice}`;
+    
+//       console.log(apiUrl);
+//       const response = await fetch(apiUrl, {
+//         method: 'GET',
+//       });
+  
+//       if (!response.ok) {
+//         throw new Error(`HTTP error! Status: ${response.status}`);
+//       }
+  
+//       const data = await response.json();
+//       return data;
+//     } catch (error) {
+//       console.error('Error in filtering products =>', error);
+//       throw error;  
+//     }
+//   };
+  
+//   useEffect(() => {
+//     const fetchData = async () => {
+//       try {
+//         const data = await filterProducts({
+//           url: 'https://custom2.mystagingserver.site/food-stadium/public/api/filter_product/?menu_id=3&dietary_id=1&min_price=null&max_price=null',
+//          });
+//         setFilter(data);
+//       } catch (error) {
+//         console.error('Error fetching data:', error);
+//       }
+//     };
+  
+//     fetchData();
+//   }, [selectedMenuId]);
+  
+  console.log("filter", filter);
+  
     return(
         <div className="col-md-3 col-xl-2">
         <div className="categoryFilter bg-white shadow p-md-3 h-100">
@@ -48,7 +148,7 @@ export function Menue(){
                 </div>
                 <div className="categoryData">
                     {mainmenu.data?.map(data => (<ul>
-                        <li key={data.id} className="nav-link px-md-0"><a className="catLink text-dark" href="#"><i className="fa fa-home" aria-hidden="true"></i> {data.name}</a></li>
+                        <li onClick={() => handleMenuClick(data.id)}   key={data.id} className="nav-link px-md-0"><Link className="catLink text-dark" ><i className="fa fa-home" aria-hidden="true"></i> {data.name}</Link></li>
                     </ul>))}
                 </div>
             </div>

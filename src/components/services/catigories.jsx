@@ -1,5 +1,5 @@
  
-const url = 'https://custom2.mystagingserver.site/food-stadium'
+const url = 'https://custom2.mystagingserver.site/food-stadium' 
  
 // https://custom2.mystagingserver.site/food-stadiumpublic/api/all_product
 
@@ -18,13 +18,43 @@ export const Get_all_product = async() => {
   // ${url}/public/api/filter_product/?category_id=1&menu_id=3&dietary_id=1&min_price=20&max_price=40
 }
 // 
-export const filterProducts = async (url, categoryID, menuID, dietaryID, minPrice, maxPrice) => {
-  try {
-    const apiUrl = `${url}/public/api/filter_product/?category_id=${categoryID}&menu_id=${menuID}&dietary_id=${dietaryID}&min_price=${minPrice}&max_price=${maxPrice}`;
+// export const filterProducts = async (url, categoryID, menuID, dietaryID, minPrice, maxPrice) => {
+//   console.log("menuID" , menuID)
+//   try {
+//     const apiUrl = `${url}/public/api/filter_product/?category_id=${categoryID}&menu_id=${menuID}&dietary_id=${dietaryID}&min_price=${minPrice}&max_price=${maxPrice}`;
   
-    console.log(apiUrl)
-    const response = await fetch(apiUrl, {
+//     console.log(apiUrl)
+//     const response = await fetch(apiUrl, {
+//       method: 'GET',
+//     });
+
+//     if (!response.ok) {
+//       throw new Error(`HTTP error! Status: ${response.status}`);
+//     }
+
+//     const data = await response.json();
+
+//     return data;
+//   } catch (error) {
+//     console.error('Error in filtering products =>', error);
+//     throw error;  
+//   }
+// };
+ 
+export const filterProducts = async (menuID) => {
+  console.log("menuID", menuID);
+  try {
+    const apiUrl = `https://custom2.mystagingserver.site/food-stadium/public/api/filter_product/?menu_id=${menuID},`;
+
+    const response = await fetch(`https://custom2.mystagingserver.site/food-stadium/public/api/filter_product?menu_id=${menuID}`, {
       method: 'GET',
+      
+      headers: {
+        "Content-Type": "application/json",
+        'Access-Control-Allow-Headers':'*',
+        'Access-Control-Allow-Origin':'*',
+        'Access-Control-Allow-Methods':'POST, GET, OPTIONS, PUT, DELETE'
+   }
     });
 
     if (!response.ok) {
@@ -32,14 +62,42 @@ export const filterProducts = async (url, categoryID, menuID, dietaryID, minPric
     }
 
     const data = await response.json();
-
+console.log("datafil" , data.data)
     return data;
   } catch (error) {
     console.error('Error in filtering products =>', error);
     throw error;  
   }
 };
- 
+
+// import { createProxyMiddleware } from 'http-proxy-middleware';
+
+// export const filterProducts = async (menuID) => {
+//   console.log("menuID", menuID);
+//   try {
+//     // Use a relative URL since the proxy is configured to handle requests starting with "/api/"
+//     const apiUrl = `/api/filter_product/?menu_id=${menuID}`;
+
+//     const response = await fetch(apiUrl, {
+//       method: 'GET',
+//       headers: {
+//         'Content-Type': 'application/json', // Fix the typo in 'application'
+//       },
+//     });
+
+//     if (!response.ok) {
+//       throw new Error(`HTTP error! Status: ${response.status}`);
+//     }
+
+//     const data = await response.json();
+//     console.log("datafil", data.data);
+//     return data.data;
+//   } catch (error) {
+//     console.error('Error in filtering products =>', error);
+//     throw error;  
+//   }
+// };
+
 
 
 export const Get_all_product_detail = async (productId) => {
@@ -202,40 +260,7 @@ export const Trending_product = async () => {
 
 
 
-// export const Order_Placed = async () => {
-//   try {
-//     const res = await fetch(`${url}/public/api/order_placed`, {
-//       method: "Post",
-      
-//   });
-//     const data = await res.json();
-//     return data;
-//   } catch (error) {
-//     console.log('Error in getting all products (service) =>', error)
-//   }
-// }
-
-
-// export const Order_Placed = async (postData) => {
-//   console.log("postData" , postData)
-//   try {
-//     const res = await fetch(`${url}/public/api/order_placed`, {
-//       method: "POST",
-//       headers: {
-//         'Content-Type': 'application/json', 
-//       },
-//       body: JSON.stringify(postData),
-//     });
-
-//     const data = await res.json();
-//     return data;
-//     console.log("success" , data)
-//   } catch (error) {
-//     console.log('Error in placing order (service) =>', error);
-//   }
-// };
-
-
+ 
 
 
 
@@ -259,50 +284,7 @@ console.log("res" , res)
       console.log('Error in Add New Category (service) =>', error);
   }
 }
-
-
-
-
-
-// export const Order_Placed = async (postData) => {
-//   console.log("postData", postData);
-
-//   const res = await fetch('https://custom2.mystagingserver.site/food-stadium/public/api/order_placed', {
-//     method: "POST",
-//     headers: {
-//       'Content-Type': 'application/json',
-//     },
-//     body: JSON.stringify(postData),
-//   });
-  
-//   if (res.status !== 200) {
-//     console.error('Error in placing order. Status:', res.status);
-//     // Handle the error here
-//     return; // Or throw an error if needed
-//   }
-  
-//   const data = await res.json();
-//   console.log('Success:', data);
-  
-
-
-//   // try {
-//   //   const res = await fetch('https://custom2.mystagingserver.site/food-stadium/public/api/order_placed', {
-//   //     method: "POST",
-//   //     headers: {
-//   //       'Content-Type': 'application/json',
-//   //     },
-//   //     body: JSON.stringify(postData),
-//   //   });
-
-//   //   const data = await res.json();
-//   //   console.log("success", data.data);
-//   //   return data;
-//   // } catch (error) {
-//   //   console.log('Error in placing order (service) =>', error);
-//   //   throw error; // Rethrow the error to handle it in the calling code
-//   // }
-// };
+ 
 
 
  

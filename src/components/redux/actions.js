@@ -68,7 +68,7 @@ export const fetchProducts = () => {
       console.log(" data response", response)
       const data = await response.json();
       dispatch(fetchProductsSuccess(data?.data));
-      console.log(" data", data)
+  
     } catch (error) {
       dispatch(fetchProductsFailure(error.message));
     }
