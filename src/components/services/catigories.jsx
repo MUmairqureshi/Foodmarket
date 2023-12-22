@@ -244,19 +244,17 @@ export const Trending_product = async () => {
 export const Order_Placed = async (formData) => {
   console.log("formData"  , formData)
   try {
-      const res = await fetch(`https://custom2.mystagingserver.site/food-stadium/public/api/order_placed`, {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json',
- 
-          },
-          body: JSON.stringify(formData),
-      });
-      console.log("resp" , res)
-      const data = await res.json();
-      console.log("data"  , data.data)
-      return data;
- 
+    const res = await fetch('https://custom2.mystagingserver.site/food-stadium/public/api/order_placed', {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    });
+console.log("res" , res)
+    const data = await res.json();
+    console.log("success", data.message);
+    return data;
   } catch (error) {
       console.log('Error in Add New Category (service) =>', error);
   }

@@ -9,6 +9,7 @@ import c1 from '../../assets/images/c1.png'
 import { Get_all_product_detail, Order_Placed } from '../../components/services/catigories'
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts, addToCart, incrementvariationQuantity, removeFromCart } from '../../components/redux/actions';
+import { json } from 'react-router-dom';
 export function Cart() {
 
     const [zipcode, setZipcode] = useState()
@@ -20,7 +21,7 @@ export function Cart() {
     const [productQuantities, setProductQuantities] = useState({});
     const cartItems = useSelector((state) => state.cart.items);
     console.log("cartItems", cartItems)
-
+console.log("cartItems" , cartItems)
     const dispatch = useDispatch()
 
 
@@ -190,35 +191,36 @@ export function Cart() {
     //       console.error('Error in placing order:', error);
     //     }
     //   };
+    const data = {
+        sub_total: 21,
+        total: 21,
+        zipcode: 21,
+        message: "axas",
+        products : cartItems ,
+        discount: 32,
+        coupon_code: 12,
+    };
 
+ 
     const placeOrder = async () => {
-        const data = {
-            sub_total: 12,
-            total: 12,
-            zipcode: 12,
-            message: "uwedn",
-            products: "uwedn",
-            discount: 32,
-            coupon_code: 21,
-        };
-
+       
         try {
             const response = await Order_Placed(data);
-
-            //   if (response && response.ok) {
-            const jsonData = await response.json();
-            console.log("Success ", jsonData);
+    
+            // if (response && response.ok) {
+            const jsonData = await response
+            console.log("Success ", jsonData.status);
             // Handle the successful response here
-            //   } else {
-            console.error('Error in placing order:', response && response.status);
+            // } else {
+ 
             // Handle the error here
-            //   }
+            // }
         } catch (error) {
             console.error('Error in placing order:', error);
             // Handle the error here
         }
     };
-    //   placeOrder();
+     
 
     return (
         <div>
@@ -245,11 +247,6 @@ export function Cart() {
                                                     <div className="product_discription ">
                                                         <div className="img_div mb-3" style={{ display: 'flex', alignItems: 'center' }}>
                                                             <img src={ImageUrl + data?.feature_image} className="img-fluid" alt="" />
-
-
-
-
-
                                                         </div>
                                                         <div className="product_detail">
                                                             <div className="titleBox text-left ">
