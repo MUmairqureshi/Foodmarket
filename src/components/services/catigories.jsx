@@ -237,31 +237,74 @@ export const Trending_product = async () => {
 
 
 
-export const Order_Placed = async (postData) => {
-  console.log("postData", postData);
+
+
+
+
+export const Order_Placed = async (formData) => {
+  console.log("formData"  , formData)
   try {
-    const res = await fetch('https://custom2.mystagingserver.site/food-stadium/public/api/order_placed', {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(postData),
-    });
-
-    const data = await res.json();
-    console.log("success", data.data);
-    return data;
+      const res = await fetch(`https://custom2.mystagingserver.site/food-stadium/public/api/order_placed`, {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+ 
+          },
+          body: JSON.stringify(formData),
+      });
+      console.log("resp" , res)
+      const data = await res.json();
+      console.log("data"  , data.data)
+      return data;
+ 
   } catch (error) {
-    console.log('Error in placing order (service) =>', error);
-    throw error; // Rethrow the error to handle it in the calling code
+      console.log('Error in Add New Category (service) =>', error);
   }
-};
+}
 
 
 
-// const postData = {
-//   // Your data here
+
+
+// export const Order_Placed = async (postData) => {
+//   console.log("postData", postData);
+
+//   const res = await fetch('https://custom2.mystagingserver.site/food-stadium/public/api/order_placed', {
+//     method: "POST",
+//     headers: {
+//       'Content-Type': 'application/json',
+//     },
+//     body: JSON.stringify(postData),
+//   });
+  
+//   if (res.status !== 200) {
+//     console.error('Error in placing order. Status:', res.status);
+//     // Handle the error here
+//     return; // Or throw an error if needed
+//   }
+  
+//   const data = await res.json();
+//   console.log('Success:', data);
+  
+
+
+//   // try {
+//   //   const res = await fetch('https://custom2.mystagingserver.site/food-stadium/public/api/order_placed', {
+//   //     method: "POST",
+//   //     headers: {
+//   //       'Content-Type': 'application/json',
+//   //     },
+//   //     body: JSON.stringify(postData),
+//   //   });
+
+//   //   const data = await res.json();
+//   //   console.log("success", data.data);
+//   //   return data;
+//   // } catch (error) {
+//   //   console.log('Error in placing order (service) =>', error);
+//   //   throw error; // Rethrow the error to handle it in the calling code
+//   // }
 // };
 
-// const result = await Order_Placed(postData);
-// console.log(result);
+
+ 

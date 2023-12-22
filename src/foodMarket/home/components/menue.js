@@ -1,6 +1,6 @@
 import React , {useState , useEffect} from "react";
 
-import { Menu_listing } from '../../../components/services/catigories'
+import { Menu_listing , Dietary_listing } from '../../../components/services/catigories'
 export function Menue(){
 
      

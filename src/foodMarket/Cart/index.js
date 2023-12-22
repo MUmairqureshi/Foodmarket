@@ -1,7 +1,7 @@
 
 import { Nav } from 'react-bootstrap';
 import { Product_deatail } from '../productDetail/product_detail'
-
+import { ToastContainer, toast } from 'react-toastify';
 import React, { useState } from 'react'
 import { useEffect } from 'react'
 import mac from '../../assets/images/mac.png'
@@ -193,13 +193,13 @@ export function Cart() {
 
     const placeOrder = async () => {
         const data = {
-            sub_total: totalCartPrice,
-            total: totalCartPrice,
-            zipcode: zipcode,
-            message: message,
-            products: cartItems,
+            sub_total: 12,
+            total: 12,
+            zipcode: 12,
+            message: "uwedn",
+            products: "uwedn",
             discount: 32,
-            coupon_code: applycoupon,
+            coupon_code: 21,
         };
 
         try {
@@ -639,7 +639,7 @@ export function Cart() {
                     </div>
                 </div>
             </section> */}
-
+     <ToastContainer />
 
             <section className="footer">
                 <div className="container">
