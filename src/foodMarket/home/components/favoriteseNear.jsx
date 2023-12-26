@@ -1,60 +1,133 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts, addToCart, incrementQuantity, decrementQuantity } from '../../../components/redux/actions';
-import {  Get_all_product } from '../../../components/services/catigories'
+import { Get_all_product } from '../../../components/services/catigories'
 import { useState, useEffect } from 'react'
 import { Card, Button } from 'react-bootstrap';
-
-import  { useRef } from "react";
-export function FavoriteseNear (){
+import { TailSpin } from 'react-loader-spinner'
+import { useRef } from "react";
+export function FavoriteseNear() {
     const dispatch = useDispatch();
     const products = useSelector((state) => state.products?.products);
-        const loading = useSelector((state) => state.products.loading);
-      
-    console.log ("Redux product favourites " + products)
-    
+
+
+    console.log("Redux product favourites " + products)
+
     const sliderRef = useRef(null);
 
     const next = () => {
-      sliderRef.current.slickNext();
+        sliderRef.current.slickNext();
     };
-  
+
     const previous = () => {
-      sliderRef.current.slickPrev();
+        sliderRef.current.slickPrev();
     };
-  
+
     const settings = {
-      // dots: true,
-      infinite: true,
-      speed: 500,
-      slidesToShow: 4,
-      slidesToScroll: 1
+        // dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 4,
+        slidesToScroll: 1
     };
-     
+
     const ImageUrl = "https://custom2.mystagingserver.site/food-stadium/public/"
-    const [all_product, setAll_product] = useState([]);
+
+    const [searchTerm, setSearchTerm] = useState('');
+    const [filteredBeverages, setFilteredBeverages] = useState([]);
+
+
+    const [productDetails, setProductDetails] = useState(null);
+    const [showModal, setShowModal] = useState(false);
+
+    const [beverages, setBeverages] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const data = await Get_all_product();
-                setAll_product(data);
+                setBeverages(data?.data || []);
+                setFilteredBeverages(data?.data || []);
             } catch (error) {
                 console.error('Error fetching data:', error);
+            } finally {
+                setLoading(false);
             }
         };
 
         fetchData();
     }, []);
 
+    const handleSearch = () => {
+        if (searchTerm?.trim() === '') {
+            setFilteredBeverages(beverages);
+        } else {
+            const filteredData = beverages?.filter(beverage =>
+                beverage?.title.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+            setFilteredBeverages(filteredData);
+        }
+    };
+    const handlepopulerdata = () => {
+        const popularDataId = 1;
+
+        // Filter the data based on is_popular property
+        const popularData = beverages.filter(beverage => beverage.is_popular === popularDataId);
+
+        setFilteredBeverages(popularData);
+    };
+    const handletoprateddata = () => {
+        const toprateddata = 1;
+
+        // Filter the data based on is_popular property
+        const toprateData = beverages.filter(beverage => beverage.is_trending === toprateddata);
+
+        setFilteredBeverages(toprateData);
+    };
+
+    const handlealldata = () => {
+        setFilteredBeverages(beverages);
+    };
+
+    //   handlealldata
+    const handleIncrement = (productId) => {
+        setFilteredBeverages((prevProducts) =>
+            prevProducts.map((product) =>
+                product.id === productId
+                    ? { ...product, quantity: product.quantity + 1 }
+                    : product
+            )
+        );
+    };
+
+    const handleDecrement = (productId) => {
+        setFilteredBeverages((prevProducts) =>
+            prevProducts.map((product) =>
+                product.id === productId && product.quantity > 0
+                    ? { ...product, quantity: product.quantity - 1 }
+                    : product
+            )
+        );
+    };
 
 
-    useEffect(() => {
-        dispatch(fetchProducts());
-      }, [dispatch]);
+
+    const handleAddToCart = (product) => {
+
+        dispatch(addToCart(product));
 
 
-return(
-    <div>
-  <section className="favoriteseNear">
+        setFilteredBeverages((prevProducts) =>
+            prevProducts.map((p) =>
+                p.id === product.id ? { ...p, quantity: 1 } : p
+            )
+        );
+    };
+
+    return (
+        <div>
+            <section className="favoriteseNear">
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-md-4 mb-3">
@@ -69,19 +142,27 @@ return(
                             <div className="d-flex justify-content-end">
                                 <div className="catFilter d-flex align-items-center flex-wrap mb-3">
                                     <div className="dineIN mb-2 genralBtn">
-                                        <button type="button" className="primaryButton btn w-100 bg-white"> Most Popular</button>
+                                        <button onClick={handlepopulerdata} type="button" className="primaryButton btn w-100 bg-white"> Most Popular</button>
                                     </div>
                                     <div className="dineIN mb-2 genralBtn">
-                                        <button type="button" className="primaryButton btn w-100 bg-white"> 0$ Delivery</button>
+                                        <button type="button" onClick={handlealldata} className="primaryButton btn w-100 bg-white"> 0$ Delivery</button>
                                     </div>
                                     <div className="dineIN mb-2 genralBtn">
-                                        <button type="button" className="primaryButton btn w-100 bg-white"> Top Rated</button>
+                                        <button type="button" onClick={handletoprateddata} className="primaryButton btn w-100 bg-white"> Top Rated</button>
                                     </div>
                                     <div className="dineIN mb-2 genralBtn">
                                         <div className="form-group mb-0">
                                             <i className="fa fa-search"></i>
-                                            <input type="text" placeholder="Search Favorite Food..." className="form-control" />
+                                            <input type="text" placeholder="Search Favorite Food..." className="form-control"
+
+                                                value={searchTerm}
+                                                onChange={(e) => setSearchTerm(e.target.value)}
+                                            />
                                         </div>
+
+                                    </div>
+                                    <div className="dineIN mb-2 genralBtn filterBtn">
+                                        <button onClick={handleSearch} type="button" className="primaryButton btn w-100 bg-white"> <img src="../images/filter.png" alt="" />Filter</button>
                                     </div>
                                 </div>
                             </div>
@@ -96,48 +177,68 @@ return(
                         </ol>
                         <div className="carousel-inner">
                             <div className="carousel-item active">
-                                <div className="row">
-                                 {products.map(data => ( 
-                                     <div className="col-md-4 col-xl-3 mb-3">
-                                        <div className="favouriteCard">
-                                            <div className="leftCard">
-                                                <div className="whishListIcon">
-                                                    <button type="button"><i className="fa fa-heart-o"></i></button>
-                                                </div>
-                                                <div className="imageThumbnail">
-                                                    <img src={ImageUrl + data?.feature_image} alt="Favorite" />
-                                                </div>
-                                            </div>
-                                            <div className="rightCard">
-                                                <div className="favContent">
-                                                    <div className="reviewsStar">
-                                                        <p>Reviews 3.5k
-                                                            <span>
-                                                                <i className="fa fa-star"></i>
-                                                                <i className="fa fa-star"></i>
-                                                                <i className="fa fa-star"></i>
-                                                                <i className="fa fa-star"></i>
-                                                                <i className="fa fa-star"></i>
-                                                            </span>
-                                                        </p>
+                                {loading ? (
+                                    <p>  <TailSpin
+                                        visible={true}
+                                        height="80"
+                                        width="80"
+                                        color="#4fa94d"
+                                        ariaLabel="tail-spin-loading"
+                                        radius="1"
+                                        wrapperStyle={{}}
+                                        wrapperClass=""
+                                    /></p>
+                                ) : (
+                                    <>
+
+                                        {filteredBeverages.length > 0 ? (
+                                            <div className="row">
+                                                {filteredBeverages?.map(data => (
+                                                    <div className="col-md-4 col-xl-3 mb-3">
+                                                        <div className="favouriteCard">
+                                                            <div className="leftCard">
+                                                                <div className="whishListIcon">
+                                                                    <button type="button"><i className="fa fa-heart-o"></i></button>
+                                                                </div>
+                                                                <div className="imageThumbnail">
+                                                                    <img src={ImageUrl + data?.feature_image} alt="Favorite" />
+                                                                </div>
+                                                            </div>
+                                                            <div className="rightCard">
+                                                                <div className="favContent">
+                                                                    <div className="reviewsStar">
+                                                                        <p>Reviews 3.5k
+                                                                            <span>
+                                                                                <i className="fa fa-star"></i>
+                                                                                <i className="fa fa-star"></i>
+                                                                                <i className="fa fa-star"></i>
+                                                                                <i className="fa fa-star"></i>
+                                                                                <i className="fa fa-star"></i>
+                                                                            </span>
+                                                                        </p>
+                                                                    </div>
+                                                                    <div className="favContent">
+                                                                        <h3>{data.title}</h3>
+                                                                        <p className="addressData"><i className="fa fa-map-marker"></i> 4564 US-40 (468) 366-788 $$$</p>
+                                                                        <p className="foodPerson">4.8 (106) 98% Good Food </p>
+                                                                        <p className="deliveries">$2.99 Delivery <span>Fee 15-30</span></p>
+                                                                    </div>
+                                                                    <div className="favButton">
+                                                                        <button type="button" onClick={() => dispatch(addToCart(data))} className="primaryButton btn w-100">Place Order</button>
+                                                                        <button type="button" className="primaryButton btn w-100">Book Seat</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <div className="favContent">
-                                                        <h3>{data.title}</h3>
-                                                        <p className="addressData"><i className="fa fa-map-marker"></i> 4564 US-40 (468) 366-788 $$$</p>
-                                                        <p className="foodPerson">4.8 (106) 98% Good Food </p>
-                                                        <p className="deliveries">$2.99 Delivery <span>Fee 15-30</span></p>
-                                                    </div>
-                                                    <div className="favButton">
-                                                        <button type="button" onClick={() => dispatch(addToCart(data))} className="primaryButton btn w-100">Place Order</button>
-                                                        <button type="button" className="primaryButton btn w-100">Book Seat</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>)) }
-                                  
-                            
-                                </div>
+                                                ))
+                                                }
+                                            </div>) : (
+                                            <p>No results found.</p>
+                                        )}
+                                    </>
+                                )}
+
                             </div>
                         </div>
 
@@ -158,6 +259,6 @@ return(
                 </div>
             </section>
 
-    </div>
-)
+        </div>
+    )
 }

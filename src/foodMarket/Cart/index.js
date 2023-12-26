@@ -1,7 +1,7 @@
 
 import { Nav } from 'react-bootstrap';
 import { Product_deatail } from '../productDetail/product_detail'
-import { ToastContainer, toast } from 'react-toastify';
+ 
 import React, { useState } from 'react'
 import { useEffect } from 'react'
 import mac from '../../assets/images/mac.png'
@@ -10,6 +10,8 @@ import { Get_all_product_detail, Order_Placed } from '../../components/services/
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts, addToCart, incrementvariationQuantity, removeFromCart } from '../../components/redux/actions';
 import { json } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 export function Cart() {
 
     const [zipcode, setZipcode] = useState()
@@ -203,24 +205,34 @@ console.log("cartItems" , cartItems)
 
  
     const placeOrder = async () => {
-       
         try {
-            const response = await Order_Placed(data);
+          const response = await Order_Placed(data);
     
-            // if (response && response.ok) {
-            const jsonData = await response
-            console.log("Success ", jsonData.status);
+          if (response && response.status === true) {
             // Handle the successful response here
-            // } else {
- 
-            // Handle the error here
-            // }
+
+            console.log('Success ', response.message);
+    
+              toast.success('Order placed successfully!', {
+              position: toast.POSITION.TOP_RIGHT,
+            });
+    
+          } else {
+             console.error('Error in placing order:', response.statusText);
+    
+              toast.error('Failed to place order. Please try again.', {
+              position: toast.POSITION.TOP_RIGHT,
+            });
+          }
         } catch (error) {
-            console.error('Error in placing order:', error);
-            // Handle the error here
+          console.error('Error in placing order:', error);
+    
+            toast.error('An error occurred while placing the order.', {
+            position: toast.POSITION.TOP_RIGHT,
+          });
         }
-    };
-     
+      };
+    
 
     return (
         <div>
@@ -653,6 +665,7 @@ console.log("cartItems" , cartItems)
                     </div>
                 </div>
             </section>
+            <ToastContainer />
         </div>
     )
 }

@@ -1,14 +1,12 @@
 import { useState, useEffect } from 'react'
-
 import { PopularCategories } from './popularCategories'
-
+import '../../css/style.css'
 import { Menue } from './menue'
-
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchProducts, addToCart, incrementQuantity, decrementQuantity } from '../../../components/redux/actions';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../../../components/redux/actions';
 import { Cart } from '../../../components/redux/carts'
-import { Increment, Decrement, Remove } from '../../../redux/hook'
-import { Product_deatail } from '../../productDetail/product_detail'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 import React from 'react';
@@ -17,10 +15,10 @@ import { useRef } from "react";
 
 import { Catigory_view } from './catigory_view'
 
-import { Get_all_product, Get_all_product_detail } from '../../../components/services/catigories'
+import { Get_all_product, filterProducts, filterMenu, filterDietary, filterPrice } from '../../../components/services/catigories'
 
-export function Category() { 
- 
+export function Category() {
+    const dispatch = useDispatch();
     const sliderRefs = useRef(null);
 
     const nextcat = () => {
@@ -41,9 +39,103 @@ export function Category() {
     const previous = () => {
         sliderRef.current.slickPrev();
     };
- 
+
+    const [dietary, setDietary] = useState('');
+    const [minPrice, setMinPrice] = useState('');
+    const [maxPrice, setMaxPrice] = useState('');
+
+    const [filteredData, setFilteredData] = useState([]);
+    const [selectedCatigoryId, setSelectedCatigoryId] = useState('');
+    const [selectedMenuId, setSelectedMenuId] = useState('');
+    const [loading, setLoading] = useState(true);
+     
 
  
+    const [allProducts, setAllProducts] = useState([]);
+    console.log("allProducts", allProducts)
+
+    console.log("dietary", dietary)
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                let data;
+
+                if (selectedCatigoryId) {
+                    data = await filterProducts(selectedCatigoryId);
+                } else if (selectedMenuId) {
+                    data = await filterMenu(selectedMenuId);
+
+                    setAllProducts([]);
+                } else if (dietary) {
+                    data = await filterDietary(dietary);
+
+                    setAllProducts([]);
+                } else if (minPrice || maxPrice) {
+
+                    data = await filterPrice(minPrice, maxPrice);
+                    setAllProducts([]);
+                }
+                else {
+                    data = await Get_all_product();
+                    setAllProducts(data?.data || []);
+                }
+
+
+                setFilteredData(data?.data || []);
+
+                setAllProducts(data?.data || []);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchData();
+    }, [selectedCatigoryId, selectedMenuId, dietary, minPrice, maxPrice]);
+
+    console.log("")
+    const handleIncrement = (productId) => {
+        setAllProducts((prevProducts) =>
+            prevProducts.map((product) =>
+                product.id === productId
+                    ? { ...product, quantity: product.quantity + 1 }
+                    : product
+            )
+        );
+    };
+
+    const handleDecrement = (productId) => {
+        setAllProducts((prevProducts) =>
+            prevProducts.map((product) =>
+                product.id === productId && product.quantity > 0
+                    ? { ...product, quantity: product.quantity - 1 }
+                    : product
+            )
+        );
+    };
+
+
+
+    const handleAddToCart = (product) => {
+        dispatch(addToCart(product));
+    
+        setAllProducts((prevProducts) =>
+          prevProducts.map((p) =>
+            p?.id === product?.id ? { ...p, quantity: 1 } : p,
+            
+            )
+        );
+    
+        // Show toast
+        toast.success(`${product.title} added to cart!`, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      };
+
+
+
+
 
     return (
 
@@ -51,19 +143,32 @@ export function Category() {
         <section className="homeCategory">
             <div className="container-fluid">
                 <div className="row">
-                    <Menue />
+                    <Menue maxPrice={maxPrice} minPrice={minPrice} setSelectedMenuId={setSelectedMenuId} setMinPrice={setMinPrice}
+                        setDietary={setDietary} setMaxPrice={setMaxPrice}
+                    />
 
                     <div className="col-md-6 col-xl-7">
                         <div className="categoryListing py-3 h-100">
-                            <Catigory_view />
+                            <Catigory_view setSelectedCatigoryId={setSelectedCatigoryId} />
 
-                            <PopularCategories />
+                            <PopularCategories
+
+                                data={allProducts}
+                                handleIncrement={handleIncrement}
+                                handleDecrement={handleDecrement}
+                                handleAddToCart={handleAddToCart}
+                                loading={loading}
+                            />
+
+
+
                         </div>
-                    </div> 
+                    </div>
                     <Cart />
 
                 </div>
             </div>
+            <ToastContainer />
         </section>
 
     )

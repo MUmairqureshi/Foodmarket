@@ -1,26 +1,72 @@
- 
 import React from "react";
 import { Nav } from 'react-bootstrap';
 import { Product_deatail } from '../../productDetail/product_detail'
-
 import  { useRef } from "react";
- 
 import Slider from 'react-slick';  
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchProducts, addToCart, incrementQuantity, decrementQuantity } from '../../../components/redux/actions';
+import {   addToCart   } from '../../../components/redux/actions';
 import {  Card } from 'react-bootstrap';
 import mac from '../../../assets/images/mac.png'  
 import {  Trending_product  , Get_all_product_detail} from '../../../components/services/catigories'
 
 export function Trending_dishes(){
     const dispatch = useDispatch();
-    const products = useSelector((state) => state.products?.products);
-        const loading = useSelector((state) => state.products.loading);
+    const [loading, setLoading] = useState(true);
+ 
+
         const [productDetails, setProductDetails] = useState(null);
         const [showModal, setShowModal] = useState(false);
 
+        const [trendingdishes, setTrendingdishes] = useState([]);
 
+        useEffect(() => {
+          const fetchData = async () => {
+            try {
+              const data = await Trending_product();
+              setTrendingdishes(data?.data || []);
+            } catch (error) {
+              console.error('Error fetching data:', error);
+            }
+          };
+      
+          fetchData();
+        }, []);
+      
+        const handleIncrement = (productId) => {
+          setTrendingdishes((prevProducts) =>
+            prevProducts.map((product) =>
+              product.id === productId
+                ? { ...product, quantity: product.quantity + 1 }
+                : product
+            )
+          );
+        };
+      
+        const handleDecrement = (productId) => {
+          setTrendingdishes((prevProducts) =>
+            prevProducts.map((product) =>
+              product.id === productId && product.quantity > 0
+                ? { ...product, quantity: product.quantity - 1 }
+                : product
+            )
+          );
+        };
+    
+    
+    
+        const handleAddToCart = (product) => {
+     
+            dispatch(addToCart(product));
+        
+            // Reset the quantity for the specific product
+            setTrendingdishes((prevProducts) =>
+              prevProducts.map((p) =>
+                p.id === product.id ? { ...p, quantity: 1 } : p
+              )
+            );
+          };
+    
         const handleProductClick = async (productId) => {
             console.log(productId)
             // setSelectedProductId(productId);
@@ -35,11 +81,7 @@ export function Trending_dishes(){
             }
         };
         // console.log(productDetails?.data)
-    
-        useEffect(() => {
-            dispatch(fetchProducts());
-          }, [dispatch]);
-    
+     
 
     const sliderRef = useRef(null);
 
@@ -90,22 +132,7 @@ export function Trending_dishes(){
      
     const ImageUrl = "https://custom2.mystagingserver.site/food-stadium/public/"
     
-    const [trending_product, setTrending_product] = useState([]);
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const data = await Trending_product();
-                setTrending_product(data);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        };
-
-        fetchData();
-    }, []);
-
-
- 
+  
     // TRENDING DISHES
     return(
     <div>
@@ -133,7 +160,7 @@ export function Trending_dishes(){
                             <div className=" ">
                             <Slider  ref={sliderRef} {...settings}>
                                  
-                                  {products.map(data =>(
+                                  {trendingdishes?.map(data =>(
                                         <div className="row"> 
                                         <Card style={{ width: '22em' }}>
                                    
@@ -190,12 +217,12 @@ export function Trending_dishes(){
                                                 <div className="cardAction">
                                                     <div className="counterAction">
                                                         <span className="qunatingCount">{data.quantity}</span>
-                                                        <button className="minus" type="button" onClick={() => dispatch(decrementQuantity(data.id))}  ><i className="fa fa-minus"></i></button>
+                                                        <button className="minus" type="button" onClick={() => handleDecrement(data.id)}  ><i className="fa fa-minus"></i></button>
 
-                                                        <button className="plus" onClick={() => dispatch(incrementQuantity(data.id))} type="button"><i className="fa fa-plus"></i></button>
+                                                        <button className="plus" onClick={() => handleIncrement(data.id)} type="button"><i className="fa fa-plus"></i></button>
                                                     </div>
                                                     <div className="addToCart">
-                                                        <button type="button"  onClick={() => dispatch(addToCart(data))}>Add To Cart</button>
+                                                        <button type="button"  onClick={() => handleAddToCart(data)}>Add To Cart</button>
                                                     </div>
                                                 </div>
                                             </div>

@@ -62,10 +62,7 @@ export function Bakery(){
     };
 
     useEffect(() => {
-
-
-
-        const fetchData = async () => {
+  const fetchData = async () => {
             try {
                 const data = await Get_all_product();
                 setAll_product(data);
