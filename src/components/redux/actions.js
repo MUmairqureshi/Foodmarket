@@ -37,9 +37,22 @@ export const decrementQuantity = (productId) => ({
   payload: productId,
 });
 
+export const incrementQuantityCart = (productId) => {
+  console.log("productId", productId); // Log the productId here
 
+  return {
+    type: 'INCREMENT_QUANTITY_incart',
+    payload: productId,
+  };
+};
+export const decrementQuantityCart = (productId) => {
+  console.log("productId", productId); // Log the productId here
 
-
+  return {
+    type: 'DECREMENT_QUANTITY_incart',
+    payload: productId,
+  };
+}; 
 export const incrementvariationQuantity = (productId, newQuantity) => ({
 
   type: 'INCREMENT_QUANTITY_VA',

@@ -58,7 +58,7 @@ export function Header() {
                                 <Link className="nav-link" to="/">Shop By Location </Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" to="/">Contact Us </Link>
+                                <Link className="nav-link" to="/contact-us">Contact Us </Link>
                             </li>
                         </ul>
                         <div className="form-inline my-2 my-lg-0 headerIcons">
@@ -69,9 +69,9 @@ export function Header() {
                             <Link className="nav-link" to="/cart"> <i className="fa fa-shopping-cart"></i></Link>
                                
                             </button>
-                            <button type="button">
+                            <Link className="no-link-decoration" id='nav-link' style={{ textDecorationStyle: 'none' }} to="/login" type="button">
                                 <i className="fa fa-user-circle-o" aria-hidden="true"></i>
-                            </button>
+                            </Link>
                         </div>
                     </div>
                 </nav>

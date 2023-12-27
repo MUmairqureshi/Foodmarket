@@ -275,7 +275,60 @@ console.log("res" , res)
       console.log('Error in Add New Category (service) =>', error);
   }
 }
+export const login = async (formData) => {
+  try {
+    const res = await fetch('https://custom2.mystagingserver.site/food-stadium/public/api/user-login', {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    });
+
+    // Check if the request was successful (status code in the range of 200-299)
+    if (!res.ok) {
+      throw new Error(`HTTP error! Status: ${res.status}`);
+    }
+
+    // Parse the JSON response
+    const data = await res.json();
+
+    // Check the status property in the response data
+    if (data.status === 'success') {
+      console.log("Login successful");
+    } else {
+      console.log("Login failed. Server message:", data.message);
+    }
+
+    return data;
+  } catch (error) {
+    console.error('Error in login:', error.message);
+    return { status: 'error', message: 'An error occurred during login.' };
+  }
+}
+
  
 
 
+
+
+export const Contactus = async (formData) => {
+  console.log("formData"  , formData)
+  try {
+    const res = await fetch('https://custom2.mystagingserver.site/food-stadium/public/api/contact_query', {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    });
+console.log("res" , res)
+    const data = await res.json();
+    console.log("success", data.status);
+    return data;
+  } catch (error) {
+      console.log('Error in Add New Category (service) =>', error);
+  }
+}
+ 
  

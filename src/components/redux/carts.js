@@ -5,25 +5,40 @@ import cashBack from '../../assets/images/cashBack.png'
 import recycle from '../../assets/images/recycle.png'
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { removeFromCart } from './actions';
+import { removeFromCart  , incrementQuantityCart , decrementQuantityCart} from './actions';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
- 
+
 import { Link } from 'react-router-dom';
 
 export const Cart = () => {
 
     const dispatch = useDispatch();
-    
+
     const handleDelete = (itemId) => {
+
         dispatch(removeFromCart(itemId));
-    
+
         // Show toast for successful deletion
         toast.success('Item removed from the cart.', {
-          position: toast.POSITION.TOP_RIGHT,
+            position: toast.POSITION.TOP_RIGHT,
         });
-      };
-    
+    };
+ 
+const handleincrement = (itemId) => {
+    console.log("itemId" , itemId)
+    dispatch(incrementQuantityCart(itemId));
+
+    // Show toast for successful deletion
+   
+};
+const handledecrement = (itemId) => {
+    console.log("itemId" , itemId)
+    dispatch(decrementQuantityCart(itemId));
+
+    // Show toast for successful deletion
+   
+};
     const cartItems = useSelector((state) => state.cart.items);
     const ImageUrl = "https://custom2.mystagingserver.site/food-stadium/public/"
 
@@ -155,21 +170,38 @@ export const Cart = () => {
                     <div className="orderList">
                         {cartItems.map((item) => (
                             <div key={item.id} className="orderCard flex-xl-nowrap flex-wrap mb-3">
-                                <div className="orderItem flex-xl-nowrap flex-wrap">
-                                    <div className="orderThumnail">
-                                        <img src={`${ImageUrl}${item?.feature_image}`} alt="Menu Image" className="mw-100" />
+                                <div className="orderItem flex-xl-nowrap flex-wrap mb-3">
+                                    <div className='d-flex justify-content-between align-items-center ' style={{ gap: "5px" }}>
+                                        <div className="orderThumnail">
+                                            <img src={`${ImageUrl}${item?.feature_image}`} alt="Menu Image" className="mw-100" />
+                                        </div>
+                                        <div className="orderInfo">
+                                            <p className="mb-0">{item?.title}</p>
+                                            {/* <p className="mb-0 text-secondary">{item?.quantity}</p> */}
+                                        </div>
                                     </div>
-                                    <div className="orderInfo">
-                                        <p className="mb-0">{item?.title}</p>
-                                        <p className="mb-0 text-secondary">{item?.quantity}</p>
+                                    <div className="deleteButton ">
+                                        <Link className="no-link-decoration" id='nav-link' style={{ textDecorationStyle: 'none' }} onClick={() => handleDelete(item.id)}><i className="fa-regular fa-trash-can"></i></Link>
+
                                     </div>
                                 </div>
-                                <div className="orderPrice">
-                                    <p><span>+</span>${item?.product_price}</p>
+
+                                <div className='price_qty'>
+                                    <div className="orderPrice">
+                                        <p><span>+</span>${item?.product_price}</p>
+                                    </div>
+
+                                    <div class="qty-container">
+                                        <button onClick={() => handledecrement(item?.id)} className="qty-btn-minus " type="button">-</button>
+                                        <input className="form-control" type="hidden" value="{{$item->id}}" name="" />
+                                        <input type="number" name="quantity" className="product_qty input-qty" value={item?.quantity} placeholder="Quantity" />
+                                        <button onClick={() => handleincrement(item?.id)} className="qty-btn-plus " type="button">+</button>
+                                    </div>
                                 </div>
-                                <div className="deleteButton">
-                                    <Link onClick={() => handleDelete(item.id)}><i class="fa-regular fa-trash-can"></i></Link>
-                                </div>
+
+
+
+
                             </div>
 
 
@@ -208,7 +240,7 @@ export const Cart = () => {
                     </div>
                 </div>
             </div>
-            <ToastContainer/>
+            <ToastContainer />
         </div>
     );
 };

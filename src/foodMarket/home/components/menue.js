@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom'
 import { Menu_listing, Dietary_listing } from '../../../components/services/catigories'
-export function Menue({ setSelectedMenuId, setDietary, minPrice , setMinPrice, setMaxPrice   ,  maxPrice}) {
+export function Menue({isRadioHidden ,  setSelectedMenuId, setDietary, minPrice, setMinPrice, setMaxPrice, maxPrice  , handlepopulerdata , handletoprateddata , handlealldata}) {
 
- 
+
     const ImageUrl = "https://custom2.mystagingserver.site/food-stadium/public/"
     const [mainmenu, setMainmenu] = useState([]);
-     const [dietary_listing, setDietary_listing] = useState([]);
+    const [dietary_listing, setDietary_listing] = useState([]);
 
 
     const handleProductClick = async (productId) => {
@@ -32,6 +32,8 @@ export function Menue({ setSelectedMenuId, setDietary, minPrice , setMinPrice, s
     };
 
 
+
+  
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -59,7 +61,7 @@ export function Menue({ setSelectedMenuId, setDietary, minPrice , setMinPrice, s
     }, []);
     const [filter, setFilter] = useState([]);
 
-    console.log("filter", filter);
+
 
     return (
         <div className="col-md-3 col-xl-2">
@@ -90,7 +92,7 @@ export function Menue({ setSelectedMenuId, setDietary, minPrice , setMinPrice, s
                             </div>
 
                             <div className="col">
-                            <input type="number" className="form-control" placeholder="$ Max" value={maxPrice}
+                                <input type="number" className="form-control" placeholder="$ Max" value={maxPrice}
                                     onChange={(e) => setMaxPrice(e.target.value)} />
                                 {/* <input className="form-control" placeholder="$ Max" type="number"
                                     value={maxPrice}
@@ -126,12 +128,20 @@ export function Menue({ setSelectedMenuId, setDietary, minPrice , setMinPrice, s
                     </div>
                     <div className="form-check">
                         <label for="popular">
-                            <input className="form-check-input position-static" type="radio" name="stores" id="popular" value="popular" aria-label="..." /> Most Popular
+                        <input
+        onClick={handlepopulerdata}
+        className={`form-check-input position-static ${isRadioHidden ? 'hidden' : ''}`}
+        type="radio"
+        name="stores"
+        id="popular"
+        value="popular"
+        aria-label="..."
+      /> Most Popular
                         </label>
                     </div>
                     <div className="form-check">
                         <label for="rating">
-                            <input className="form-check-input position-static" type="radio" name="stores" id="rating" value="rating" aria-label="..." /> Rating
+                            <input onClick={handletoprateddata} className="form-check-input position-static" type="radio" name="stores" id="rating" value="rating" aria-label="..." /> Rating
                         </label>
                     </div>
                     <div className="form-check">

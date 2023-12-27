@@ -143,56 +143,7 @@ console.log("cartItems" , cartItems)
     };
 
 
-
-
-    //     const placeOrder = async () => {
-
-    //         const data = {
-    //             sub_total: totalCartPrice,
-    //             total: totalCartPrice,
-    //             zipcode: zipcode,
-    //             message: message,
-    //             products: cartItems,
-    //             discount : 32,
-    //             coupon_code : coupon
-
-    //         }
-
-    //         try {
-    //             const response = await Order_Placed(data)
-    //    console.log("Success " , response )
-
-    //         } catch (error) {
-    //             console.error('Error fetching product details:', error);
-    //         }
-    //     };
-
-
-    // const placeOrder = async () => {
-    //     const data = {
-    //       sub_total: totalCartPrice,
-    //       total: totalCartPrice,
-    //       zipcode: zipcode,
-    //       message: message,
-    //       products: cartItems,
-    //       discount: 32,
-    //       coupon_code: applycoupon,
-    //     };
-
-    //     try {
-    //       const response = await Order_Placed(data);
-
-    //       if (response.ok) {
-    //         const jsonData = await response.json();
-    //         console.log("Success ", jsonData); 
-    //       } else {
-
-    //         console.error('Error in placing order:', response.status);
-    //       }
-    //     } catch (error) {
-    //       console.error('Error in placing order:', error);
-    //     }
-    //   };
+ 
     const data = {
         sub_total: totalCartPrice,
               total: totalCartPrice,

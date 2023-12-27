@@ -6,7 +6,7 @@ import   Product_deatail  from './foodMarket/home/productdetail/index'
 import { Home } from './foodMarket/home/index' 
 import { Provider } from 'react-redux'; 
 import store from './components/redux/store';
-
+import {Contact} from './foodMarket/Contact-us/contactus'
 import {Rout} from './route/index'
 function App() {
 
@@ -14,7 +14,7 @@ function App() {
     <div className="App">
        <Provider store={store}>
       <div>
-
+      {/* <Contact/> */}
         {/* <Header /> */}
         {/* <Product_deatail/> */}
 {/* <YourComponent/> */}
@@ -34,7 +34,7 @@ function App() {
 
         {/* <ProductSlider/> */}
         {/* <Aboutus/>
-  <Contact_us/>
+ 
   <Product_deatail/>
   <Store/> */}
 

@@ -31,11 +31,9 @@ export function Category() {
 
 
     const sliderRef = useRef(null);
-
     const next = () => {
         sliderRef.current.slickNext();
     };
-
     const previous = () => {
         sliderRef.current.slickPrev();
     };
@@ -43,14 +41,15 @@ export function Category() {
     const [dietary, setDietary] = useState('');
     const [minPrice, setMinPrice] = useState('');
     const [maxPrice, setMaxPrice] = useState('');
+    const [isRadioHidden, setIsRadioHidden] = useState(false);
 
     const [filteredData, setFilteredData] = useState([]);
     const [selectedCatigoryId, setSelectedCatigoryId] = useState('');
     const [selectedMenuId, setSelectedMenuId] = useState('');
     const [loading, setLoading] = useState(true);
-     
 
- 
+    const [populerdata, setPopulardata] = useState(false)
+
     const [allProducts, setAllProducts] = useState([]);
     console.log("allProducts", allProducts)
 
@@ -74,8 +73,7 @@ export function Category() {
 
                     data = await filterPrice(minPrice, maxPrice);
                     setAllProducts([]);
-                }
-                else {
+                } else {
                     data = await Get_all_product();
                     setAllProducts(data?.data || []);
                 }
@@ -119,23 +117,44 @@ export function Category() {
 
     const handleAddToCart = (product) => {
         dispatch(addToCart(product));
-    
+
         setAllProducts((prevProducts) =>
-          prevProducts.map((p) =>
-            p?.id === product?.id ? { ...p, quantity: 1 } : p,
-            
+            prevProducts.map((p) =>
+                p?.id === product?.id ? { ...p, quantity: 1 } : p,
+
             )
         );
-    
+
         // Show toast
         toast.success(`${product.title} added to cart!`, {
-          position: toast.POSITION.TOP_RIGHT,
+            position: toast.POSITION.TOP_RIGHT,
         });
-      };
+    };
 
 
 
 
+
+    const handlepopulerdata = () => {
+
+        const popularDataId = 1;
+
+        setAllProducts((prevProducts) => prevProducts?.filter(beverage => beverage.is_popular === popularDataId));
+        setIsRadioHidden(true)
+    };
+    const handletoprateddata = () => {
+        const toprateddata = 1;
+
+        setAllProducts((prevProducts) => prevProducts?.filter(beverage => beverage.is_trending === toprateddata));
+
+     };
+
+    const handlealldata = () => {
+        setAllProducts(allProducts);
+    };
+
+
+     
 
     return (
 
@@ -143,8 +162,8 @@ export function Category() {
         <section className="homeCategory">
             <div className="container-fluid">
                 <div className="row">
-                    <Menue maxPrice={maxPrice} minPrice={minPrice} setSelectedMenuId={setSelectedMenuId} setMinPrice={setMinPrice}
-                        setDietary={setDietary} setMaxPrice={setMaxPrice}
+                    <Menue maxPrice={maxPrice} minPrice={minPrice} setSelectedMenuId={setSelectedMenuId} setMinPrice={setMinPrice} handletoprateddata={handletoprateddata} handlealldata={handlealldata}
+                        setDietary={setDietary} setMaxPrice={setMaxPrice} handlepopulerdata={handlepopulerdata} isRadioHidden={isRadioHidden}
                     />
 
                     <div className="col-md-6 col-xl-7">

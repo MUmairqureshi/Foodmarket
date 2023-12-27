@@ -29,83 +29,32 @@ export const Product_deatail = (props) => {
     const cartItems = useSelector((state) => state.cart.items);
     console.log("cartItems", cartItems)
 
-    //  in the cartItems come product and variation who selected check in this data?.variation_items who selected already  in the cartItems select the radiobutton 
-
-    // useEffect(() => {
-    //     const productId = props.productDetails?.data.id;
-        
-    //     // Calculate the total quantity for the specific product
-    //     const totalProductQuantity = cartItems?.reduce((total, item) => 
-    //          item.id === productId ? total + item.quantity : total
-    //             );
-    
-    //     // Set new quantity only if it's greater than 0, otherwise set it to 1
-    //     setNewQuantity(totalProductQuantity > 0 ? totalProductQuantity : 1);
-    // }, [cartItems, props]);
-    
-    // useEffect(() => {
-    //     const productId = props.productDetails?.data.id;
- 
-    //     // Calculate the total quantity for the specific product
-    //     const totalProductQuantity = cartItems?.reduce((total, item) =>
-    //         item.id === productId ? total + item.quantity : total, 0);
-
-    //     // Set new quantity only if it's greater than 0, otherwise set it to 1
-    //     setNewQuantity(totalProductQuantity > 0 ? totalProductQuantity : 1);
-    // }, [props.cartItems, props.productDetails]);
-
-
-    // useEffect(() => {
-    //     const productId = props.productDetails?.data.id;
-
-    //     // Set new quantity to null initially to indicate loading
-    //     setNewQuantity(null);
-
-    //     // Calculate the total quantity for the specific product
-    //     const totalProductQuantity = cartItems?.reduce((total, item) =>
-    //         item.id === productId ? total + item.quantity : total);
-
-    //     // Set new quantity only if it's greater than 0, otherwise set it to 1
-    //     setNewQuantity(totalProductQuantity > 0 ? totalProductQuantity : 1);
-    // }, [cartItems, props]);
-
-    // useEffect(() => {
-    //     const productId = props.productDetails?.data.id;
-    //     const productqty = props.productDetails?.data.quantity;
-    //     // Calculate the total quantity for the specific product
-    //     const totalProductQuantity = cartItems
-    //         .filter((item) => item.id === productId)
-    //         .reduce((total, item) => total + item.quantity > 0 ? (total, item) => total + item.quantity :   0 );
-
-        
-    //     setNewQuantity(totalProductQuantity > 0 ? totalProductQuantity : 1);
-    // }, [cartItems, props]);
-
-    // useEffect(() => {
-    //     const productId = props.productDetails?.data.id;
-    //     const productqty = props.productDetails?.data.quantity;
-    //     // Calculate the total quantity for the specific product
-    //     const totalProductQuantity = cartItems
-    //       .filter((item) => item.id === productId )
-    //       .reduce((total, item) => total + item.quantity , 1);
-
-    //     // Set the initial quantity to the calculated total if it's greater than 0
-    //     setNewQuantity(totalProductQuantity > 0 ? totalProductQuantity : 0);
-    //   }, [cartItems, props]);
-
+     
 
     useEffect(() => {
         const productId = props.productDetails?.data.id;
         const productqty = props.productDetails?.data.quantity;
-    
         // Calculate the total quantity for the specific product
-        const totalProductQuantity = cartItems?.reduce((total, item) => total + item.quantity > 0 ? (total, item) => total + item.quantity : item.quantity);
-            // .filter((item) => item.id === productId)
+        const totalProductQuantity = cartItems
+          .filter((item) => item.id === productId )
+          .reduce((total, item) => total + item.quantity , 1);
+
+        // Set the initial quantity to the calculated total if it's greater than 0
+        setNewQuantity(totalProductQuantity > 0 ? totalProductQuantity : 0);
+      }, [cartItems, props]);
+
+
+    // useEffect(() => {
+    //     const productId = props.productDetails?.data.id;
+    //     const productqty = props.productDetails?.data.quantity;
+     
+    //     const totalProductQuantity = cartItems?.reduce((total, item) => total + item.quantity > 0 ? (total, item) => total + item.quantity : 1);
+    //         // .filter((item) => item.id === productId)
 
     
-        // Set the initial quantity to the current quantity if it's greater than 0, otherwise set it to 1
-        setNewQuantity(totalProductQuantity > 0 ? totalProductQuantity : productqty > 0 ? totalProductQuantity : 1);
-    }, [cartItems, props]);
+         
+    //     setNewQuantity(totalProductQuantity > 0 ? totalProductQuantity : productqty > 0 ? totalProductQuantity : 1);
+    // }, [cartItems, props]);
 
 
 
