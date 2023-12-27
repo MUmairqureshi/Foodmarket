@@ -71,8 +71,7 @@ const productReducer = (state = initialState, action) => {
 
 
     case 'INCREMENT_VARIATION_QUANTITY':
-      console.log("state", state)
-      return {
+       return {
         ...state,
         products: state.products.map(product =>
           product.id === action.payload

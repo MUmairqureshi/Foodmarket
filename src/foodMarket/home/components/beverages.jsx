@@ -87,6 +87,67 @@ export function Beverages(){
 
         fetchData();
     }, []);
+
+
+
+
+    
+
+
+    const [data, setData] = useState([])
+
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await Get_all_product();
+                const data = response.data;
+                const updatedData = data.map(product => ({ ...product, quantity: product.quantity }));
+
+                setData(updatedData);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    console.log("productdata", data);
+
+    const handleIncreaseQuantity = async (productId) => {
+        try {
+            const updatedData = data.map(product => {
+                if (product.id === productId) {
+                    const updatedQuantity = product.quantity + 1;
+
+                    return { ...product, quantity: updatedQuantity };
+                }
+                return product;
+            });
+
+            setData(updatedData);
+        } catch (error) {
+            console.error('Error updating quantity:', error);
+        }
+    };
+
+    const handleDecreaseQuantity = async (productId) => {
+        try {
+            const updatedData = data.map(product => {
+                if (product.id === productId && product.quantity > 0) {
+                    const updatedQuantity = product.quantity - 1;
+
+                    return { ...product, quantity: updatedQuantity };
+                }
+                return product;
+            });
+
+            setData(updatedData);
+        } catch (error) {
+            console.error('Error updating quantity:', error);
+        }
+    };
     return(
     
     <div>
@@ -133,7 +194,7 @@ export function Beverages(){
                             <div className="carousel-item active">
                             <Slider ref={sliderRef} {...settings}>
                              
-                                  {products.map(data =>(
+                                  {data?.map(data =>(
                                            <div className="row">
                                       <div key={data.id} className="col-md-3 mb-3">
                                         <Card style={{ width: '22em' }} className="categoryCard shadow">
@@ -190,12 +251,12 @@ export function Beverages(){
                                                 <div className="cardAction">
                                                     <div className="counterAction">
                                                         <span className="qunatingCount">{data.quantity}</span>
-                                                        <button className="minus" onClick={() => dispatch(decrementQuantity(data.id))} type="button"><i className="fa fa-minus"></i></button>
+                                                        <button className="minus" onClick={() => handleDecreaseQuantity(data.id)} type="button"><i className="fa fa-minus"></i></button>
 
-                                                        <button className="plus" onClick={() => dispatch(incrementQuantity(data.id))} type="button"><i className="fa fa-plus"></i></button>
+                                                        <button className="plus" onClick={() => handleIncreaseQuantity(data.id)} type="button"><i className="fa fa-plus"></i></button>
                                                     </div>
                                                     <div className="addToCart">
-                                                        <button type="button">Add To Cart</button>
+                                                        <button  onClick={() => dispatch(addToCart(data))}  type="button">Add To Cart</button>
                                                     </div>
                                                 </div>
                                             </div>

@@ -89,25 +89,65 @@ export function Trending_dishes(){
     };
      
     const ImageUrl = "https://custom2.mystagingserver.site/food-stadium/public/"
-    
-    const [trending_product, setTrending_product] = useState([]);
+     
+
+    const [data , setData] = useState([])
+ 
+
     useEffect(() => {
         const fetchData = async () => {
-            try {
-                const data = await Trending_product();
-                setTrending_product(data);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
+          try {
+            const response = await Trending_product();
+            const data = response.data; 
+            const updatedData = data.map(product => ({ ...product, quantity: product.quantity }));
+      
+            setData(updatedData);
+          } catch (error) {
+            console.error('Error fetching data:', error);
+          }
         };
-
+      
         fetchData();
-    }, []);
-
-
- 
-    // TRENDING DISHES
-    return(
+      }, []);
+      
+      console.log("productdata", data);
+      
+      const handleIncreaseQuantity = async (productId) => {
+        try {
+          const updatedData = data.map(product => {
+            if (product.id === productId) {
+              const updatedQuantity = product.quantity + 1;
+           
+              return { ...product, quantity: updatedQuantity };
+            }
+            return product;
+          });
+      
+          setData(updatedData);
+        } catch (error) {
+          console.error('Error updating quantity:', error);
+        }
+      };
+      
+      const handleDecreaseQuantity = async (productId) => {
+        try {
+          const updatedData = data.map(product => {
+            if (product.id === productId && product.quantity > 0) {
+              const updatedQuantity = product.quantity - 1;
+    
+              return { ...product, quantity: updatedQuantity };
+            }
+            return product;
+          });
+      
+          setData(updatedData);
+        } catch (error) {
+          console.error('Error updating quantity:', error);
+        }
+      };
+      
+    
+         return(
     <div>
  <section className="trendingDishes">
                 <div className="container-fluid">
@@ -133,7 +173,7 @@ export function Trending_dishes(){
                             <div className=" ">
                             <Slider  ref={sliderRef} {...settings}>
                                  
-                                  {products.map(data =>(
+                                  {data?.map(data =>(
                                         <div className="row"> 
                                         <Card style={{ width: '22em' }}>
                                    
@@ -190,9 +230,9 @@ export function Trending_dishes(){
                                                 <div className="cardAction">
                                                     <div className="counterAction">
                                                         <span className="qunatingCount">{data.quantity}</span>
-                                                        <button className="minus" type="button" onClick={() => dispatch(decrementQuantity(data.id))}  ><i className="fa fa-minus"></i></button>
+                                                        <button className="minus" type="button" onClick={() => handleDecreaseQuantity(data.id)}  ><i className="fa fa-minus"></i></button>
 
-                                                        <button className="plus" onClick={() => dispatch(incrementQuantity(data.id))} type="button"><i className="fa fa-plus"></i></button>
+                                                        <button className="plus" onClick={() => handleIncreaseQuantity(data.id)} type="button"><i className="fa fa-plus"></i></button>
                                                     </div>
                                                     <div className="addToCart">
                                                         <button type="button"  onClick={() => dispatch(addToCart(data))}>Add To Cart</button>

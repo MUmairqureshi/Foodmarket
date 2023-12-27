@@ -3,6 +3,7 @@ import { Button, Card } from 'react-bootstrap';
 
 import Slider from 'react-slick';  
 import  { useRef } from "react";
+import {Link} from 'react-router-dom'
 import mac from '../../../assets/images/mac.png' 
 import c1 from '../../../assets/images/c1.png'
 import {  Get_all_product } from '../../../components/services/catigories'
@@ -125,7 +126,7 @@ export function Bakery(){
                                                     $5.99 delivery</p>
                                             </div>
                                             <div className="offerButton">
-                                                <button type="button" className="primaryButton btn">View Store</button>
+                                                <Link   to="/cart" className="primaryButton btn">View Store</Link>
                                             </div>
                                         </div>
                                     </div>
@@ -181,7 +182,7 @@ export function Bakery(){
                                                 </Card.Text>
                                               </div>
                                               <div className="offerButton text-center">
-                                                <Button type="button" className="primaryButton btn">View Store</Button>
+                                                <Link to="/cart" type="button" className="primaryButton btn">View Store</Link>
                                               </div>
                                             </Card>
                                             </div>      </div>

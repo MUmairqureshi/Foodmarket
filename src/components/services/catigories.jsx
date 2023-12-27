@@ -1,5 +1,5 @@
  
-const url = 'https://custom2.mystagingserver.site/food-stadium'
+const url = 'https://custom2.mystagingserver.site/food-stadium' 
  
 // https://custom2.mystagingserver.site/food-stadiumpublic/api/all_product
 
@@ -17,10 +17,11 @@ export const Get_all_product = async() => {
   }
   // ${url}/public/api/filter_product/?category_id=1&menu_id=3&dietary_id=1&min_price=20&max_price=40
 }
-// ${url}/public/api/filter_product/?category_id=${categoryID}&menu_id=${menuID}&dietary_id=${dietaryID}&min_price=${minPrice}&max_price=${maxPrice}
+// 
 // export const filterProducts = async (url, categoryID, menuID, dietaryID, minPrice, maxPrice) => {
+//   console.log("menuID" , menuID)
 //   try {
-//     const apiUrl = `${url}/public/api/filter_product/?category_id=1&menu_id=3&dietary_id=1&min_price=20&max_price=40`;
+//     const apiUrl = `${url}/public/api/filter_product/?category_id=${categoryID}&menu_id=${menuID}&dietary_id=${dietaryID}&min_price=${minPrice}&max_price=${maxPrice}`;
   
 //     console.log(apiUrl)
 //     const response = await fetch(apiUrl, {
@@ -32,35 +33,40 @@ export const Get_all_product = async() => {
 //     }
 
 //     const data = await response.json();
-// console.log("filterdata " , data)
 //     return data;
 //   } catch (error) {
 //     console.error('Error in filtering products =>', error);
 //     throw error;  
 //   }
 // };
-
-
-
-
-
-export const filterProducts = async (productId) => {
-  console.log(productId)
+ 
+export const filterProducts = async (menuID) => {
+  console.log("menuID", menuID);
   try {
-    const res = await fetch('https://custom2.mystagingserver.site/food-stadium/public/api/filter_product/?category_id=2&menu_id=3&dietary_id=1&min_price=300&max_price=304', {
+    const apiUrl = `https://custom2.mystagingserver.site/food-stadium/public/api/filter_product/?menu_id=${menuID},`;
+
+    const response = await fetch(`https://custom2.mystagingserver.site/food-stadium/public/api/filter_product?menu_id=${menuID}`, {
       method: 'GET',
+      
+      headers: {
+        "Content-Type": "application/json",
+        'Access-Control-Allow-Headers':'*',
+        'Access-Control-Allow-Origin':'*',
+        'Access-Control-Allow-Methods':'POST, GET, OPTIONS, PUT, DELETE'
+   }
     });
-    const data = await res.json();
- console.log("filterdata" , data)
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const data = await response.json();
+console.log("datafil" , data.data)
     return data;
   } catch (error) {
     console.log('Error in getting all products (service) =>', error)
   }
-}
-
-
-
-
+};
 
 
 export const Get_all_product_detail = async (productId) => {
@@ -223,66 +229,31 @@ export const Trending_product = async () => {
 
 
 
-// export const Order_Placed = async () => {
-//   try {
-//     const res = await fetch(`${url}/public/api/order_placed`, {
-//       method: "Post",
-      
-//   });
-//     const data = await res.json();
-//     return data;
-//   } catch (error) {
-//     console.log('Error in getting all products (service) =>', error)
-//   }
-// }
-
-
-// export const Order_Placed = async (postData) => {
-//   console.log("postData" , postData)
-//   try {
-//     const res = await fetch(`${url}/public/api/order_placed`, {
-//       method: "POST",
-//       headers: {
-//         'Content-Type': 'application/json', 
-//       },
-//       body: JSON.stringify(postData),
-//     });
-
-//     const data = await res.json();
-//     return data;
-//     console.log("success" , data)
-//   } catch (error) {
-//     console.log('Error in placing order (service) =>', error);
-//   }
-// };
+ 
 
 
 
-export const Order_Placed = async (postData) => {
-  console.log("postData", postData);
+
+
+export const Order_Placed = async (formData) => {
+  console.log("formData"  , formData)
   try {
     const res = await fetch('https://custom2.mystagingserver.site/food-stadium/public/api/order_placed', {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(postData),
+      body: JSON.stringify(formData),
     });
 console.log("res" , res)
     const data = await res.json();
     console.log("success", data.message);
     return data;
   } catch (error) {
-    console.log('Error in placing order (service) =>', error);
-    throw error; // Rethrow the error to handle it in the calling code
+      console.log('Error in Add New Category (service) =>', error);
   }
-};
+}
+ 
 
 
-
-// const postData = {
-//   // Your data here
-// };
-
-// const result = await Order_Placed(postData);
-// console.log(result);
+ 

@@ -1,7 +1,7 @@
 
 import { Nav } from 'react-bootstrap';
 import { Product_deatail } from '../productDetail/product_detail'
-
+import { ToastContainer, toast } from 'react-toastify';
 import React, { useState } from 'react'
 import { useEffect } from 'react'
 import mac from '../../assets/images/mac.png'
@@ -193,12 +193,12 @@ console.log("cartItems" , cartItems)
     //   };
     const data = {
         sub_total: totalCartPrice,
-        total: totalCartPrice,
-        zipcode: zipcode,
-        message: message,
-        products : cartItems ,
-        discount: 32,
-        coupon_code: applycoupon,
+              total: totalCartPrice,
+              zipcode: zipcode,
+              message: message,
+              products: cartItems,
+              discount: 32,
+              coupon_code: applycoupon,
     };
 
  
@@ -636,7 +636,7 @@ console.log("cartItems" , cartItems)
                     </div>
                 </div>
             </section> */}
-
+     <ToastContainer />
 
             <section className="footer">
                 <div className="container">

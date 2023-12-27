@@ -1,7 +1,3 @@
-
-
-
-
 // import CloseButton from 'react-bootstrap/CloseButton';
 
 
@@ -33,8 +29,6 @@ export const Product_deatail = (props) => {
     const cartItems = useSelector((state) => state.cart.items);
     console.log("cartItems", cartItems)
 
-    //  in the cartItems come product and variation who selected check in this data?.variation_items who selected already  in the cartItems select the radiobutton 
-
 
 
 
@@ -45,21 +39,7 @@ export const Product_deatail = (props) => {
         }, 1);
         setNewQuantity(totalProductQuantity);
     }, [cartItems, props]);
-
-
-
-    // useEffect(() => {
-    //     const productId = props.productDetails?.data.id;
-    //     const productqty = props.productDetails?.data.quantity;
-    //     // Calculate the total quantity for the specific product
-    //     const totalProductQuantity = cartItems
-    //       .filter((item) => item.id === productId )
-    //       .reduce((total, item) => total + item.quantity , 1);
-
-    //     // Set the initial quantity to the calculated total if it's greater than 0
-    //     setNewQuantity(totalProductQuantity > 0 ? totalProductQuantity : 0);
-    //   }, [cartItems, props]);
-
+ 
 
 
     useEffect(() => {
@@ -69,8 +49,7 @@ export const Product_deatail = (props) => {
         const totalProductQuantity = cartItems
             .filter((item) => item.id === productId)
             .reduce((total, item) => total + item.quantity, 1);
-
-        // Set the initial quantity to the calculated total if it's greater than 0
+ 
         setNewQuantity(totalProductQuantity > 0 ? totalProductQuantity : 0);
     }, [cartItems, props]);
 
@@ -87,11 +66,7 @@ export const Product_deatail = (props) => {
 
 
 
-
-
-
-    // const data = props.productDetails?.data.product_price
-
+ 
     const dispatch = useDispatch();
     const [selectedVariations, setSelectedVariations] = useState({});
 
@@ -128,31 +103,7 @@ export const Product_deatail = (props) => {
         calculateTotalPrice();
     }, [selectedVariations, props.productDetails?.data.product_price]);
 
-
-
-    // const handleAddToCart = () => {
-    //     props.onHide()
-    //     const selectedVariationsObject = {
-    //         ...props.productDetails?.data,
-    //         quantity: newQuantity,
-
-    //         // variation: Object.values(selectedVariations),
-    //         variation: Object.values(selectedVariations).map(variation => ({
-    //             ...variation,
-    //             quantity: newQuantity,
-    //         })),
-
-
-    //     };
-
-    //     dispatch(addToCart(selectedVariationsObject));
-
-
-    //     setSelectedVariations({});
-
-    // }
-
-
+ 
 
 
     const handleAddToCart = () => {
@@ -849,8 +800,3 @@ console.log("itemId" , itemId)
 };
 
 // export default Product_deatail;
-
-
-
-
-

@@ -17,8 +17,7 @@ const cartReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'ADD_TO_CART':
       const quantity = action.payload
-      console.log("quantity" , quantity)
-      const existingProductIndex = state.items.findIndex((item) => item.id === action.payload.id);
+       const existingProductIndex = state.items.findIndex((item) => item.id === action.payload.id);
 
       if (existingProductIndex !== -1) {
         // Product already in cart, replace quantity
@@ -48,8 +47,7 @@ const cartReducer = (state = initialState, action) => {
       }
     case 'INCREMENT_QUANTITY_VA':
       const { productId, newQuantity } = action.payload;
-      console.log("productId", productId)
-      console.log("newQuantity", newQuantity)
+      
       return {
         ...state,
         items: state.items.map((item) =>
@@ -59,9 +57,9 @@ const cartReducer = (state = initialState, action) => {
 
     case 'REMOVE_FROM_CART':
       const removedProductId = action.payload;
-      console.log('Removing product with ID:', removedProductId);
+      
       const removeItems = state.items.filter(item => item.id !== removedProductId);
-      console.log('Updated items:', removeItems);
+ 
       return {
         ...state,
         items: removeItems,
