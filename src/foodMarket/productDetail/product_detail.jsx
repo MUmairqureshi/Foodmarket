@@ -29,30 +29,32 @@ export const Product_deatail = (props) => {
     const cartItems = useSelector((state) => state.cart.items);
     console.log("cartItems", cartItems)
 
-
-
-
-    useEffect(() => {
-        const productId = props.productDetails?.data.id
-        const totalProductQuantity = cartItems.reduce((total, item) => {
-            return item.id === productId ? total + item.quantity : total;
-        }, 1);
-        setNewQuantity(totalProductQuantity);
-    }, [cartItems, props]);
- 
-
+     
 
     useEffect(() => {
         const productId = props.productDetails?.data.id;
         const productqty = props.productDetails?.data.quantity;
         // Calculate the total quantity for the specific product
         const totalProductQuantity = cartItems
-            .filter((item) => item.id === productId)
-            .reduce((total, item) => total + item.quantity, 1);
- 
-        setNewQuantity(totalProductQuantity > 0 ? totalProductQuantity : 0);
-    }, [cartItems, props]);
+          .filter((item) => item.id === productId )
+          .reduce((total, item) => total + item.quantity , 1);
 
+        // Set the initial quantity to the calculated total if it's greater than 0
+        setNewQuantity(totalProductQuantity > 0 ? totalProductQuantity : 0);
+      }, [cartItems, props]);
+
+
+    // useEffect(() => {
+    //     const productId = props.productDetails?.data.id;
+    //     const productqty = props.productDetails?.data.quantity;
+     
+    //     const totalProductQuantity = cartItems?.reduce((total, item) => total + item.quantity > 0 ? (total, item) => total + item.quantity : 1);
+    //         // .filter((item) => item.id === productId)
+
+    
+         
+    //     setNewQuantity(totalProductQuantity > 0 ? totalProductQuantity : productqty > 0 ? totalProductQuantity : 1);
+    // }, [cartItems, props]);
 
 
 

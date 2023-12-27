@@ -65,6 +65,26 @@ const cartReducer = (state = initialState, action) => {
         items: removeItems,
       };
 
+      case 'INCREMENT_QUANTITY_incart':
+        return {
+          ...state,
+          items: state.items.map(product =>
+            product.id === action.payload
+              ? { ...product, quantity: product?.quantity + 1 }
+              : product
+          ),
+        };
+        case 'DECREMENT_QUANTITY_incart':
+          return {
+            ...state,
+            items: state.items.map(product =>
+              product.id === action.payload
+                ? { ...product, quantity: Math.max(1, product.quantity - 1) }
+                : product
+            ),
+          };
+        
+
     // case 'UPDATE_CART_ITEM':
     //   const updatedCartItem = action.payload;
     //   console.log("updatedCartItem" , updatedCartItem)
