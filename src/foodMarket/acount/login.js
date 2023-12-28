@@ -3,46 +3,81 @@ import {login} from '../../components/services/catigories'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../css/style.css'
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom"
+import { useNavigate } from 'react-router';
 export function Login() {
     const [email , setEmail] = useState("")
     const [password , setPassword] = useState("")
+    const navigate = useNavigate();
 
 const data = {
     email : email , 
     password : password
 }
  
+    // const log_in = async (e) => {
+    //     e.preventDefault(); // Prevents the default form submission behavior
+    
+    //     try {
+    //       const response = await login(data);
+    
+    //       if (response && response.success === true) {
+    //         // Handle the successful response here
+    //  response.data.token
+    //         toast.success('login Successfull', {
+    //           position: toast.POSITION.TOP_RIGHT,
+    //         });
+    //       } else {
+    //         console.error('Error in signin:', response.statusText);
+    
+    //         toast.error('User does not exist. Please try again.', {
+    //           position: toast.POSITION.TOP_RIGHT,
+    //         });
+    //       }
+    //     } catch (error) {
+    //       console.error('Error in placing order:', error);
+    
+    //       toast.error('An error occurred while placing the order.', {
+    //         position: toast.POSITION.TOP_RIGHT,
+    //       });
+    //     }
+    //   };
+    
+
+
     const log_in = async (e) => {
         e.preventDefault(); // Prevents the default form submission behavior
-    
-        try {
+      
+        try { 
           const response = await login(data);
-    
+      
           if (response && response.success === true) {
-            // Handle the successful response here
-    
-            console.log('Success ', response.message);
-    
-            toast.success('login Successfull', {
+       
+            const userToken = response.data.token;
+ 
+            localStorage.setItem('userToken', userToken);
+            navigate('/')
+       
+            toast.success('Login Successful', {
               position: toast.POSITION.TOP_RIGHT,
             });
-          } else {
+       
+          } else { 
             console.error('Error in signin:', response.statusText);
-    
+      
             toast.error('User does not exist. Please try again.', {
               position: toast.POSITION.TOP_RIGHT,
             });
           }
-        } catch (error) {
-          console.error('Error in placing order:', error);
-    
-          toast.error('An error occurred while placing the order.', {
+        } catch (error) { 
+          console.error('Error in logging in:', error);
+      
+          toast.error('An error occurred while logging in.', {
             position: toast.POSITION.TOP_RIGHT,
           });
         }
       };
-    
+      
   // ... rest of
 
     return (

@@ -6,7 +6,7 @@ import  { useRef } from "react";
 import {Link} from 'react-router-dom'
 import mac from '../../../assets/images/mac.png' 
 import c1 from '../../../assets/images/c1.png'
-import {  Wenderdata } from '../../../components/services/catigories'
+import { Get_all_product ,  Wenderdata } from '../../../components/services/catigories'
 import { useState, useEffect } from 'react'
 export function Bakery(){
     const ImageUrl = "https://custom2.mystagingserver.site/food-stadium/public/"
@@ -61,19 +61,19 @@ export function Bakery(){
 
     };
 
-    const handleProductClick = async (productId) => {
-      console.log(productId)
+  //   const handleProductClick = async (productId) => {
+  //     console.log(productId)
 
-      setShowModal(true);
-      try {
-          const response = await Wenderdata(productId)
-          console.log('abc', response)
-          setProductDetails(response);
-          setShowModal(true);
-      } catch (error) {
-          console.error('Error fetching product details:', error);
-      }
-  };
+  //     setShowModal(true);
+  //     try {
+  //         const response = await Wenderdata(productId)
+  //         console.log('abc', response)
+  //         setProductDetails(response);
+  //         setShowModal(true);
+  //     } catch (error) {
+  //         console.error('Error fetching product details:', error);
+  //     }
+  // };
 
     useEffect(() => {
   const fetchData = async () => {
@@ -86,7 +86,7 @@ export function Bakery(){
         };
 
         fetchData();
-    }, []);
+    },[]);
 
     return(
  <div>
@@ -193,7 +193,7 @@ export function Bakery(){
                                                 </Card.Text>
                                               </div>
                                               <div className="offerButton text-center">
-                                                <Link onClick={() => handleProductClick(data?.id)} to={`wender/${data.store_id}`} type="button" className="primaryButton btn">View Store</Link>
+                                                <Link   to={`wender/${data.store_id}`} type="button" className="primaryButton btn">View Store</Link>
                                               </div>
                                             </Card>
                                             </div>      </div>

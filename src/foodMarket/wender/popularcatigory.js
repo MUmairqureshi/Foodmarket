@@ -12,8 +12,8 @@ import mac from '../../assets/images/mac.png'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { fetchProducts, addToCart, incrementQuantity, decrementQuantity } from '../../components/redux/actions';
-export function PopularCategory() {
-
+export function PopularCategory({data}) {
+console.log("wemderdata" , data.data?.store_products)
 
 
 
@@ -112,8 +112,7 @@ export function PopularCategory() {
     const [allproduct, setAllproduct] = useState([])
     const [loading, setLoading] = useState(true)
 
-    console.lo
-
+ 
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -198,7 +197,7 @@ export function PopularCategory() {
                         <Slider ref={sliderRef} {...settings}>
 
 
-                            {allproduct?.map(data => (
+                            {data.data?.store_products?.map(data => (
                                 <div className="row">
                                     <Card className="mb-3" style={{ width: '16rem' }}>
                                         <Nav.Link className="no-link-decoration" id='nav-link' style={{ textDecorationStyle: 'none' }} onClick={() => handleProductClick(data?.id)}>

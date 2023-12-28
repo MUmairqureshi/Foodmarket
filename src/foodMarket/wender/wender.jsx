@@ -6,44 +6,69 @@ import filter from '../../assets/images/filter.png'
 import mac from '../../assets/images/mac.png'
 import ab_2 from '../../assets/images/ab_2.png'
  import {PopularCategory} from './popularcatigory'
-import {Trending_dishes} from '../home/components/trending_dishes'
+import {Trending_dishes} from './trending_disher'
 import clock_icon from '../../assets/images/clock_icon.png'
 import {Bakery} from '../home/components/bakery'
 import {Wenderdata} from '../../components/services/catigories'
 import c1 from '../../assets/images/c1.png'
-import {Beverages} from '../home/components/beverages'
+import {Beverages} from './beraverages'
+import { useParams } from 'react-router-dom';
+
  import {Beverages_Recommendations} from '../home/components/beverages_recommendation'
 import { Form } from 'react-bootstrap'
 import { useState } from 'react'
 export function Wender() {
+
+
     const[loading  , setLoading ] = useState(true)
-    // src/foodMarket/home
-    // const { id } = useParams();
+ 
 
 const [wenderdata , setWenderdata] = useState([])
+const { id } = useParams()
+// console.log("id" , id)
+    // useEffect(() => {
+        
+    //     const fetchData = async (id) => {
+    //         console.log("id" , id)
+    //         try {
+                // const data = await Wenderdata(id);
+    //             setWenderdata(data?.data || []);
+    //             // setFilteredBeverages(data?.data || []);
+    //         } catch (error) {
+    //             console.error('Error fetching data:', error);
+    //         } finally {
+    //             setLoading(false);
+    //         }
+    //     };
+
+    //     fetchData();
+    // }, []);
+    let componentMounted = true
+ 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const data = await Wenderdata();
-                setWenderdata(data?.data || []);
-                // setFilteredBeverages(data?.data || []);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            } finally {
-                setLoading(false);
+        const getproduct = async () => {
+            setLoading(true)
+            const data = await fetch(`https://custom2.mystagingserver.site/food-stadium/public/api/product_by_store/${id}`)
+
+
+            if (componentMounted) {
+                setWenderdata(await data.json())
+                setLoading(false)
             }
-        };
-
-        fetchData();
-    }, []);
-    console.log("wenderdata" , wenderdata)
-
+            return () => {
+                componentMounted = false
+            }
+        }
+        getproduct()
+    }, [])
+    console.log("wenderdata" , wenderdata?.data?.store_detail)
+    const ImageUrl = "https://custom2.mystagingserver.site/food-stadium/public/"
     return (
         <div className=" ">
             <section className="aboutUsBanner" >
                 <img src={ab_bg} className="main_img img-fluid" alt="" />
                 <div className="company_logo">
-                    <img src={m_img} className=" img-fluid" alt="" />
+                    <img src={ImageUrl + wenderdata?.data?.store_detail.logo} className=" img-fluid" alt="" />
                 </div>
             </section>
 
@@ -87,7 +112,7 @@ const [wenderdata , setWenderdata] = useState([])
 
 
                                 </div>
-                                <div className="catFilter d-flex align-items-center flex-wrap gap-10 mb-3">
+                                {/* <div className="catFilter d-flex align-items-center flex-wrap gap-10 mb-3">
                                     <div className="dineIN mb-2">
                                         <button type="button" className="primaryButton btn w-100"> <span className="metaDollar">Delivery</span>Pickup <span>Dine-in</span></button>
                                     </div>
@@ -110,16 +135,16 @@ const [wenderdata , setWenderdata] = useState([])
                                         <button type="button" className="primaryButton btn w-100 bg-white"> <img src={filter} alt="" />Filters</button>
                                     </div>
 
-                                </div>
-                                <div className="categoryHeader d-flex justify-content-between align-items-center flex-wrap">
+                                </div> */}
+                                {/* <div className="categoryHeader d-flex justify-content-between align-items-center flex-wrap">
                                     <div className="titleBox">
                                         <h3>Menu</h3>
                                     </div>
                                     <div className="vewAll">
                                         <p><a href="#">View All</a></p>
                                     </div>
-                                </div>
-                                <div className="Dietary d-flex align-items-center flex-wrap gap-10 mb-3">
+                                </div> */}
+                                {/* <div className="Dietary d-flex align-items-center flex-wrap gap-10 mb-3">
                                     <div className="titleBox text-center mb-3">
                                         <h3>Dietary</h3>
                                     </div>
@@ -145,7 +170,7 @@ const [wenderdata , setWenderdata] = useState([])
                                         <button type="button" className="primaryButton btn w-100 px-4">Midnight Meal</button>
                                     </div>
 
-                                </div>
+                                </div> */}
 
                                 <div className="popularCategories">
                                     {/* <div className="categoryHeader d-flex justify-content-between align-items-center flex-wrap">
@@ -158,7 +183,7 @@ const [wenderdata , setWenderdata] = useState([])
 
 {/*  */}
                                                  
-                        {/* <PopularCategory/> */}
+                        <PopularCategory data={wenderdata}/>
 
                     </div>
                 </div>
@@ -176,7 +201,7 @@ const [wenderdata , setWenderdata] = useState([])
                             </div>
                         </div>
                     </div> */}
-                     {/* <Trending_dishes /> */}
+                     <Trending_dishes data={wenderdata}/>
 
 {/* 
 
@@ -833,7 +858,7 @@ const [wenderdata , setWenderdata] = useState([])
 
         
 
-{/* <Beverages/> */}
+<Beverages data={wenderdata}/>
            
            {/* <Beverages_Recommendations /> */}
 

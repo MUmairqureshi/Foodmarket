@@ -368,7 +368,7 @@ console.log("res" , res)
 
 
 export const Wenderdata = async (wenderId) => {
-  console.log(productId)
+ 
   try {
     const res = await fetch(`${url}public/api/product_by_store/${wenderId}`, {
       method: 'GET',
@@ -381,3 +381,30 @@ export const Wenderdata = async (wenderId) => {
   }
 }
 
+const logout = async () => {
+  try {
+    // Make a request to the logout API
+    const response = await fetch('https://custom2.mystagingserver.site/food-stadium/public/api/logout', {
+      method: 'POST', // Assuming a POST request is required for logout, adjust as needed
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('userToken')}`, // Include the user token in the headers
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (response.ok) {
+      // Clear the token from local storage
+      localStorage.removeItem('userToken');
+
+      // Add any additional cleanup or redirection logic here
+
+      console.log('Logout successful');
+    } else {
+      console.error('Error in logout:', response.statusText);
+      // Handle logout error, if needed
+    }
+  } catch (error) {
+    console.error('Error in logout:', error);
+    // Handle any unexpected errors during logout
+  }
+};

@@ -33,7 +33,9 @@ export function Signup() {
     
           if (response && response.success === true) {
             // Handle the successful response here
-    
+            const userToken = response.data.token;
+ 
+            localStorage.setItem('userToken', userToken);
             console.log('Success ', response.message);
     
             toast.success('signup Successfully', {
