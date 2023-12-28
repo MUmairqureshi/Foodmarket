@@ -362,3 +362,22 @@ console.log("res" , res)
   }
 }
  
+// https://custom2.mystagingserver.site/food-stadium/public/api/product_by_store/12
+
+
+
+
+export const Wenderdata = async (wenderId) => {
+  console.log(productId)
+  try {
+    const res = await fetch(`${url}public/api/product_by_store/${wenderId}`, {
+      method: 'GET',
+    });
+    const data = await res.json();
+ 
+    return data;
+  } catch (error) {
+    console.log('Error in getting all products (service) =>', error)
+  }
+}
+

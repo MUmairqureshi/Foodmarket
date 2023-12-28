@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { PopularCategories } from './popularCategories'
+import { PopularCategories } from './popularCategories.jsx'
 import '../../css/style.css'
 import { Menue } from './menue'
 import { useDispatch } from 'react-redux';
@@ -54,23 +54,38 @@ export function Category() {
     console.log("allProducts", allProducts)
 
     console.log("dietary", dietary)
+   
+
+
+
+
+
+
+
+
+
+
+    
     useEffect(() => {
         const fetchData = async () => {
             try {
+                setLoading(true);
+
+                // Simulate a loading time of 2 seconds
+                const loadingTime = 2000;
+                const startTime = new Date().getTime();
+
                 let data;
 
                 if (selectedCatigoryId) {
                     data = await filterProducts(selectedCatigoryId);
                 } else if (selectedMenuId) {
                     data = await filterMenu(selectedMenuId);
-
                     setAllProducts([]);
                 } else if (dietary) {
                     data = await filterDietary(dietary);
-
                     setAllProducts([]);
                 } else if (minPrice || maxPrice) {
-
                     data = await filterPrice(minPrice, maxPrice);
                     setAllProducts([]);
                 } else {
@@ -78,13 +93,17 @@ export function Category() {
                     setAllProducts(data?.data || []);
                 }
 
+                const elapsedTime = new Date().getTime() - startTime;
+                const remainingTime = Math.max(0, loadingTime - elapsedTime);
 
-                setFilteredData(data?.data || []);
-
-                setAllProducts(data?.data || []);
+                // Simulate loading with a timeout
+                setTimeout(() => {
+                    setFilteredData(data?.data || []);
+                    setAllProducts(data?.data || []);
+                    setLoading(false);
+                }, remainingTime);
             } catch (error) {
                 console.error('Error fetching data:', error);
-            } finally {
                 setLoading(false);
             }
         };
@@ -178,7 +197,7 @@ export function Category() {
                                 handleAddToCart={handleAddToCart}
                                 loading={loading}
                             />
-
+ 
 
 
                         </div>

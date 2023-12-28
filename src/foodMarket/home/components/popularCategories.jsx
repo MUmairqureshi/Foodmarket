@@ -8,10 +8,11 @@ import { Get_all_product_detail } from '../../../components/services/catigories'
 import { useRef } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { Product_deatail } from '../../productDetail/product_detail'
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 import mac from '../../../assets/images/mac.png'
 import '../../css/style.css'
-
-import Skeleton from 'react-loading-skeleton'
+ 
 
 
 export function PopularCategories({loading , data, handleIncrement, handleDecrement, handleAddToCart }) {
@@ -138,20 +139,349 @@ export function PopularCategories({loading , data, handleIncrement, handleDecrem
 
                 </div>
                 <div className="carousel-inner">
-
-                    <div className="loaderContainerStyle">
-                        {loading ? (
-
-                            <div className="loader-container">  <TailSpin
+{/*   {/* <TailSpin
                                 visible={true}
                                 height="80"
                                 width="80"
+                                margin="auto"
+                                textAlign="center"
                                 color="#4fa94d"
                                 ariaLabel="tail-spin-loading"
                                 radius="1"
                                 wrapperStyle={{}}
                                 wrapperClass=""
-                            /></div>
+                            /> */}
+                    <div className="loaderContainerStyle">
+                        {loading ? (
+
+                            <div className="loader-container ">  <div className="row">
+                            <div className="col-md-4">
+                             <Card className="mb-3" style={{ width: '16rem' }}>
+                                                    <Nav.Link className="no-link-decoration" id='nav-link' style={{ textDecorationStyle: 'none' }} >
+                                                        <div className="cardHeader">
+                                                            <div className="topMeta">
+                                                                
+                                                            </div>
+                                                            <div className="cardImage">
+                                                                {/* <img src={  <Skeleton />}  alt="Category Image" className="mw-100" /> */}<Skeleton height={200} width={200} />
+                                                            </div>
+
+                                                        
+
+                                                        </div>
+                                                        <div className="cardBody">
+                                                            <div className="body-upper">
+                                                                <div className="ratingBox">
+                                                                    <p className="mb-0"><Skeleton /></p>
+                                                                    <p className="mb-0"> 
+                                                                    {/* <Skeleton />
+                                                                    <Skeleton />
+                                                                    <Skeleton />
+                                                                    <Skeleton />
+                                                                    <Skeleton /> */}
+                                                                        {/* <i className="fa fa-star"></i><Skeleton /> */}
+                                                                        {/* <i className="fa fa-star"></i> */}
+                                                                        {/* <i className="fa fa-star"></i> */}
+                                                                        {/* <i className="fa fa-star"></i> */}
+                                                                        {/* <i className="fa fa-star"></i> */}
+                                                                    </p>
+                                                                </div>
+                                                                <div className="deliveryInfo">
+                                                                    <div className="meter">
+                                                                        <p className="mb-0"><Skeleton /></p>
+                                                                        <p className="mb-0 text-success"><Skeleton /></p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div className="cardContent" style={{ textAlign: 'left' }}>
+                                                                <h3>  <Skeleton /></h3>
+                                                                <p><Skeleton /></p>
+                                                                <h5 className="text-theme-primary font-weight-bold"><Skeleton /></h5>
+                                                            </div>
+                                                        </div>
+                                                    </Nav.Link>
+                                                    <div className="cardFooter">
+                                                        <div className="cardAction">
+                                                      
+                                                        </div>
+                                                    </div>
+
+                                                </Card> 
+                                           
+                            </div> 
+                            <div className="col-md-4">
+                             <Card className="mb-3" style={{ width: '16rem' }}>
+                                                    <Nav.Link className="no-link-decoration" id='nav-link' style={{ textDecorationStyle: 'none' }} >
+                                                        <div className="cardHeader">
+                                                            <div className="topMeta">
+                                                                
+                                                            </div>
+                                                            <div className="cardImage">
+                                                                {/* <img src={  <Skeleton />}  alt="Category Image" className="mw-100" /> */}<Skeleton height={200} width={200} />
+                                                            </div>
+
+                                                        
+
+                                                        </div>
+                                                        <div className="cardBody">
+                                                            <div className="body-upper">
+                                                                <div className="ratingBox">
+                                                                    <p className="mb-0"><Skeleton /></p>
+                                                                    <p className="mb-0"> 
+                                                                    {/* <Skeleton />
+                                                                    <Skeleton />
+                                                                    <Skeleton />
+                                                                    <Skeleton />
+                                                                    <Skeleton /> */}
+                                                                        {/* <i className="fa fa-star"></i><Skeleton /> */}
+                                                                        {/* <i className="fa fa-star"></i> */}
+                                                                        {/* <i className="fa fa-star"></i> */}
+                                                                        {/* <i className="fa fa-star"></i> */}
+                                                                        {/* <i className="fa fa-star"></i> */}
+                                                                    </p>
+                                                                </div>
+                                                                <div className="deliveryInfo">
+                                                                    <div className="meter">
+                                                                        <p className="mb-0"><Skeleton /></p>
+                                                                        <p className="mb-0 text-success"><Skeleton /></p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div className="cardContent" style={{ textAlign: 'left' }}>
+                                                                <h3>  <Skeleton /></h3>
+                                                                <p><Skeleton /></p>
+                                                                <h5 className="text-theme-primary font-weight-bold"><Skeleton /></h5>
+                                                            </div>
+                                                        </div>
+                                                    </Nav.Link>
+                                                    <div className="cardFooter">
+                                                        <div className="cardAction">
+                                                      
+                                                        </div>
+                                                    </div>
+
+                                                </Card> 
+                                           
+                            </div> 
+                            <div className="col-md-4">
+                             <Card className="mb-3" style={{ width: '16rem' }}>
+                                                    <Nav.Link className="no-link-decoration" id='nav-link' style={{ textDecorationStyle: 'none' }} >
+                                                        <div className="cardHeader">
+                                                            <div className="topMeta">
+                                                                
+                                                            </div>
+                                                            <div className="cardImage">
+                                                                {/* <img src={  <Skeleton />}  alt="Category Image" className="mw-100" /> */}<Skeleton height={200} width={200} />
+                                                            </div>
+
+                                                        
+
+                                                        </div>
+                                                        <div className="cardBody">
+                                                            <div className="body-upper">
+                                                                <div className="ratingBox">
+                                                                    <p className="mb-0"><Skeleton /></p>
+                                                                    <p className="mb-0"> 
+                                                                    {/* <Skeleton />
+                                                                    <Skeleton />
+                                                                    <Skeleton />
+                                                                    <Skeleton />
+                                                                    <Skeleton /> */}
+                                                                        {/* <i className="fa fa-star"></i><Skeleton /> */}
+                                                                        {/* <i className="fa fa-star"></i> */}
+                                                                        {/* <i className="fa fa-star"></i> */}
+                                                                        {/* <i className="fa fa-star"></i> */}
+                                                                        {/* <i className="fa fa-star"></i> */}
+                                                                    </p>
+                                                                </div>
+                                                                <div className="deliveryInfo">
+                                                                    <div className="meter">
+                                                                        <p className="mb-0"><Skeleton /></p>
+                                                                        <p className="mb-0 text-success"><Skeleton /></p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div className="cardContent" style={{ textAlign: 'left' }}>
+                                                                <h3>  <Skeleton /></h3>
+                                                                <p><Skeleton /></p>
+                                                                <h5 className="text-theme-primary font-weight-bold"><Skeleton /></h5>
+                                                            </div>
+                                                        </div>
+                                                    </Nav.Link>
+                                                    <div className="cardFooter">
+                                                        <div className="cardAction">
+                                                      
+                                                        </div>
+                                                    </div>
+
+                                                </Card> 
+                                           
+                            </div> 
+                            
+
+                            <div className="col-md-4">
+                             <Card className="mb-3" style={{ width: '16rem' }}>
+                                                    <Nav.Link className="no-link-decoration" id='nav-link' style={{ textDecorationStyle: 'none' }} >
+                                                        <div className="cardHeader">
+                                                            <div className="topMeta">
+                                                                
+                                                            </div>
+                                                            <div className="cardImage">
+                                                                {/* <img src={  <Skeleton />}  alt="Category Image" className="mw-100" /> */}<Skeleton height={200} width={200} />
+                                                            </div>
+
+                                                        
+
+                                                        </div>
+                                                        <div className="cardBody">
+                                                            <div className="body-upper">
+                                                                <div className="ratingBox">
+                                                                    <p className="mb-0"><Skeleton /></p>
+                                                                    <p className="mb-0"> 
+                                                                    {/* <Skeleton />
+                                                                    <Skeleton />
+                                                                    <Skeleton />
+                                                                    <Skeleton />
+                                                                    <Skeleton /> */}
+                                                                        {/* <i className="fa fa-star"></i><Skeleton /> */}
+                                                                        {/* <i className="fa fa-star"></i> */}
+                                                                        {/* <i className="fa fa-star"></i> */}
+                                                                        {/* <i className="fa fa-star"></i> */}
+                                                                        {/* <i className="fa fa-star"></i> */}
+                                                                    </p>
+                                                                </div>
+                                                                <div className="deliveryInfo">
+                                                                    <div className="meter">
+                                                                        <p className="mb-0"><Skeleton /></p>
+                                                                        <p className="mb-0 text-success"><Skeleton /></p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div className="cardContent" style={{ textAlign: 'left' }}>
+                                                                <h3>  <Skeleton /></h3>
+                                                                <p><Skeleton /></p>
+                                                                <h5 className="text-theme-primary font-weight-bold"><Skeleton /></h5>
+                                                            </div>
+                                                        </div>
+                                                    </Nav.Link>
+                                                    <div className="cardFooter">
+                                                        <div className="cardAction">
+                                                      
+                                                        </div>
+                                                    </div>
+
+                                                </Card> 
+                                           
+                            </div> 
+                            <div className="col-md-4">
+                             <Card className="mb-3" style={{ width: '16rem' }}>
+                                                    <Nav.Link className="no-link-decoration" id='nav-link' style={{ textDecorationStyle: 'none' }} >
+                                                        <div className="cardHeader">
+                                                            <div className="topMeta">
+                                                                
+                                                            </div>
+                                                            <div className="cardImage">
+                                                                {/* <img src={  <Skeleton />}  alt="Category Image" className="mw-100" /> */}<Skeleton height={200} width={200} />
+                                                            </div>
+
+                                                        
+
+                                                        </div>
+                                                        <div className="cardBody">
+                                                            <div className="body-upper">
+                                                                <div className="ratingBox">
+                                                                    <p className="mb-0"><Skeleton /></p>
+                                                                    <p className="mb-0"> 
+                                                                    {/* <Skeleton />
+                                                                    <Skeleton />
+                                                                    <Skeleton />
+                                                                    <Skeleton />
+                                                                    <Skeleton /> */}
+                                                                        {/* <i className="fa fa-star"></i><Skeleton /> */}
+                                                                        {/* <i className="fa fa-star"></i> */}
+                                                                        {/* <i className="fa fa-star"></i> */}
+                                                                        {/* <i className="fa fa-star"></i> */}
+                                                                        {/* <i className="fa fa-star"></i> */}
+                                                                    </p>
+                                                                </div>
+                                                                <div className="deliveryInfo">
+                                                                    <div className="meter">
+                                                                        <p className="mb-0"><Skeleton /></p>
+                                                                        <p className="mb-0 text-success"><Skeleton /></p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div className="cardContent" style={{ textAlign: 'left' }}>
+                                                                <h3>  <Skeleton /></h3>
+                                                                <p><Skeleton /></p>
+                                                                <h5 className="text-theme-primary font-weight-bold"><Skeleton /></h5>
+                                                            </div>
+                                                        </div>
+                                                    </Nav.Link>
+                                                    <div className="cardFooter">
+                                                        <div className="cardAction">
+                                                      
+                                                        </div>
+                                                    </div>
+
+                                                </Card> 
+                                           
+                            </div> 
+                            <div className="col-md-4">
+                             <Card className="mb-3" style={{ width: '16rem' }}>
+                                                    <Nav.Link className="no-link-decoration" id='nav-link' style={{ textDecorationStyle: 'none' }} >
+                                                        <div className="cardHeader">
+                                                            <div className="topMeta">
+                                                                
+                                                            </div>
+                                                            <div className="cardImage">
+                                                                {/* <img src={  <Skeleton />}  alt="Category Image" className="mw-100" /> */}<Skeleton height={200} width={200} />
+                                                            </div>
+
+                                                        
+
+                                                        </div>
+                                                        <div className="cardBody">
+                                                            <div className="body-upper">
+                                                                <div className="ratingBox">
+                                                                    <p className="mb-0"><Skeleton /></p>
+                                                                    <p className="mb-0"> 
+                                                                    {/* <Skeleton />
+                                                                    <Skeleton />
+                                                                    <Skeleton />
+                                                                    <Skeleton />
+                                                                    <Skeleton /> */}
+                                                                        {/* <i className="fa fa-star"></i><Skeleton /> */}
+                                                                        {/* <i className="fa fa-star"></i> */}
+                                                                        {/* <i className="fa fa-star"></i> */}
+                                                                        {/* <i className="fa fa-star"></i> */}
+                                                                        {/* <i className="fa fa-star"></i> */}
+                                                                    </p>
+                                                                </div>
+                                                                <div className="deliveryInfo">
+                                                                    <div className="meter">
+                                                                        <p className="mb-0"><Skeleton /></p>
+                                                                        <p className="mb-0 text-success"><Skeleton /></p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div className="cardContent" style={{ textAlign: 'left' }}>
+                                                                <h3>  <Skeleton /></h3>
+                                                                <p><Skeleton /></p>
+                                                                <h5 className="text-theme-primary font-weight-bold"><Skeleton /></h5>
+                                                            </div>
+                                                        </div>
+                                                    </Nav.Link>
+                                                    <div className="cardFooter">
+                                                        <div className="cardAction">
+                                                      
+                                                        </div>
+                                                    </div>
+
+                                                </Card> 
+                                           
+                            </div> 
+                            </div> </div>
                         ) : (
                             <>
 

@@ -1,7 +1,7 @@
 
 import { Nav } from 'react-bootstrap';
 import { Product_deatail } from '../productDetail/product_detail'
- 
+
 import React, { useState } from 'react'
 import { useEffect } from 'react'
 import mac from '../../assets/images/mac.png'
@@ -23,7 +23,7 @@ export function Cart() {
     const [productQuantities, setProductQuantities] = useState({});
     const cartItems = useSelector((state) => state.cart.items);
     console.log("cartItems", cartItems)
-console.log("cartItems" , cartItems)
+    console.log("cartItems", cartItems)
     const dispatch = useDispatch()
 
 
@@ -143,47 +143,47 @@ console.log("cartItems" , cartItems)
     };
 
 
- 
+
     const data = {
         sub_total: totalCartPrice,
-              total: totalCartPrice,
-              zipcode: zipcode,
-              message: message,
-              products: cartItems,
-              discount: 32,
-              coupon_code: applycoupon,
+        total: totalCartPrice,
+        zipcode: zipcode,
+        message: message,
+        products: cartItems,
+        discount: 32,
+        coupon_code: applycoupon,
     };
 
- 
+
     const placeOrder = async () => {
         try {
-          const response = await Order_Placed(data);
-    
-          if (response && response.status === true) {
-            // Handle the successful response here
+            const response = await Order_Placed(data);
 
-            console.log('Success ', response.message);
-    
-              toast.success('Order placed successfully!', {
-              position: toast.POSITION.TOP_RIGHT,
-            });
-    
-          } else {
-             console.error('Error in placing order:', response.statusText);
-    
-              toast.error('Failed to place order. Please try again.', {
-              position: toast.POSITION.TOP_RIGHT,
-            });
-          }
+            if (response && response.status === true) {
+                // Handle the successful response here
+
+                console.log('Success ', response.message);
+
+                toast.success('Order placed successfully!', {
+                    position: toast.POSITION.TOP_RIGHT,
+                });
+
+            } else {
+                console.error('Error in placing order:', response.statusText);
+
+                toast.error('Failed to place order. Please try again.', {
+                    position: toast.POSITION.TOP_RIGHT,
+                });
+            }
         } catch (error) {
-          console.error('Error in placing order:', error);
-    
+            console.error('Error in placing order:', error);
+
             toast.error('An error occurred while placing the order.', {
-            position: toast.POSITION.TOP_RIGHT,
-          });
+                position: toast.POSITION.TOP_RIGHT,
+            });
         }
-      };
-    
+    };
+
 
     return (
         <div>
@@ -222,14 +222,31 @@ console.log("cartItems" , cartItems)
                                                                 </Nav.Link>
                                                             </p>
                                                             <div className="product_detail_extras">
+
                                                                 {data.variation?.map(item => (
+                                                                    <div key={item.id}>
+                                                                        {/* Your existing code for data.variation */}
+
+                                                                        {item.variation_item?.map(variationItem => (
+                                                                            <div key={variationItem.id} className="first_extra d-flex align-items-center">
+                                                                                <div className="img_div">
+                                                                                    <img src={ImageUrl + variationItem?.image} className="img-fluid" alt="" />
+                                                                                </div>
+                                                                                <p>{item?.title} : <span> ${variationItem.price}</span></p>
+                                                                            </div>
+                                                                        ))}
+                                                                    </div>
+                                                                ))}
+
+
+                                                                {/* {data.variation?.map(item => (
 
                                                                     <div className="first_extra d-flex align-items-center">
                                                                         <div className="img_div">
                                                                             <img src={ImageUrl + item?.image} className="img=-fluid" alt="" />
                                                                         </div>
                                                                         <p>{item?.title} : <span> ${item.price}</span></p>
-                                                                    </div>))}
+                                                                    </div>))} */}
 
                                                             </div>
                                                         </div>
@@ -599,7 +616,7 @@ console.log("cartItems" , cartItems)
                     </div>
                 </div>
             </section> */}
-     <ToastContainer />
+            <ToastContainer />
 
             <section className="footer">
                 <div className="container">

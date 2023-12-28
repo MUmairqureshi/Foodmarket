@@ -152,13 +152,13 @@ const [zip , setZip] = useState()
                 <div className="addressBox mb-3">
                     <div className="addressTitle flex-xl-nowrap flex-wrap">
                         <div className="addrssName">
-                            <p className="mb-0">Your Address</p>
+                            {/* <p className="mb-0">Your Address</p> */}
                             {/* <h5 className="font-weight-bold text-black"><i className="fa fa-map-marker"></i>Jordan James</h5> */}
-                            <input placeholder='Enter Zipcode ' onChange={(e) => setZip(e.target.value)}/>
+                            {/* <input placeholder='Enter Zipcode ' onChange={(e) => setZip(e.target.value)}/> */}
                         </div>
-                        <div className="actionChange">
+                        {/* <div className="actionChange">
                             <button type="button" className="btn primaryButton">Find Neraest food</button>
-                        </div>
+                        </div> */}
                     </div>
                     <div className="addressContent">
                         <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the</p>

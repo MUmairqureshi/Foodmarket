@@ -25,34 +25,33 @@ export const Product_deatail = (props) => {
 
     const datas = props.productDetails?.data
 
-    console.log("datas", datas)
+    console.log("pro", datas)
     const cartItems = useSelector((state) => state.cart.items);
-    console.log("cartItems", cartItems)
 
-     
+    console.log("cartItems", cartItems)
 
     useEffect(() => {
         const productId = props.productDetails?.data.id;
         const productqty = props.productDetails?.data.quantity;
         // Calculate the total quantity for the specific product
         const totalProductQuantity = cartItems
-          .filter((item) => item.id === productId )
-          .reduce((total, item) => total + item.quantity , 1);
+            .filter((item) => item.id === productId)
+            .reduce((total, item) => total + item.quantity, 1);
 
         // Set the initial quantity to the calculated total if it's greater than 0
         setNewQuantity(totalProductQuantity > 0 ? totalProductQuantity : 0);
-      }, [cartItems, props]);
+    }, [cartItems, props]);
 
 
     // useEffect(() => {
     //     const productId = props.productDetails?.data.id;
     //     const productqty = props.productDetails?.data.quantity;
-     
+
     //     const totalProductQuantity = cartItems?.reduce((total, item) => total + item.quantity > 0 ? (total, item) => total + item.quantity : 1);
     //         // .filter((item) => item.id === productId)
 
-    
-         
+
+
     //     setNewQuantity(totalProductQuantity > 0 ? totalProductQuantity : productqty > 0 ? totalProductQuantity : 1);
     // }, [cartItems, props]);
 
@@ -68,7 +67,7 @@ export const Product_deatail = (props) => {
 
 
 
- 
+
     const dispatch = useDispatch();
     const [selectedVariations, setSelectedVariations] = useState({});
 
@@ -105,32 +104,202 @@ export const Product_deatail = (props) => {
         calculateTotalPrice();
     }, [selectedVariations, props.productDetails?.data.product_price]);
 
+
+
+
+    // const handleAddToCart = () => {
+    //     props.onHide();
+
+    //     const selectedVariationsObject = Object.values(selectedVariations).map((variation) => ({
+    //         ...variation,
+    //         quantity: newQuantity,
+    //     }));
+
+    //     const existingCartItem = cartItems?.find(
+    //         (cartVariation) => cartVariation.id === props.productDetails?.data?.id
+    //     );
+
+
+
+    //     if (existingCartItem) {
+
+    //         const updatedCartItem = {
+    //             ...existingCartItem,
+    //             quantity: newQuantity,
+    //             ...variation,
+    //          };
+
+
+    //         dispatch(updateCartItem(updatedCartItem));
+    //     } else {
+    //         const newCartItem = {
+    //             ...props.productDetails?.data,
+    //             quantity: newQuantity,
+    // /variation :selectedVariationsObject
+    //             )),
+
+    //         };
+
+    //         dispatch(addToCart(newCartItem));
+    //     }
+    // };
+    //       const handleAddToCart = () => {
+
+    //     const selectedVariationsObject = Object.values(selectedVariations).map((variation) => ({
+    //         ...variation,
+    //         quantity: newQuantity,
+    //     }));
+
+    //     const existingCartItem = cartItems?.find(
+    //         (cartVariation) => cartVariation.id === props.productDetails?.data?.id
+    //     );
+
+    //     if (existingCartItem) {
+    //         const updatedCartItem = {
+    //             ...existingCartItem,
+    //             quantity: newQuantity,
+    //             ...variation,
+    //         };
+
+    //         dispatch(updateCartItem(updatedCartItem));
+    //     } else {
+    //         const newCartItem = {
+    //             ...props.productDetails?.data,
+    //             quantity: newQuantity,
+
+    //         };
+
+    //         // If your data has a property 'variation', you can map over it to add 'variation_items'
+    //         if (props.productDetails?.data?.variation) {
+    //             newCartItem.variation = props.productDetails.data.variation.map((data) => ({
+    //                 ...data,
+    //                 variation_items: selectedVariationsObject,
+    //             }));
+    //         }
+
+    //         dispatch(addToCart(newCartItem));
+    //     }
+    // };
+
+    console.log("selectedVariations", selectedVariations)
+    // const handleAddToCart = () => {
+    //     const selectedVariationsObject = Object.values(selectedVariations).map((variation) => ({
+    //         ...variation,
+    //         quantity: newQuantity,
+    //     }));
+    // console.log("selectedVariationsObject" , selectedVariationsObject)
+    //     const existingCartItem = cartItems?.find(
+    //         (cartVariation) => cartVariation.id === props.productDetails?.data?.id
+    //     );
+
+    //     if (existingCartItem) {
+    //         const updatedCartItem = {
+    //             ...existingCartItem,
+    //             quantity: newQuantity,
+    //             ...variation,
+    //         };
+
+    //         dispatch(updateCartItem(updatedCartItem));
+    //     } else {
+    //         const newCartItem = {
+    //             ...props.productDetails?.data,
+    //             quantity: newQuantity,
+    //             variation: (props.productDetails?.data?.variation || []).map((data) => ({
+    //                 ...data,
+    //                 variation_items: selectedVariationsObject,
+    //             })),
+    //         };
+
+    //         dispatch(addToCart(newCartItem));
+    //     }
+    // };
+
+
+
+
+
+
+
+
+
+
+// 
+        // const selectedVariationsObject = Object.values(selectedVariations).map((variation) => ({
+        //     ...variation,
+        //     quantity: newQuantity,
+        // }));
+
+        // const selectedVariationsObject = props.productDetails.data.variation.map((data) => ({
+        //     ...data,
+        //     variation_items: selectedVariations,
+        // }));
+        // const selectedVariationsObject = props.productDetails.data.variation.map((data) => ({
+        //     ...data,
+        //     variation_items: data.id in selectedVariations[data.id] ,
+        // }));
+
+
+
+    // const handleAddToCart = () => {
+    //     props.onHide();
  
+    //     const selectedVariationsObject = props.productDetails.data.variation.map((data) => ({
+    //         ...data,
+    //         variation_items: selectedVariations[data.id] !== undefined ? selectedVariations[data.id] : undefined,
+    //     }));
+        
+
+    //     const existingCartItem = cartItems?.find(
+    //         (cartVariation) => cartVariation.id === props.productDetails?.data?.id
+    //     );
+
+
+
+    //     if (existingCartItem) {
+
+    //         const updatedCartItem = {
+    //             ...existingCartItem,
+    //             quantity: newQuantity,
+    //             variation: selectedVariationsObject,
+    //         };
+
+
+    //         dispatch(updateCartItem(updatedCartItem));
+    //     } else {
+    //         const newCartItem = {
+    //             ...props.productDetails?.data,
+    //             quantity: newQuantity,
+    //             variation: selectedVariationsObject,
+    //         };
+
+    //         dispatch(addToCart(newCartItem));
+    //     }
+    // };
+
+
 
 
     const handleAddToCart = () => {
         props.onHide();
-
-        const selectedVariationsObject = Object.values(selectedVariations).map((variation) => ({
-            ...variation,
-            quantity: newQuantity,
-        }));
-
+    
+        const selectedVariationsObject = props.productDetails.data.variation
+            .filter((data) => selectedVariations[data.id] !== undefined)
+            .map((data) => ({
+                ...data,
+                variation_items: selectedVariations[data.id],
+            }));
+    
         const existingCartItem = cartItems?.find(
             (cartVariation) => cartVariation.id === props.productDetails?.data?.id
         );
-
-
-
+    
         if (existingCartItem) {
-
             const updatedCartItem = {
                 ...existingCartItem,
                 quantity: newQuantity,
                 variation: selectedVariationsObject,
             };
-
-
+    
             dispatch(updateCartItem(updatedCartItem));
         } else {
             const newCartItem = {
@@ -138,15 +307,11 @@ export const Product_deatail = (props) => {
                 quantity: newQuantity,
                 variation: selectedVariationsObject,
             };
-
+    
             dispatch(addToCart(newCartItem));
         }
     };
-
-
-
-
-
+    
 
     const handleQuantityChange = (newQuantity) => {
         const productId = parseFloat(props.productDetails?.data.id);
@@ -195,12 +360,11 @@ export const Product_deatail = (props) => {
     };
 
     const itmdata = cartItems?.variation;
-    console.log("itmdata", itmdata);
 
-    const isItemChecked = (variationId, itemId) => {
-console.log("variationId" , variationId)
-console.log("itemId" , itemId)
-    };
+    // const isItemChecked = (variationId, itemId) => {
+    //     console.log("variationId", variationId)
+    //     console.log("itemId", itemId)
+    // };
 
 
 
@@ -226,12 +390,12 @@ console.log("itemId" , itemId)
 
     //      });
 
-        // const itmdatasata = cartItems?.variation?.map(cartVariation => cartVariation.id);
-        // console.log("itmdatasata", itmdatasata);
+    // const itmdatasata = cartItems?.variation?.map(cartVariation => cartVariation.id);
+    // console.log("itmdatasata", itmdatasata);
 
-        // const foundItem = itmdata?.find(cartVariation => cartVariation.id === itemId);
-        // console.log("foundItem", foundItem);
-        // return checkcartitems;?
+    // const foundItem = itmdata?.find(cartVariation => cartVariation.id === itemId);
+    // console.log("foundItem", foundItem);
+    // return checkcartitems;?
     // };
     // in the cartitems come array in the array come variation in the variation array come variation_items thencheck with variation_items === itemId?
 
@@ -282,35 +446,78 @@ console.log("itemId" , itemId)
 
     //     return checkcartitems;
     // };
-    
 
-    // const isItemChecked = (variationId, itemId) => {
+
+    // const isChecked = cartItems?.some(product => {
+    //     //         const hasVariation = product?.variation?.some(variation => {
+    //     //             const hasVariationItems = Array.isArray(variation?.variation_items) &&
+    //     //                 variation.variation_items?.some(variationItem => {
+    //     //                     console.log("variationItem : " , variationItem ,  "apiitmid : ", item.id)
+    //     //                     return (
+    //     //                         variationItem?.id === item?.id)
+    //     //                 });
+
+    //     //             console.log("PCartroduct ID:", product, "cartVariation ID:", variation, "api ", data, "apiitmid : ", item.id,);
+
+    //     //             return hasVariationItems;
+    //     //         });
+
+    //     //         // console.log("Product ID:", product?.id, "Has Variation:", hasVariation);
+
+    //     //         return hasVariation || product;
+    //     //     });
+
+    //     //     // console.log("Is Checked:", isChecked);
+
+    //     //     return isChecked || item;
+    //     // })()}
+
+    // const isItemChecked = (data ,variationId, itemId) => {
     //     console.log("variationId", variationId);
     //     console.log("itemId", itemId);
 
     //     // Use some() to check if the item is present in cartItems
     //     const checkcartitems = cartItems?.some(product => {
-    //         // Declare variation outside of the find function
-    //         let variation;
+    //                 const hasVariation = product?.variation?.some(variation => {
+    //                     const hasVariationItems = Array.isArray(variation?.variation_items) &&
+    //                         variation.variation_items?.some(variationItem => {
+    //                             console.log("variationItem : " , variationItem ,  "apiitmid : ", itemId)
+    //                             return (
+    //                                 variationItem?.id === itemId)
+    //                         });
+    
+    //                     console.log("PCartroduct ID:", product, "cartVariation ID:", variation, "api ", data, "apiitmid : ", itemId,);
+    
+    //                     return hasVariationItems;
+    //                 });
+    
+    //                 // console.log("Product ID:", product?.id, "Has Variation:", hasVariation);
+    
+    //                 return hasVariation || product;
+    //             });
+    
+    //             // console.log("Is Checked:", isChecked);
+    
+    //             return checkcartitems || item;
+    //         } 
 
-    //         const variationItem = product?.variation?.reduce(variationObj => {
-    //             variation = variationObj;  // Assign variationObj to the outer variable
-    //             return Array.isArray(variationObj?.variation_items) && variationObj.variation_items?.some(variationItem =>
-    //                 variationItem.id === itemId
-    //             );
-    //         });
+    const isItemChecked = (dataId, item , itemId) => {
+        console.log("dataId" , dataId)
 
-    //         console.log("variation?.id:", variation && variation.id, "Variation Item:", variationItem);
-    //         return variationItem && variation && variation.id === variationId;
-    //     });
+        console.log("itemId" , itemId)
+        const isChecked = cartItems?.some(product => {
+            const hasVariation = product?.variation?.some(variation =>{
+             console.log("variation" , variation.variation_items?.id) 
+              return(  variation.variation_items?.id === itemId && variation.id === dataId
+           ) });
+    
+            return hasVariation;
+        });
+    
+        return isChecked || item;
+    };
+    
 
-    //     console.log("checkcartitems", checkcartitems);
-    //     return checkcartitems ?? null;
-    // };
-
-
-
- 
 
 
 
@@ -421,40 +628,56 @@ console.log("itemId" , itemId)
                                                                                 handleToggleSelection(data?.id, item?.id, e.target.checked)
                                                                             }
                                                                             // checked={cartItems?.vari?ation?.some(cartVariation =>  cartVariation.id === item.id)}
-                                                                             // checked={cartItems?.variation?.some((cartVariation) => cartVariation.id === data?.id && cartVariation.item_id === item.id)}
+                                                                             // checked={cartItems?.variation?.some( (cartVariation) => cartVariation.id === data?.id && cartVariation.item_id === item.id)}
 
                                                                             // checked={isItemChecked(data?.id, item?.id)}
                                                                         // checked={selectedItemsObj && selectedItemsObj[`${data?.id}_${item?.id}`]}
 
 
                                                                         /> */}
-                                                                     
-                                                                     <input
+
+                                                                        {/* <input
+                                                                            type="radio"
+                                                                            name={`variation_${data?.id}`}
+                                                                            onChange={(e) => handleToggleSelection(data?.id, item?.id, e.target.checked)}
+                                                                            checked={cartItems?.variation?.some(cartVariation => cartVariation.id === item.id)}
+
+                                                                        /> */}
+                                                                        {/* <input
+                                                                            type="radio"
+                                                                            name={`variation_${data?.id}`}
+                                                                            onChange={(e) => handleToggleSelection(data?.id, item?.id, e.target.checked)}
+                                                                            // checked={isItemChecked(data ,  data?.id, item?.id)}
+                                                                            checked={(() => {
+                                                                                const isChecked = cartItems?.some(product => {
+                                                                                    const hasVariation = product?.variation?.some(variation => 
+                                                                                     
+                                                                                              
+                                                                                        variation.variation_items?.id === item?.id
+                                                                                           
+
+                                 
+                                                                                   );
+
+                                                                                    // console.log("Product ID:", product?.id, "Has Variation:", hasVariation);
+
+                                                                                    return hasVariation || product;
+                                                                                });
+
+                                                                                // console.log("Is Checked:", isChecked);
+
+                                                                                return isChecked || item;
+                                                                            })()}
+                                                                        /> */}
+
+
+<input
     type="radio"
     name={`variation_${data?.id}`}
     onChange={(e) => handleToggleSelection(data?.id, item?.id, e.target.checked)}
-    // checked={(() => {
-    //     const isChecked = cartItems?.some(product => {
-    //         const hasVariation = product?.variation?.some(variation => {
-    //             const hasVariationItems = Array.isArray(variation?.variation_items) &&
-    //                 variation.variation_items?.some(variationItem => variationItem.id === item.id);
-
-    //             console.log("Product ID:", product?.id, "Variation ID:", variation?.id, "Has Variation Items:", hasVariationItems);
-
-    //             return hasVariationItems;
-    //         });
-
-    //         // console.log("Product ID:", product?.id, "Has Variation:", hasVariation);
-
-    //         return hasVariation || product;
-    //     });
-
-    //     console.log("Is Checked:", isChecked);
-
-    //     return isChecked || item;
-    // })()}
+    checked={isItemChecked(data?.id,   item , item?.id)}
 />
-                                                                        {console.log("Data:", data, " data id :", data.id, "Item ID:", item?.id)}
+
 
                                                                     </div>
                                                                     <div className="order_img">
@@ -502,6 +725,21 @@ console.log("itemId" , itemId)
 
                                     </div>
 
+                                    {/* checked={
+                                                                                  (() => {
+                                                                                      const isChecked = cartItems?.some((product) => {
+                                                                                          const hasVariationItems = product?.variation?.some((variation) => props.data?.id === data.id && variation.variation_id === item?.id);
+
+                                                                                          console.log("Product ID:", data,);
+
+                                                                                          return hasVariationItems;
+                                                                                      });
+
+                                                                                      console.log("Is Checked:", isChecked);
+
+                                                                                      return isChecked;
+                                                                                  })() || item
+                                                                              } */}
 
 
                                 </Tab>

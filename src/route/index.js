@@ -2,7 +2,7 @@ import React from "react";
 
 import { Cart } from '../foodMarket/Cart/index'
 import { Header } from '../foodMarket/Layout/header'
-import {Aboutus} from '../foodMarket/aboutUs/about_us'
+import {Wender} from '../foodMarket/wender/wender'
 import {Login} from '../foodMarket/acount/login'
 import {Signup} from '../foodMarket/acount/signup'
 import {Contact} from '../foodMarket/Contact-us/contactus'
@@ -16,7 +16,8 @@ export function Rout() {
         <Routes>
         <Route path="/" element={<Home />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/about" element={<Aboutus />} />
+          <Route path="/wender/:id" element={<Wender/>} />
+          {/* <Route path="/about" element={<Aboutus />} /> */}
           <Route path="/contact-us" element={<Contact />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />

@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import { Aboutus } from './foodMarket/aboutUs/about_us'
+// import { Aboutus } from './foodMarket'
 import { Header } from './foodMarket/Layout/header'
 import   Product_deatail  from './foodMarket/home/productdetail/index'
 import { Home } from './foodMarket/home/index' 
