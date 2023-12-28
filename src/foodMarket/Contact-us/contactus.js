@@ -4,51 +4,66 @@ import c1 from '../../assets/images/c1.png'
 import phone_icon from '../../assets/images/phone_icon.png'
 import message_icon from '../../assets/images/message_icon.png'
 import mac from '../../assets/images/mac.png'
-import {Contactus} from '../../components/services/catigories'
+import { Contactus } from '../../components/services/catigories'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { Link } from "react-router-dom";
 export function Contact() {
-const [name , SetName] = useState("")
-const [country , SetCountry] = useState("")
-const [lastname , SetLastname] = useState("")
+    const [name, setName] = useState("");
+    const [country, setCountry] = useState("");
+    const [lastname, setLastname] = useState("");
+    const [state, setState] = useState("");
+    const [zip, setZip] = useState("");
+    const [city, setCity] = useState("");
+    const [message, setMessage] = useState("");
+
     const data = {
-        // sub_total: totalCartPrice,
-        //       total: totalCartPrice,
-        //       zipcode: zipcode,
-        //       message: message,
-        //       products: cartItems,
-        //       discount: 32,
-        //       coupon_code: applycoupon,
+        name: name,
+        country: country,
+        lastname: lastname,
+        state: state,
+        zip: zip,
+        city: city,
+        message: message,
     };
 
-    const placeOrder = async () => {
+    const Contact_us = async (e) => {
+        e.preventDefault();
         try {
-          const response = await Contactus(data);
-    
-          if (response && response.status === true) {
-            // Handle the successful response here
+            const response = await Contactus(data);
 
-            console.log('Success ', response.message);
-    
-              toast.success('Order placed successfully!', {
-              position: toast.POSITION.TOP_RIGHT,
-            });
-    
-          } else {
-             console.error('Error in placing order:', response.statusText);
-    
-              toast.error('Failed to place order. Please try again.', {
-              position: toast.POSITION.TOP_RIGHT,
-            });
-          }
+            if (response && response.status === true) {
+                // Handle the successful response here
+
+                console.log('Success ', response.message);
+
+                toast.success('Message sent successfully!', {
+                    position: toast.POSITION.TOP_RIGHT,
+                });
+
+                // Reset state variables to empty strings
+                setName("");
+                setCountry("");
+                setLastname("");
+                setState("");
+                setZip("");
+                setCity("");
+                setMessage("");
+            } else {
+                console.error('Error in placing order:', response.statusText);
+
+                toast.error('Message not sent.', {
+                    position: toast.POSITION.TOP_RIGHT,
+                });
+            }
         } catch (error) {
-          console.error('Error in placing order:', error);
-    
-            toast.error('An error occurred while placing the order.', {
-            position: toast.POSITION.TOP_RIGHT,
-          });
-        }
-      };
+            console.error('Error in placing order:', error);
 
+            toast.error('An error occurred while placing the order.', {
+                position: toast.POSITION.TOP_RIGHT,
+            });
+        }
+    };
     return (
         <div>
 
@@ -117,10 +132,10 @@ const [lastname , SetLastname] = useState("")
                                 <div class="content_discription">
                                     <p>For all enquires, please contact us and one of our delightful team will be be happy to help.</p>
                                 </div>
-                                <form>
+                                <form onSubmit={Contact_us}>
                                     <div class="form-row">
                                         <div class="form-group col-md-12">
-<input type="text" name="" id=""  placeholder="Full Name" class="form-control"/>
+                                            <input type="text" name="" id="" placeholder="Full Name" class="form-control" />
                                             {/* <select id="inputState" class="form-control">
                                                 <option selected>Full Name</option>
                                                 <option>...</option>
@@ -137,13 +152,13 @@ const [lastname , SetLastname] = useState("")
                                         </div>
                                     </div>
                                     <div class="titleBox text-center mb-3">
-                                        <h3>Shipping Address</h3>
+                                        <h3>Contact us</h3>
                                     </div>
 
 
                                     <div class="form-row">
                                         <div class="form-group col-md-12">
-<input type="text" name="" id="" placeholder="Country"  class="form-control"/>
+                                            <input value={country} onChange={(e) => setCountry(e.target.value)} type="text" name="" id="" placeholder="Country" class="form-control" required />
                                             {/* <select id="inputState" class="form-control">
                                                 <option selected>Country</option>
                                                 <option>...</option>
@@ -153,48 +168,44 @@ const [lastname , SetLastname] = useState("")
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label for="inputEmail4"></label>
-                                            <input type="text" class="form-control" id="inputEmail4" placeholder="First Name" />
+                                            <input value={name} onChange={(e) => setName(e.target.value)} type="text" class="form-control" id="inputEmail4" placeholder="First Name" required />
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="inputPassword4"></label>
-                                            <input type="text" class="form-control" id="inputPassword4" placeholder="Last Name" />
+                                            <input value={lastname} onChange={(e) => setLastname(e.target.value)} type="text" class="form-control" id="inputPassword4" placeholder="Last Name" required />
                                         </div>
                                     </div>
 
-                            
+
                                     <div class="form-row">
                                         <div class="form-group col-md-4">
-                                            <label for="inputEmail4">First Name</label>
-                                            <input type="text" class="form-control" id="inputEmail4" placeholder="City" />
+
+                                            <input value={city} onChange={(e) => setCity(e.target.value)} type="text" class="form-control" id="inputEmail4" placeholder="City" required />
                                         </div>
                                         <div class="form-group col-md-4">
-                                            <label for="inputPassword4">Last Name</label>
-                                            <input type="text" class="form-control" id="inputPassword4" placeholder="State" />
+
+                                            <input value={state} onChange={(e) => setState(e.target.value)} type="text" class="form-control" id="inputPassword4" placeholder="State" required />
                                         </div>
                                         <div class="form-group col-md-4">
-                                            <label for="inputPassword4">Last Name</label>
-                                            <input type="text" class="form-control" id="inputPassword4" placeholder="Zip" />
+
+                                            <input value={zip} onChange={(e) => setZip(e.target.value)} type="text" class="form-control" id="inputPassword4" placeholder="Zip" required />
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-12">
 
-                                            <textarea name="" class="form-control" id="" cols="30" rows="5">Message</textarea>
+                                            <textarea value={message}
+                                                onChange={(e) => setMessage(e.target.value)} name="" class="form-control" id="" cols="30" rows="5" required>Message</textarea>
                                         </div>
                                         <div class="form-group col-md-12">
-                                            {/* <div class="form-check d-flex">
-      <input class="form-check-input" type="checkbox" id="gridCheck"/>
-      <label class="form-check-label" for="gridCheck">
-      Email me with news and offers
-      </label>
-    </div> */}
+
                                         </div>
 
                                     </div>
                                     <div class="form-row align-items-center">
                                         <div class="form-group col-md-6 ">
                                             <div class="actionShipping">
-                                                <button type="button" class="btn shippingButton">Continue To shipping</button>
+                                                <button type="submit" class="btn shippingButton">Semd Message</button>
                                             </div>
 
                                         </div>
@@ -421,6 +432,7 @@ const [lastname , SetLastname] = useState("")
                     </div>
                 </div>
             </section>
+            <ToastContainer />
         </div>
     )
 }

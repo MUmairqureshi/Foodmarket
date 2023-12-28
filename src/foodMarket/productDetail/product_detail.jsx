@@ -68,11 +68,7 @@ export const Product_deatail = (props) => {
 
 
 
-
-
-
-    // const data = props.productDetails?.data.product_price
-
+ 
     const dispatch = useDispatch();
     const [selectedVariations, setSelectedVariations] = useState({});
 
@@ -109,31 +105,7 @@ export const Product_deatail = (props) => {
         calculateTotalPrice();
     }, [selectedVariations, props.productDetails?.data.product_price]);
 
-
-
-    // const handleAddToCart = () => {
-    //     props.onHide()
-    //     const selectedVariationsObject = {
-    //         ...props.productDetails?.data,
-    //         quantity: newQuantity,
-
-    //         // variation: Object.values(selectedVariations),
-    //         variation: Object.values(selectedVariations).map(variation => ({
-    //             ...variation,
-    //             quantity: newQuantity,
-    //         })),
-
-
-    //     };
-
-    //     dispatch(addToCart(selectedVariationsObject));
-
-
-    //     setSelectedVariations({});
-
-    // }
-
-
+ 
 
 
     const handleAddToCart = () => {

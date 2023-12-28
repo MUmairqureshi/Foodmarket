@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect } from "react";
 import {login} from '../../components/services/catigories'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -12,35 +12,38 @@ const data = {
     email : email , 
     password : password
 }
-    const log_in = async () => {
+ 
+    const log_in = async (e) => {
+        e.preventDefault(); // Prevents the default form submission behavior
+    
         try {
           const response = await login(data);
     
-          if (response && response.status === true) {
+          if (response && response.success === true) {
             // Handle the successful response here
-
+    
             console.log('Success ', response.message);
     
-              toast.success('Order placed successfully!', {
+            toast.success('login Successfull', {
               position: toast.POSITION.TOP_RIGHT,
             });
-    
           } else {
-             console.error('Error in placing order:', response.statusText);
+            console.error('Error in signin:', response.statusText);
     
-              toast.error('Failed to place order. Please try again.', {
+            toast.error('User does not exist. Please try again.', {
               position: toast.POSITION.TOP_RIGHT,
             });
           }
         } catch (error) {
           console.error('Error in placing order:', error);
     
-            toast.error('An error occurred while placing the order.', {
+          toast.error('An error occurred while placing the order.', {
             position: toast.POSITION.TOP_RIGHT,
           });
         }
       };
-
+    
+  // ... rest of
 
     return (
         <div>
@@ -67,7 +70,7 @@ const data = {
                                 </div>
 
 
-                                <form action="">
+                                <form onSubmit={log_in}>
 
 
         
@@ -91,7 +94,7 @@ const data = {
 
 
                                     </div>
-                                    <button type="submit" className="btn login_btn">Log In</button>
+                                    <button   type="submit" className="btn login_btn">Log In</button>
                                     <Link to="/signup" className="forgot_password"><label for="">signup</label></Link>
                                 </form>
 
@@ -121,6 +124,7 @@ const data = {
 
 
             </section>
+            <ToastContainer/>
         </div>
     )
 }

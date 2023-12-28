@@ -3,16 +3,16 @@
 import menuOrder from '../../assets/images/menuOrder.png'
 import cashBack from '../../assets/images/cashBack.png'
 import recycle from '../../assets/images/recycle.png'
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { removeFromCart  , incrementQuantityCart , decrementQuantityCart} from './actions';
+import { removeFromCart, incrementQuantityCart, decrementQuantityCart } from './actions';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { Link } from 'react-router-dom';
 
 export const Cart = () => {
-
+const [zip , setZip] = useState()
     const dispatch = useDispatch();
 
     const handleDelete = (itemId) => {
@@ -24,21 +24,21 @@ export const Cart = () => {
             position: toast.POSITION.TOP_RIGHT,
         });
     };
- 
-const handleincrement = (itemId) => {
-    console.log("itemId" , itemId)
-    dispatch(incrementQuantityCart(itemId));
 
-    // Show toast for successful deletion
-   
-};
-const handledecrement = (itemId) => {
-    console.log("itemId" , itemId)
-    dispatch(decrementQuantityCart(itemId));
+    const handleincrement = (itemId) => {
+        console.log("itemId", itemId)
+        dispatch(incrementQuantityCart(itemId));
 
-    // Show toast for successful deletion
-   
-};
+        // Show toast for successful deletion
+
+    };
+    const handledecrement = (itemId) => {
+        console.log("itemId", itemId)
+        dispatch(decrementQuantityCart(itemId));
+
+        // Show toast for successful deletion
+
+    };
     const cartItems = useSelector((state) => state.cart.items);
     const ImageUrl = "https://custom2.mystagingserver.site/food-stadium/public/"
 
@@ -153,10 +153,11 @@ const handledecrement = (itemId) => {
                     <div className="addressTitle flex-xl-nowrap flex-wrap">
                         <div className="addrssName">
                             <p className="mb-0">Your Address</p>
-                            <h5 className="font-weight-bold text-black"><i className="fa fa-map-marker"></i>Jordan James</h5>
+                            {/* <h5 className="font-weight-bold text-black"><i className="fa fa-map-marker"></i>Jordan James</h5> */}
+                            <input placeholder='Enter Zipcode ' onChange={(e) => setZip(e.target.value)}/>
                         </div>
                         <div className="actionChange">
-                            <button type="button" className="btn primaryButton">Changes</button>
+                            <button type="button" className="btn primaryButton">Find Neraest food</button>
                         </div>
                     </div>
                     <div className="addressContent">
