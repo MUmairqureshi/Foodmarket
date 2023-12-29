@@ -12,8 +12,8 @@ import mac from '../../assets/images/mac.png'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { fetchProducts, addToCart, incrementQuantity, decrementQuantity } from '../../components/redux/actions';
-export function PopularCategory({data}) {
-console.log("wemderdata" , data.data?.store_products)
+export function PopularCategory({data , setWenderdata}) {
+console.log("wemderdata" , data)
 
 
 
@@ -133,7 +133,7 @@ console.log("wemderdata" , data.data?.store_products)
 
 
     const handleIncrement = (productId) => {
-        setAllproduct((prevProducts) =>
+        setWenderdata((prevProducts) =>
             prevProducts.map((product) =>
                 product.id === productId
                     ? { ...product, quantity: product.quantity + 1 }
@@ -143,7 +143,7 @@ console.log("wemderdata" , data.data?.store_products)
     };
 
     const handleDecrement = (productId) => {
-        setAllproduct((prevProducts) =>
+        setWenderdata((prevProducts) =>
             prevProducts.map((product) =>
                 product.id === productId && product.quantity > 0
                     ? { ...product, quantity: product.quantity - 1 }
@@ -157,7 +157,7 @@ console.log("wemderdata" , data.data?.store_products)
     const handleAddToCart = (product) => {
         dispatch(addToCart(product));
 
-        setAllproduct((prevProducts) =>
+        setWenderdata((prevProducts) =>
             prevProducts.map((p) =>
                 p?.id === product?.id ? { ...p, quantity: 1 } : p,
 
@@ -197,7 +197,7 @@ console.log("wemderdata" , data.data?.store_products)
                         <Slider ref={sliderRef} {...settings}>
 
 
-                            {data.data?.store_products?.map(data => (
+                            {data?.map(data => (
                                 <div className="row">
                                     <Card className="mb-3" style={{ width: '16rem' }}>
                                         <Nav.Link className="no-link-decoration" id='nav-link' style={{ textDecorationStyle: 'none' }} onClick={() => handleProductClick(data?.id)}>

@@ -257,16 +257,20 @@ export const Trending_product = async () => {
 
 
 
-export const Order_Placed = async (formData) => {
+export const Order_Placed = async (formData) => { 
+ 
+
   console.log("formData"  , formData)
   try {
     const res = await fetch('https://custom2.mystagingserver.site/food-stadium/public/api/order_placed', {
       method: "POST",
       headers: {
+        'Authorization': `Bearer ${localStorage.getItem('userToken')}`, // Include the user token in the headers
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(formData),
     });
+   
 console.log("res" , res)
     const data = await res.json();
     console.log("success", data.status);
@@ -309,7 +313,7 @@ export const login = async (formData) => {
 // verdorsignup
 export const verdorsignup = async (formData) => {
   try {
-    const res = await fetch('https://custom2.mystagingserver.site/food-stadium/public/api/user-register', {
+    const res = await fetch('https://custom2.mystagingserver.site/food-stadium/public/api/vendor_register', {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
@@ -439,5 +443,97 @@ const logout = async () => {
   } catch (error) {
     console.error('Error in logout:', error);
     // Handle any unexpected errors during logout
+  }
+};
+// https://custom2.mystagingserver.site/food-stadium/public/api/add_remove_favorte/1
+
+
+
+
+
+
+// export const Favourite = async (formData) => {
+      
+// const login = localStorage.getItem('userToken');
+//   console.log("Contactus"  , formData)
+//   try {
+//     const res = await fetch('https://custom2.mystagingserver.site/food-stadium/public/api/contact_query', {
+//       method: "POST",
+//       headers: {
+//         'Content-Type': 'application/json',
+//         // Add the authentication token to the headers if available
+//         'Authorization': authToken ? `Bearer ${login}` : '',
+//       },
+//       body: JSON.stringify(formData),
+//     });
+// console.log("res" , res)
+//     const data = await res.json();
+//     console.log("Contactussuccess", data.status);
+//     return data;
+//   } catch (error) {
+//       console.log('Error in Add New Category (service) =>', error);
+//   }
+// }
+export const Favourite = async (formData) => {
+ 
+  console.log("Contactus", formData);
+
+  try {
+    const res = await fetch('https://custom2.mystagingserver.site/food-stadium/public/api/contact_query', {
+      method: "POST",
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('userToken')}`, // Include the user token in the headers
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    });
+
+    console.log("res", res);
+    const data = await res.json();
+    console.log("Contactussuccess", data.status);
+    return data;
+  } catch (error) {
+    console.log('Error in Add New Category (service) =>', error);
+  }
+};
+
+
+// https://custom2.mystagingserver.site/food-stadium/public/api/favorte_list
+
+ 
+
+// export const favouritepropuctlist = async() => {
+  
+//   try {
+//     const res = await fetch(`https://custom2.mystagingserver.site/food-stadium/public/api/favorte_list`, {
+//       method: 'GET',
+//     });
+//     const data = await res.json();
+//     return data;
+//   } catch (error) {
+//     console.log('Error in getting all products (service) =>', error)
+//   }
+  
+// }
+
+export const favouritepropuctlist = async () => {
+  try {
+    // Retrieve the authentication token from local storage
+    
+const login = localStorage.getItem('userToken');
+ 
+
+    const res = await fetch('https://custom2.mystagingserver.site/food-stadium/public/api/favorite_list', {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('userToken')}`, // Include the user token in the headers
+        'Content-Type': 'application/json',
+      },
+    });
+
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.log('Error in getting favorite product list:', error);
   }
 };

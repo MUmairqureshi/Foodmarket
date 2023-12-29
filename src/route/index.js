@@ -10,7 +10,7 @@ import {Contact} from '../foodMarket/Contact-us/contactus'
 import { BrowserRouter as Router, Routes, Route, Link, BrowserRouter  } from "react-router-dom";
 import Home from '../foodMarket/home/index'
 import { Protected , Protectedvendor } from "./protectedroute";
-
+import {Favourites} from '../foodMarket/favourite/favourite'
 export function Rout() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   // const navigate = useNavigate();
@@ -30,7 +30,8 @@ export function Rout() {
           <Route path="/contact-us" element={<Contact />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-       
+          <Route path="/favourit-product" element={<Favourites />} />
+       {/* favourit-product */}
         </Routes>
       </BrowserRouter>
  

@@ -96,7 +96,9 @@ export function Header() {
                                     </ul>
                                     <div className="form-inline my-2 my-lg-0 headerIcons">
                                         <button type="button">
+                                            <Link to="/favourit-product">
                                             <i className="fa fa-heart"></i>
+                                            </Link>
                                         </button>
                                         <button type="button">
                                             <Link className="nav-link" to="/cart"> <i className="fa fa-shopping-cart"></i></Link>

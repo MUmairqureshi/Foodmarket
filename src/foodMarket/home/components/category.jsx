@@ -72,7 +72,7 @@ export function Category() {
                 setLoading(true);
 
                 // Simulate a loading time of 2 seconds
-                const loadingTime = 2000;
+                const loadingTime = 100;
                 const startTime = new Date().getTime();
 
                 let data;
@@ -101,7 +101,7 @@ export function Category() {
                     setFilteredData(data?.data || []);
                     setAllProducts(data?.data || []);
                     setLoading(false);
-                }, remainingTime);
+                });
             } catch (error) {
                 console.error('Error fetching data:', error);
                 setLoading(false);

@@ -7,6 +7,13 @@ import { useNavigate } from 'react-router';
 export function Signup() {
 
     const [email , setEmail] = useState("")
+    const [City , setCity] = useState("")
+    const [state , setState] = useState("")
+    const [Country , setCountry] = useState("")
+    
+    const [store_name , setStore_name] = useState("")
+    const [store_descripction , setStore_descripction] = useState("")
+    const [store_timing , setStore_timing] = useState("")
     const [password , setPassword] = useState("")
     const [confirmpassword , setConfirmPassword] = useState("")
     const [name , setName] = useState("")
@@ -17,6 +24,20 @@ export function Signup() {
         email :email,
         password:  password , 
     }
+
+    const vendordata = {
+      name : name,
+      email :email,
+      password:  password ,
+      store_name:store_name,
+      store_descripction:store_descripction,
+      City:City,
+      state:state,
+      Country:Country,
+      store_timing:store_timing
+
+       
+  }
     console.log("datasignup" , data)
   
     // const sign_up = async (e) => {
@@ -176,7 +197,7 @@ export function Signup() {
  
       } else if (userType === 'vendor') {
         try {
-          const response = await verdorsignup(data);
+          const response = await verdorsignup(vendordata);
     
           if (response && response.success === true) {
  
@@ -289,22 +310,24 @@ export function Signup() {
                                   
                                     <h4>Sign Up</h4>
  
-            <Form.Group controlId="formUserType" className="d-flex">
-              <p>User Type</p>
-              <div className="d-flex">
+            <Form.Group controlId="formUserType" className="d- ">
+              <p className="m-0">User Type</p>
+              <div className="d-flex" style={{gap:"10px"}}>
                 <Form.Check
                   type="radio"
                   label="User"
                   value="user"
                   checked={userType === 'user'}
+                  class="mr-2 form-check-label  -2"
                   onChange={handleUserTypeChange}
                 />
                 <Form.Check
                   type="radio"
                   label="Vendor"
-                  value="verdor"
-                  checked={userType === 'verdor'}
+                  value="vendor"
+                  checked={userType === 'vendor'}
                   onChange={handleUserTypeChange}
+                  class="mr-2 form-check-label  -2"
                 />
               </div>
             </Form.Group>
@@ -328,6 +351,59 @@ export function Signup() {
                                         </div>
                                     </div>
 
+                                
+
+
+                                    {userType === 'vendor' && (
+                   <div class="form-group">
+                   <div class="form-item">
+                       <input  type="text" id="username" required  onChange={(e) => setCity(e.target.value)}/>
+                       <label for="username">City</label>
+                   </div>
+               </div>
+            )}
+
+ 
+                                   {userType === 'vendor' && (
+                   <div class="form-group">
+                   <div class="form-item">
+                       <input  type="text" id="username" required  onChange={(e) => setState(e.target.value)}/>
+                       <label for="username">state</label>
+                   </div>
+               </div>
+            )}
+   {userType === 'vendor' && (
+                   <div class="form-group">
+                   <div class="form-item">
+                       <input  type="text" id="username" required  onChange={(e) => setCountry(e.target.value)}/>
+                       <label for="username">Country</label>
+                   </div>
+               </div>
+            )}
+              {userType === 'vendor' && (
+                   <div class="form-group">
+                   <div class="form-item">
+                       <input  type="text" id="username" required  onChange={(e) => setStore_name(e.target.value)}/>
+                       <label for="username">Store Name</label>
+                   </div>
+               </div>
+            )}
+               {userType === 'vendor' && (
+                   <div class="form-group">
+                   <div class="form-item">
+                       <input  type="text" id="username" required  onChange={(e) => setStore_descripction(e.target.value)}/>
+                       <label for="username">store_descripction</label>
+                   </div>
+               </div>
+            )}
+   {userType === 'vendor' && (
+                   <div class="form-group">
+                   <div class="form-item">
+                       <input  type="text" id="username" required  onChange={(e) => setStore_timing(e.target.value)}/>
+                       <label for="username">store_timing</label>
+                   </div>
+               </div>
+            )}
                                     <div class="form-group">
 
                                         <div class="form-item">

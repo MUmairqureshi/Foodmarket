@@ -263,6 +263,7 @@ export function Cart() {
             }
 
             const data = {
+                user_address : "dwqed",
                 sub_total: totalCartPrice,
                 total: totalCartPrice,
                 zipcode: zipcode,

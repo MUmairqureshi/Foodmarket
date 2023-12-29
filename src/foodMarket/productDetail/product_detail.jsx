@@ -433,26 +433,26 @@ console.log("itemId" , itemId)
     type="radio"
     name={`variation_${data?.id}`}
     onChange={(e) => handleToggleSelection(data?.id, item?.id, e.target.checked)}
-    checked={(() => {
-        const isChecked = cartItems?.some(product => {
-            const hasVariation = product?.variation?.some(variation => {
-                const hasVariationItems = Array.isArray(variation?.variation_items) &&
-                    variation.variation_items?.some(variationItem => variationItem.id === item.id);
+    // checked={(() => {
+    //     const isChecked = cartItems?.some(product => {
+    //         const hasVariation = product?.variation?.some(variation => {
+    //             const hasVariationItems = Array.isArray(variation?.variation_items) &&
+    //                 variation.variation_items?.some(variationItem => variationItem.id === item.id);
 
-                console.log("Product ID:", product?.id, "Variation ID:", variation?.id, "Has Variation Items:", hasVariationItems);
+    //             console.log("Product ID:", product?.id, "Variation ID:", variation?.id, "Has Variation Items:", hasVariationItems);
 
-                return hasVariationItems;
-            });
+    //             return hasVariationItems;
+    //         });
 
-            console.log("Product ID:", product?.id, "Has Variation:", hasVariation);
+    //         console.log("Product ID:", product?.id, "Has Variation:", hasVariation);
 
-            return hasVariation || product;
-        });
+    //         return hasVariation || product;
+    //     });
 
-        console.log("Is Checked:", isChecked);
+    //     console.log("Is Checked:", isChecked);
 
-        return isChecked || item;
-    })()}
+    //     return isChecked || item;
+    // })()}
 />
                                                                         {console.log("Data:", data, " data id :", data.id, "Item ID:", item?.id)}
 
