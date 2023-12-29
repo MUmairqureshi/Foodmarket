@@ -145,45 +145,65 @@ export function Cart() {
 
 
 
-    const data = {
-        sub_total: totalCartPrice,
-        total: totalCartPrice,
-        zipcode: zipcode,
-        message: message,
-        products: cartItems,
-        discount: 32,
-        coupon_code: applycoupon,
-    };
-
-
-    // const placeOrder = async () => {
-    //     try {
-    //         const response = await Order_Placed(data);
-
-    //         if (response && response.status === true) {
-    //             // Handle the successful response here
-
-    //             console.log('Success ', response.message);
-
-    //             toast.success('Order placed successfully!', {
-    //                 position: toast.POSITION.TOP_RIGHT,
-    //             });
-
-    //         } else {
-    //             console.error('Error in placing order:', response.statusText);
-
-    //             toast.error('Failed to place order. Please try again.', {
-    //                 position: toast.POSITION.TOP_RIGHT,
-    //             });
-    //         }
-    //     } catch (error) {
-    //         console.error('Error in placing order:', error);
-
-    //         toast.error('An error occurred while placing the order.', {
-    //             position: toast.POSITION.TOP_RIGHT,
-    //         });
-    //     }
+    // const data = {
+    //     sub_total: totalCartPrice,
+    //     total: totalCartPrice,
+    //     zipcode: zipcode,
+    //     message: message,
+    //     products: cartItems,
+    //     discount: 32,
+    //     coupon_code: applycoupon,
     // };
+
+
+
+               const data = {
+                date:date,
+                user_address : "dwqed",
+                sub_total: totalCartPrice,
+                total: totalCartPrice,
+                zipcode: zipcode,
+                message: message,
+                products: cartItems,
+                discount: 32,
+                coupon_code: applycoupon,
+                user_address : "dedjedn" ,
+                delivery_type: "ontime"
+            };
+    const placeOrder = async () => {
+        try {
+            const response = await Order_Placed(data);
+
+            if (response && response.status === true) {
+                // Handle the successful response here
+
+                console.log('Success ', response.message);
+
+                toast.success('Order placed successfully!', {
+                    position: toast.POSITION.TOP_RIGHT,
+                });
+
+
+                setZipcode("");
+                setMessage("");
+                setDate("")
+                // setApplyCoupon("");
+
+            } else {
+                console.error('Error in placing order:', response.statusText);
+
+                toast.error('Failed to place order. Please try again.', {
+                    position: toast.POSITION.TOP_RIGHT,
+                });
+            }
+        } catch (error) {
+            console.error('Error in placing order:', error);
+
+            toast.error('An error occurred while placing the order.', {
+                position: toast.POSITION.TOP_RIGHT,
+            });
+        }
+    };
 
 
 
@@ -306,66 +326,66 @@ export function Cart() {
     //         });
     //     }
     // };    
-    const placeOrder = async () => {
-        try {
-            const firstProductStoreId = cartItems.length > 0 ? cartItems[0].storeId : null;
+    // const placeOrder = async () => {
+    //     try {
+    //         const firstProductStoreId = cartItems.length > 0 ? cartItems[0].storeId : null;
     
-            if (cartItems.length === 2 && firstProductStoreId !== cartItems[1].storeId) {
-                const updatedCardItems = cartItems.slice(1);
+    //         if (cartItems.length === 2 && firstProductStoreId !== cartItems[1].storeId) {
+    //             const updatedCardItems = cartItems.slice(1);
     
-                // Dispatch action to update cardItems in the store
-                dispatch(updateCartItem(updatedCardItems));
+    //             // Dispatch action to update cardItems in the store
+    //             dispatch(updateCartItem(updatedCardItems));
     
-                toast.info('Removed the first vendor product from the order.', {
-                    position: toast.POSITION.TOP_RIGHT,
-                });
-            }
+    //             toast.info('Removed the first vendor product from the order.', {
+    //                 position: toast.POSITION.TOP_RIGHT,
+    //             });
+    //         }
     
      
-            const data = {
-                date:date,
-                user_address : "dwqed",
-                sub_total: totalCartPrice,
-                total: totalCartPrice,
-                zipcode: zipcode,
-                message: message,
-                products: cartItems,
-                discount: 32,
-                coupon_code: applycoupon,
-                user_address : "dedjedn" ,
-                delivery_type: "ontime"
-            };
+    //         const data = {
+    //             date:date,
+    //             user_address : "dwqed",
+    //             sub_total: totalCartPrice,
+    //             total: totalCartPrice,
+    //             zipcode: zipcode,
+    //             message: message,
+    //             products: cartItems,
+    //             discount: 32,
+    //             coupon_code: applycoupon,
+    //             user_address : "dedjedn" ,
+    //             delivery_type: "ontime"
+    //         };
     
-            const response = await Order_Placed(data);
+    //         const response = await Order_Placed(data);
     
-            if (response && response.status === 200) {
-                // Handle the successful response here
-                console.log('Success ', response.message);
+    //         if (response && response.status === 200) {
+    //             // Handle the successful response here
+    //             console.log('Success ', response.message);
     
-                // Clear the fields
-                setZipcode("");
-                setMessage("");
-                setApplyCoupon("");
-                // Add other fields to clear if needed
+    //             // Clear the fields
+    //             setZipcode("");
+    //             setMessage("");
+    //             setApplyCoupon("");
+    //             // Add other fields to clear if needed
     
-                toast.success('Order placed successfully!', {
-                    position: toast.POSITION.TOP_RIGHT,
-                });
-            } else {
-                console.error('Error in placing order:', response.statusText);
+    //             toast.success('Order placed successfully!', {
+    //                 position: toast.POSITION.TOP_RIGHT,
+    //             });
+    //         } else {
+    //             console.error('Error in placing order:', response.statusText);
     
-                toast.error('Failed to place order. Please try again.', {
-                    position: toast.POSITION.TOP_RIGHT,
-                });
-            }
-        } catch (error) {
-            console.error('Error in placing order:', error);
+    //             toast.error('Failed to place order. Please try again.', {
+    //                 position: toast.POSITION.TOP_RIGHT,
+    //             });
+    //         }
+    //     } catch (error) {
+    //         console.error('Error in placing order:', error);
     
-            toast.error('An error occurred while placing the order.', {
-                position: toast.POSITION.TOP_RIGHT,
-            });
-        }
-    };
+    //         toast.error('An error occurred while placing the order.', {
+    //             position: toast.POSITION.TOP_RIGHT,
+    //         });
+    //     }
+    // };
     
 
     return (
@@ -468,7 +488,7 @@ export function Cart() {
 
                                             </tr>
                                         ))}
-
+{/* 
                                         <tr>
                                             <td>
                                                 <div className="actionChange">
@@ -483,7 +503,7 @@ export function Cart() {
                                                     <button type="button" className="btn primaryButton">Update Cart</button>
                                                 </div>
                                             </td>
-                                        </tr>
+                                        </tr> */}
 
                                     </tbody>
                                 </table>

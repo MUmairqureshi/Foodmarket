@@ -233,9 +233,7 @@ const [zip , setZip] = useState()
                     </div>
                 </div>
                 <div className="actionButton mb-3">
-                    <div className="haveACoupon mb-3">
-                        <button type="button" className="primaryButton btn w-100 "> <span className="metaDollar">$</span>Have a Coupon code? <i className="fa fa-chevron-right"></i></button>
-                    </div>
+                    
                     <div className="checkoutBtn">
                         <Link to="/cart" className="primaryButton btn w-100"> Checkout</Link>
                     </div>

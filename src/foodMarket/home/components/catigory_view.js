@@ -179,27 +179,7 @@ export function Catigory_view({setSelectedCatigoryId}) {
                     </div>
                 </div>
             </div>
-            <div className="catFilter d-flex align-items-center flex-wrap mb-3">
-                <div className="dineIN mb-2">
-                    <button type="button" className="primaryButton btn w-100"> <span className="metaDollar">Delivery</span>Pickup <span>Dine-in</span></button>
-                </div>
-                <div className="dineIN mb-2 genralBtn">
-                    <button type="button" className="primaryButton btn w-100 bg-white"> Group Order</button>
-                </div>
-                <div className="dineIN mb-2 genralBtn">
-                    <button type="button" className="primaryButton btn w-100 bg-white"> Catering</button>
-                </div>
-                <div className="dineIN mb-2 genralBtn">
-                    <button type="button" className="primaryButton btn w-100 bg-white"> Schedule</button>
-                </div>
-                <div className="dineIN mb-2 genralBtn">
-                    <button type="button" className="primaryButton btn w-100 bg-white"> Manhattan west . Now</button>
-                </div>
-                <div className="dineIN mb-2 genralBtn">
-                    <button type="button" className="primaryButton btn w-100 bg-white">Food, groceries,etc</button>
-                </div>
-
-            </div>
+    
         </div>
     )
 }

@@ -537,3 +537,18 @@ const login = localStorage.getItem('userToken');
     console.log('Error in getting favorite product list:', error);
   }
 };
+ 
+
+export const Zipcode = async(zip) => {
+  // console.log("apizip" , zip)
+  try {
+    const res = await fetch(`https://custom2.mystagingserver.site/food-stadium/public/api/product_by_zipcode/${zip}`, {
+      method: 'GET',
+    });
+    const data = await res.json();
+    return data.data;
+  } catch (error) {
+    console.log('Error in getting all products (service) =>', error)
+  }
+  
+}

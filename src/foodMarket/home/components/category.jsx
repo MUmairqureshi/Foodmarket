@@ -16,7 +16,7 @@ import { useRef } from "react";
 
 import { Catigory_view } from './catigory_view'
 
-import { Get_all_product, filterProducts, filterMenu, filterDietary, filterPrice  } from '../../../components/services/catigories'
+import { Get_all_product, filterProducts, filterMenu, filterDietary, filterPrice   , Zipcode} from '../../../components/services/catigories'
 
 export function Category() {
     const cartItems = useSelector((state) => state.cart.items);
@@ -111,7 +111,7 @@ export function Category() {
         };
 
         fetchData();
-    }, [selectedCatigoryId, selectedMenuId, dietary, minPrice, maxPrice]);
+    }, [selectedCatigoryId, selectedMenuId, dietary, minPrice, maxPrice ]);
 
     console.log("")
     const handleIncrement = (productId) => {
@@ -170,145 +170,7 @@ export function Category() {
     };
     
 
-
-
-
-    // const handleAddToCart = (product) => {
-    //     const firstProductStoreId = cartItems.length > 0 ? cartItems[0].store_id : null;
-     
-    //     if (cartItems.length === 2 && firstProductStoreId !== product.store_id) {
-    //          const updatedCardItems = cartItems.slice(1);
-     
-    //         dispatch(updateCartItem(updatedCardItems));
-     
-    //         toast.info('Removed the first vendor product from the order.', {
-    //             position: toast.POSITION.TOP_RIGHT,
-    //         });
-    //     }
-     
-    //     dispatch(addToCart(product));
-     
-    //     setAllProducts((prevProducts) =>
-    //         prevProducts.map((p) =>
-    //             p?.id === product?.id ? { ...p, quantity: 1 } : p
-    //         )
-    //     );
-     
-    //     toast.success(`${product.title} added to cart!`, {
-    //         position: toast.POSITION.TOP_RIGHT,
-    //     });
-    // };
-    
-
-    // const handleAddToCart = (product) => {
-    //     const currentProductStoreId = product.store_id;
-    //     const itemsToRemove = cartItems.filter(item => item.store_id === currentProductStoreId);
-    
-    //     // Check if the cart has 2 items and the first item belongs to a different store
-    //     if (cartItems.length === 2 && cartItems[0].store_id !== currentProductStoreId) {
-    //         // Remove all items related to the current store
-    //         const updatedCardItems = cartItems.filter(item => item.store_id !== currentProductStoreId);
-    
-    //         // Dispatch action to update cartItems in the store
-    //         dispatch(updateCartItem(updatedCardItems));
-    
-    //         // Show toast indicating that items related to the current store have been removed
-    //         toast.info(`Removed items related to the current store from the order.`, {
-    //             position: toast.POSITION.TOP_RIGHT,
-    //         });
-    //     }
-    
-    //     // Add the new product to the cart
-    //     dispatch(addToCart(product));
-    
-    //     // Update the quantity of the added product in the local state
-    //     setAllProducts((prevProducts) =>
-    //         prevProducts.map((p) =>
-    //             p?.id === product?.id ? { ...p, quantity: 1 } : p
-    //         )
-    //     );
-    
-    //     // Show toast indicating that the product has been added to the cart
-    //     toast.success(`${product.title} added to cart!`, {
-    //         position: toast.POSITION.TOP_RIGHT,
-    //     });
-    // };
-    
-
-
-
-
-
-
-    // const handleAddToCart = (product) => {
-        
-    //     const firstProductStoreId = cartItems.length > 0 ? cartItems[0].storeId : null;
-
-    //     if (cartItems.length === 2 && firstProductStoreId !== cartItems[1].storeId) {
-    //         const updatedCardItems = cartItems.slice(1);
-
-    //         // Dispatch action to update cardItems in the store
-    //         dispatch(updateCartItem(updatedCardItems));
-
-    //         toast.info('Removed the first vendor product from the order.', {
-    //             position: toast.POSITION.TOP_RIGHT,
-    //         });
-    //     }
-        
-    //     dispatch(addToCart(product));
-
-    //     setAllProducts((prevProducts) =>
-    //         prevProducts.map((p) =>
-    //             p?.id === product?.id ? { ...p, quantity: 1 } : p,
-
-    //         )
-    //     );
-
-    //     // Show toast
-    //     toast.success(`${product.title} added to cart!`, {
-    //         position: toast.POSITION.TOP_RIGHT,
-    //     });
-    // };
-// if use select product of different store id  first one is remove and show message in toast first order has remove if cartitems in empty add prodct
-
-
-
-
-
-
-// const handleAddToCart = (product) => {
-//     const currentProductStoreId = product.store_id;
-//     const itemsToRemove = cartItems.filter(item => item.store_id === currentProductStoreId);
-
-//     // Check if the cart has 2 items and the first item belongs to a different store
-//     if (cartItems.length === 2 && cartItems[0].store_id !== currentProductStoreId) {
-//         // Remove all items related to the current store
-//         const updatedCardItems = cartItems.filter(item => item.store_id !== currentProductStoreId);
-
-//         // Dispatch action to update cartItems in the store
-//         dispatch(updateCartItem(updatedCardItems));
-
-//         // Show toast indicating that items related to the current store have been removed
-//         toast.info(`Removed items related to the current store from the order.`, {
-//             position: toast.POSITION.TOP_RIGHT,
-//         });
-//     }
-
-//     // Add the new product to the cart
-//     dispatch(addToCart(product));
-
-//     // Update the quantity of the added product in the local state
-//     setAllProducts((prevProducts) =>
-//         prevProducts.map((p) =>
-//             p?.id === product?.id ? { ...p, quantity: 1 } : p
-//         )
-//     );
-
-//     // Show toast indicating that the product has been added to the cart
-//     toast.success(`${product.title} added to cart!`, {
-//         position: toast.POSITION.TOP_RIGHT,
-//     });
-// };
+ 
 
 
     const handlepopulerdata = () => {
