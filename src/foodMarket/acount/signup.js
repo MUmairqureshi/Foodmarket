@@ -1,84 +1,84 @@
-import React , {useState} from "react";
-import {signup, verdorsignup} from '../../components/services/catigories'
+import React, { useState } from "react";
+import { signup, verdorsignup } from '../../components/services/catigories'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Form, Button, Container, Col, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
 export function Signup() {
 
-    const [email , setEmail] = useState("")
-    const [City , setCity] = useState("")
-    const [state , setState] = useState("")
-    const [Country , setCountry] = useState("")
-    
-    const [store_name , setStore_name] = useState("")
-    const [store_descripction , setStore_descripction] = useState("")
-    const [store_timing , setStore_timing] = useState("")
-    const [password , setPassword] = useState("")
-    const [confirmpassword , setConfirmPassword] = useState("")
-    const [name , setName] = useState("")
-  
-    const navigate = useNavigate();
-    const data = {
-        name : name,
-        email :email,
-        password:  password , 
-    }
+  const [email, setEmail] = useState("")
+  const [City, setCity] = useState("")
+  const [state, setState] = useState("")
+  const [Country, setCountry] = useState("")
 
-    const vendordata = {
-      name : name,
-      email :email,
-      password:  password ,
-      store_name:store_name,
-      store_descripction:store_descripction,
-      City:City,
-      state:state,
-      Country:Country,
-      store_timing:store_timing
+  const [store_name, setStore_name] = useState("")
+  const [store_descripction, setStore_descripction] = useState("")
+  const [store_timing, setStore_timing] = useState("")
+  const [password, setPassword] = useState("")
+  const [confirmpassword, setConfirmPassword] = useState("")
+  const [name, setName] = useState("")
 
-       
+  const navigate = useNavigate();
+  const data = {
+    name: name,
+    email: email,
+    password: password,
   }
-    console.log("datasignup" , data)
-  
-    // const sign_up = async (e) => {
-    //     e.preventDefault();
-    
-    //     // Check if password and confirm password match
-    //     if (password !== confirmpassword) {
-    //       toast.error('Password and Confirm Password do not match.', {
-    //         position: toast.POSITION.TOP_RIGHT,
-    //       });
-    //       return;
-    //     }
-    
-    //     try {
-    //       const response = await signup(data);
-    
-    //       if (response && response.success === true) {
-    //         // Handle the successful response here
-    //         const userToken = response.data.token;
- 
-    //         localStorage.setItem('userToken', userToken);
-    //         console.log('Success ', response.message);
-    
-    //         toast.success('signup Successfully', {
-    //           position: toast.POSITION.TOP_RIGHT,
-    //         });
-    //       } else {
-    //         console.error('Error in signup:', response.statusText);
-    
-    //         toast.error('Email already exist. Please try again.', {
-    //           position: toast.POSITION.TOP_RIGHT,
-    //         });
-    //       }
-    //     } catch (error) {
-    //       console.error('Error in placing order:', error);
-    
-    //       toast.error('An error occurred while placing the order.', {
-    //         position: toast.POSITION.TOP_RIGHT,
-    //       });
-    //     }
-    //   };
+
+  const vendordata = {
+    name: name,
+    email: email,
+    password: password,
+    store_name: store_name,
+    store_descripction: store_descripction,
+    City: City,
+    state: state,
+    Country: Country,
+    store_timing: store_timing
+
+
+  }
+  console.log("datasignup", data)
+
+  // const sign_up = async (e) => {
+  //     e.preventDefault();
+
+  //     // Check if password and confirm password match
+  //     if (password !== confirmpassword) {
+  //       toast.error('Password and Confirm Password do not match.', {
+  //         position: toast.POSITION.TOP_RIGHT,
+  //       });
+  //       return;
+  //     }
+
+  //     try {
+  //       const response = await signup(data);
+
+  //       if (response && response.success === true) {
+  //         // Handle the successful response here
+  //         const userToken = response.data.token;
+
+  //         localStorage.setItem('userToken', userToken);
+  //         console.log('Success ', response.message);
+
+  //         toast.success('signup Successfully', {
+  //           position: toast.POSITION.TOP_RIGHT,
+  //         });
+  //       } else {
+  //         console.error('Error in signup:', response.statusText);
+
+  //         toast.error('Email already exist. Please try again.', {
+  //           position: toast.POSITION.TOP_RIGHT,
+  //         });
+  //       }
+  //     } catch (error) {
+  //       console.error('Error in placing order:', error);
+
+  //       toast.error('An error occurred while placing the order.', {
+  //         position: toast.POSITION.TOP_RIGHT,
+  //       });
+  //     }
+  //   };
 
 
 
@@ -90,58 +90,56 @@ export function Signup() {
 
 
 
-      const [userType, setUserType] = useState('user'); // Default to 'user'
+  const [userType, setUserType] = useState('user'); // Default to 'user'
 
-      const handleUserTypeChange = (event) => {
-        setUserType(event.target.value);
-      };
-    
-      // const handleSignUp = async (event) => {
-      //   event.preventDefault();
-    
-      //   const formData = new FormData(event.target);
-      //   const userData = {
-      //     fullName: formData.get('fullName'),
-      //     email: formData.get('email'),
-      //     password: formData.get('password'),
-      //   };
-    
-      //   // Make different API calls based on userType
-      //   try {
-      //     if (userType === 'user') {
-      //       // API call for user signup
-      //       const response = await fetch('userSignupEndpoint', {
-      //         method: 'POST',
-      //         headers: {
-      //           'Content-Type': 'application/json',
-      //         },
-      //         body: JSON.stringify(userData),
-      //       });
-    
-      //       const result = await response.json();
-      //       console.log('User Signup Response:', result);
-      //     } else if (userType === 'admin') {
-      //       // API call for admin signup
-      //       const response = await fetch('adminSignupEndpoint', {
-      //         method: 'POST',
-      //         headers: {
-      //           'Content-Type': 'application/json',
-      //         },
-      //         body: JSON.stringify({
-      //           email: userData.email,
-      //           password: userData.password,
-      //         }),
-      //       });
-    
-      //       const result = await response.json();
-      //       console.log('Admin Signup Response:', result);
-      //     }
-      //   } catch (error) {
-      //     console.error('Signup Error:', error);
-      //   }
-      // };
-    
-    
+  const handleUserTypeChange = (event) => {
+    setUserType(event.target.value);
+  };
+
+  // const handleSignUp = async (event) => {
+  //   event.preventDefault();
+
+  //   const formData = new FormData(event.target);
+  //   const userData = {
+  //     fullName: formData.get('fullName'),
+  //     email: formData.get('email'),
+  //     password: formData.get('password'),
+  //   };
+
+  //   // Make different API calls based on userType
+  //   try {
+  //     if (userType === 'user') {
+  //       // API call for user signup
+  //       const response = await fetch('userSignupEndpoint', {
+  //         method: 'POST',
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //         },
+  //         body: JSON.stringify(userData),
+  //       });
+
+  //       const result = await response.json();
+  //       console.log('User Signup Response:', result);
+  //     } else if (userType === 'admin') {
+  //       // API call for admin signup
+  //       const response = await fetch('adminSignupEndpoint', {
+  //         method: 'POST',
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //         },
+  //         body: JSON.stringify({
+  //           email: userData.email,
+  //           password: userData.password,
+  //         }),
+  //       });
+
+  //       const result = await response.json();
+  //       console.log('Admin Signup Response:', result);
+  //     }
+  //   } catch (error) {
+  //     console.error('Signup Error:', error);
+  //   }
+  // };
 
 
 
@@ -154,7 +152,9 @@ export function Signup() {
 
 
 
-      
+
+
+
   const sign_up = async (event) => {
     event.preventDefault();
     if (password !== confirmpassword) {
@@ -168,11 +168,11 @@ export function Signup() {
       if (userType === 'user') {
         try {
           const response = await signup(data);
-    
+
           if (response && response.success === true) {
- 
+
             const userToken = response.data.token;
- 
+
             localStorage.setItem('userToken', userToken);
             console.log('Success ', response.message);
             navigate('/')
@@ -181,51 +181,51 @@ export function Signup() {
             });
           } else {
             console.error('Error in signup:', response.statusText);
-    
+
             toast.error('Email already exist. Please try again.', {
               position: toast.POSITION.TOP_RIGHT,
             });
           }
         } catch (error) {
           console.error('Error in placing order:', error);
-    
+
           toast.error('An error occurred while placing the order.', {
             position: toast.POSITION.TOP_RIGHT,
           });
         }
 
- 
+
       } else if (userType === 'vendor') {
         try {
           const response = await verdorsignup(vendordata);
-    
+
           if (response && response.success === true) {
- 
+
             const userToken = response.data.token;
- 
+
             localStorage.setItem('userToken', userToken);
             console.log('Success ', response.message);
-    
+
             toast.success('signup Successfully', {
               position: toast.POSITION.TOP_RIGHT,
             });
           } else {
             console.error('Error in signup:', response.statusText);
-    
+
             toast.error('Email already exist. Please try again.', {
               position: toast.POSITION.TOP_RIGHT,
             });
           }
         } catch (error) {
           console.error('Error in placing order:', error);
-    
+
           toast.error('An error occurred while placing the order.', {
             position: toast.POSITION.TOP_RIGHT,
           });
         }
 
 
- 
+
       }
 
       // You can add your API calls here based on the userType
@@ -234,15 +234,15 @@ export function Signup() {
     }
   };
 
-    return (
-        <div>
+  return (
+    <div>
 
 
 
 
 
 
-{/* 
+      {/* 
 
 
 <Container>
@@ -296,150 +296,150 @@ export function Signup() {
     </Container> */}
 
 
-            <section class="login_page_section">
+      <section class="login_page_section">
 
-                <div class="container">
+        <div class="container">
 
-                    <div class="row">
+          <div class="row">
 
-                        <div class="col-md-5 mx-auto">
+            <div class="col-md-5 mx-auto">
 
-                            <div class="login_page">
+              <div class="login_page">
 
-                                <div class="login_heading">
-                                  
-                                    <h4>Sign Up</h4>
- 
-            <Form.Group controlId="formUserType" className="d- ">
-              <p className="m-0">User Type</p>
-              <div className="d-flex" style={{gap:"10px"}}>
-                <Form.Check
-                  type="radio"
-                  label="User"
-                  value="user"
-                  checked={userType === 'user'}
-                  class="mr-2 form-check-label  -2"
-                  onChange={handleUserTypeChange}
-                />
-                <Form.Check
-                  type="radio"
-                  label="Vendor"
-                  value="vendor"
-                  checked={userType === 'vendor'}
-                  onChange={handleUserTypeChange}
-                  class="mr-2 form-check-label  -2"
-                />
-              </div>
-            </Form.Group>
-                                </div>
+                <div class="login_heading d-block text-center">
 
-                                <form onSubmit={sign_up}>
+                  <h4>Sign Up</h4>
 
-                                    <div class="form-group">
-
-                                        <div class="form-item">
-                                            <input type="text" id="name" required  onChange={(e) => setName(e.target.value)}/>
-                                            <label for="name">Full Name</label>
-                                        </div>
-                                    </div>
-
-
-                                    <div class="form-group">
-                                        <div class="form-item">
-                                            <input  type="email" id="username" required  onChange={(e) => setEmail(e.target.value)}/>
-                                            <label for="username">Email Address</label>
-                                        </div>
-                                    </div>
-
-                                
-
-
-                                    {userType === 'vendor' && (
-                   <div class="form-group">
-                   <div class="form-item">
-                       <input  type="text" id="username" required  onChange={(e) => setCity(e.target.value)}/>
-                       <label for="username">City</label>
-                   </div>
-               </div>
-            )}
-
- 
-                                   {userType === 'vendor' && (
-                   <div class="form-group">
-                   <div class="form-item">
-                       <input  type="text" id="username" required  onChange={(e) => setState(e.target.value)}/>
-                       <label for="username">state</label>
-                   </div>
-               </div>
-            )}
-   {userType === 'vendor' && (
-                   <div class="form-group">
-                   <div class="form-item">
-                       <input  type="text" id="username" required  onChange={(e) => setCountry(e.target.value)}/>
-                       <label for="username">Country</label>
-                   </div>
-               </div>
-            )}
-              {userType === 'vendor' && (
-                   <div class="form-group">
-                   <div class="form-item">
-                       <input  type="text" id="username" required  onChange={(e) => setStore_name(e.target.value)}/>
-                       <label for="username">Store Name</label>
-                   </div>
-               </div>
-            )}
-               {userType === 'vendor' && (
-                   <div class="form-group">
-                   <div class="form-item">
-                       <input  type="text" id="username" required  onChange={(e) => setStore_descripction(e.target.value)}/>
-                       <label for="username">store_descripction</label>
-                   </div>
-               </div>
-            )}
-   {userType === 'vendor' && (
-                   <div class="form-group">
-                   <div class="form-item">
-                       <input  type="text" id="username" required  onChange={(e) => setStore_timing(e.target.value)}/>
-                       <label for="username">store_timing</label>
-                   </div>
-               </div>
-            )}
-                                    <div class="form-group">
-
-                                        <div class="form-item">
-                                            <input type="password" id="password" required onChange={(e) => setPassword(e.target.value)} />
-                                            <label for="password">Password</label>
-                                        </div>
-
-                                    </div>
-
-                                    <div class="form-group">
-
-                                        <div class="form-item">
-                                            <input type="password" id="confirmpassword" required onChange={(e) => setConfirmPassword(e.target.value)} />
-                                            <label for="confirmpassword">Confirm Password</label>
-                                        </div>
-
-                                    </div>
-
-                                    <button type="submit" class="btn login_btn">Sign Up</button>
-                                </form>
-
-
-                            </div>
-
-                        </div>
-
+                  <Form.Group controlId="formUserType" className="d- ">
+                    <p className="m-0">User Type</p>
+                    <div className="d-flex justify-content-center mt-3" style={{ gap: "10px" }}>
+                      <Form.Check
+                        type="radio"
+                        label="User"
+                        value="user"
+                        checked={userType === 'user'}
+                        class="mr-2 form-check-label  -2"
+                        onChange={handleUserTypeChange}
+                      />
+                      <Form.Check
+                        type="radio"
+                        label="Vendor"
+                        value="vendor"
+                        checked={userType === 'vendor'}
+                        onChange={handleUserTypeChange}
+                        class="mr-2 form-check-label  -2"
+                      />
                     </div>
-
+                  </Form.Group>
                 </div>
 
-            </section>
+                <form onSubmit={sign_up}>
 
-<ToastContainer/>
+                  <div class="form-group">
+
+                    <div class="form-item">
+                      <input type="text" id="name" required onChange={(e) => setName(e.target.value)} />
+                      <label for="name">Full Name</label>
+                    </div>
+                  </div>
+
+
+                  <div class="form-group">
+                    <div class="form-item">
+                      <input type="email" id="username" required onChange={(e) => setEmail(e.target.value)} />
+                      <label for="username">Email Address</label>
+                    </div>
+                  </div>
+
+
+
+
+                  {userType === 'vendor' && (
+                    <div class="form-group">
+                      <div class="form-item">
+                        <input type="text" id="username" required onChange={(e) => setCity(e.target.value)} />
+                        <label for="username">City</label>
+                      </div>
+                    </div>
+                  )}
+
+
+                  {userType === 'vendor' && (
+                    <div class="form-group">
+                      <div class="form-item">
+                        <input type="text" id="username" required onChange={(e) => setState(e.target.value)} />
+                        <label for="username">state</label>
+                      </div>
+                    </div>
+                  )}
+                  {userType === 'vendor' && (
+                    <div class="form-group">
+                      <div class="form-item">
+                        <input type="text" id="username" required onChange={(e) => setCountry(e.target.value)} />
+                        <label for="username">Country</label>
+                      </div>
+                    </div>
+                  )}
+                  {userType === 'vendor' && (
+                    <div class="form-group">
+                      <div class="form-item">
+                        <input type="text" id="username" required onChange={(e) => setStore_name(e.target.value)} />
+                        <label for="username">Store Name</label>
+                      </div>
+                    </div>
+                  )}
+                  {userType === 'vendor' && (
+                    <div class="form-group">
+                      <div class="form-item">
+                        <input type="text" id="username" required onChange={(e) => setStore_descripction(e.target.value)} />
+                        <label for="username">store_descripction</label>
+                      </div>
+                    </div>
+                  )}
+                  {userType === 'vendor' && (
+                    <div class="form-group">
+                      <div class="form-item">
+                        <input type="text" id="username" required onChange={(e) => setStore_timing(e.target.value)} />
+                        <label for="username">store_timing</label>
+                      </div>
+                    </div>
+                  )}
+                  <div class="form-group">
+
+                    <div class="form-item">
+                      <input type="password" id="password" required onChange={(e) => setPassword(e.target.value)} />
+                      <label for="password">Password</label>
+                    </div>
+
+                  </div>
+
+                  <div class="form-group">
+
+                    <div class="form-item">
+                      <input type="password" id="confirmpassword" required onChange={(e) => setConfirmPassword(e.target.value)} />
+                      <label for="confirmpassword">Confirm Password</label>
+                    </div>
+
+                  </div>
+
+                  <button type="submit" class="btn login_btn bg-theme-primary">Sign Up</button>
+                </form>
+
+
+              </div>
+
+            </div>
+
+          </div>
 
         </div>
-    )
+
+      </section>
+
+      <ToastContainer />
+
+    </div>
+  )
 }
 
 

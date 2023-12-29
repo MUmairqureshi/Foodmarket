@@ -122,7 +122,7 @@ export function Cart() {
 
 
 
-    const [applycoupon, setApplycoupon] = useState()
+    const [applycoupon, setApplycoupon] = useState('');
 
 
     const handleCouponChange = (e) => {
@@ -362,6 +362,11 @@ export function Cart() {
     //             // Handle the successful response here
     //             console.log('Success ', response.message);
     
+                // Clear the fields
+                setZipcode("");
+                setMessage("");
+                setApplycoupon('');
+                // Add other fields to clear if needed
     //             // Clear the fields
     //             setZipcode("");
     //             setMessage("");
