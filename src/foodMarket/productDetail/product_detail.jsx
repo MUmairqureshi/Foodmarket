@@ -551,7 +551,7 @@ console.log("itemId" , itemId)
                         <div class="col-md-12">
                             <div class="quntity_instructions d-flex align-items-center justify-content-between">
                                 <div class="titleBox">
-                                    <h3>Quantity <br /> Special Instructions?</h3>
+                                    <h3>Quantity</h3>
                                 </div>
                                 <div class="p_quantity">
                                     <input
@@ -563,9 +563,9 @@ console.log("itemId" , itemId)
                                     />
                                 </div>
                             </div>
-                            <div class="text_area">
+                            {/* <div class="text_area">
                                 <textarea name="" id="" cols="30" rows="8" class="form-control">Add instructions...</textarea>
-                            </div>
+                            </div> */}
                             <div class="quntity_instructions d-flex align-items-center justify-content-between">
                                 <div class="titleBox">
                                     <h3>Total Price</h3>
