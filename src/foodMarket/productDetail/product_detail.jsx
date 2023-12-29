@@ -411,26 +411,7 @@ export const Product_deatail = (props) => {
                                                                             type="radio"
                                                                             name={`variation_${data?.id}`}
                                                                             onChange={(e) => handleToggleSelection(data?.id, item?.id, e.target.checked)}
-                                                                        // checked={(() => {
-                                                                        //     const isChecked = cartItems?.some(product => {
-                                                                        //         const hasVariation = product?.variation?.some(variation => {
-                                                                        //             const hasVariationItems = Array.isArray(variation?.variation_items) &&
-                                                                        //                 variation.variation_items?.some(variationItem => variationItem.id === item.id);
-
-                                                                        //             console.log("Product ID:", product?.id, "Variation ID:", variation?.id, "Has Variation Items:", hasVariationItems);
-
-                                                                        //             return hasVariationItems;
-                                                                        //         });
-
-                                                                        //         console.log("Product ID:", product?.id, "Has Variation:", hasVariation);
-
-                                                                        //         return hasVariation || product;
-                                                                        //     });
-
-                                                                        //     console.log("Is Checked:", isChecked);
-
-                                                                        //     return isChecked || item;
-                                                                        // })()}
+                                                                    
                                                                         />
                                                                         {console.log("Data:", data, " data id :", data.id, "Item ID:", item?.id)}
 
@@ -487,30 +468,7 @@ export const Product_deatail = (props) => {
 
                                     <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Reviews</a>
 
-                                    {/* {remarks?.map((data)=>(
-
-                                    <div id="contact" role="tabpanel" aria-labelledby="contact-tab">
-                                        <div class="store_detail reviews_tabb">
-
-                                            <div class="client_info">
-                                                <div class="img_div">
-                                                    <img src={user} class="img-fluid" alt="" />
-                                                </div>
-                                                <div class="client_name">
-                                                    <div class="title">
-                                                        <h3>{data?.name}</h3>
-                                                    </div>
-                                                    <p>Rating : { data?.rating}</p>
-                                                </div>
-                                            </div>
-                                            <p>{data?.description}</p>
-                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero beatae architecto sequi? Placeat corporis iste hic officiis magni id atque
-                                                ipsam sed dolorum. Id, itaque. Deserunt tempora ab quia nostrum.</p>
-                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero beatae architecto sequi? Placeat corporis iste hic officiis magni id atque
-                                                ipsam sed dolorum. Id, itaque. Deserunt tempora ab quia nostrum.</p>
-
-                                        </div>
-                                    </div>))} */}
+                              
 
                                     <div id="contact" role="tabpanel" aria-labelledby="contact-tab">
                                         <div class="store_detail reviews_tabb">

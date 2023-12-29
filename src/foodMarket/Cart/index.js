@@ -363,9 +363,9 @@ export function Cart() {
     //             console.log('Success ', response.message);
     
                 // Clear the fields
-                setZipcode("");
-                setMessage("");
-                setApplycoupon('');
+                // setZipcode("");
+                // setMessage("");
+                // setApplycoupon('');
                 // Add other fields to clear if needed
     //             // Clear the fields
     //             setZipcode("");
