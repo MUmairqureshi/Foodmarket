@@ -306,6 +306,39 @@ export const login = async (formData) => {
     return { status: 'error', message: 'An error occurred during login.' };
   }
 }
+// verdorsignup
+export const verdorsignup = async (formData) => {
+  try {
+    const res = await fetch('https://custom2.mystagingserver.site/food-stadium/public/api/user-register', {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    });
+
+    // Check if the request was successful (status code in the range of 200-299)
+    if (!res.ok) {
+      throw new Error(`HTTP error! Status: ${res.status}`);
+    }
+
+    // Parse the JSON response
+    const data = await res.json();
+
+    // Check the status property in the response data
+    if (data.status === 'success') {
+      console.log("Signup successful");
+    } else {
+      console.log("Signup failed. Server message:", data.message);
+    }
+
+    return data;
+  } catch (error) {
+    console.error('Error in login:', error.message);
+    return { status: 'error', message: 'An error occurred during login.' };
+  }
+}
+
 export const signup = async (formData) => {
   try {
     const res = await fetch('https://custom2.mystagingserver.site/food-stadium/public/api/user-register', {

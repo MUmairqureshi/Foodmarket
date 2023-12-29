@@ -17,7 +17,7 @@ import { useParams } from 'react-router-dom';
  import {Beverages_Recommendations} from '../home/components/beverages_recommendation'
 import { Form } from 'react-bootstrap'
 import { useState } from 'react'
-export function Wender() {
+export function Vendor() {
 
 
     const[loading  , setLoading ] = useState(true)

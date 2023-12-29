@@ -29,6 +29,29 @@ export function PopularCategories({loading , data, handleIncrement, handleDecrem
     //   wrapperClass=""
     //   />
 
+    // const [isFavorited, setIsFavorited] = useState(false);
+
+    // const handleFavorite = (itemId) => {
+    //     console.log("itemid" ,itemId )
+    //     setIsFavorited((prevState) => !prevState);
+    
+    //    };
+    // const getFavoritedStatus = () => {
+    //     return isFavorited ? 'Favorited' : 'Not Favorited';
+    //   };
+
+
+
+    const [favoriteStates, setFavoriteStates] = useState({});
+
+    const handleFavorite = (itemId) => {
+      setFavoriteStates((prevStates) => ({
+        ...prevStates,
+        [itemId]: !prevStates[itemId], // Toggle the favorite state for the specific item
+      }));
+    };
+  
+
     const [showModal, setShowModal] = useState(false);
     const [productDetails, setProductDetails] = useState(null);
  
@@ -492,14 +515,25 @@ export function PopularCategories({loading , data, handleIncrement, handleDecrem
                                         {data?.map(data => (
                                             <div className="row">
                                                 <Card className="mb-3" style={{ width: '16rem' }}>
-                                                    <Nav.Link className="no-link-decoration" id='nav-link' style={{ textDecorationStyle: 'none' }} onClick={() => handleProductClick(data?.id)}>
+                                                    {/* <Nav.Link className="no-link-decoration" id='nav-link' style={{ textDecorationStyle: 'none' }} onClick={() => handleProductClick(data?.id)}> */}
                                                         <div className="cardHeader">
                                                             <div className="topMeta">
                                                                 <div className="tags">
                                                                     <span>19%off</span>
                                                                 </div>
                                                                 <div className="tags wishList">
-                                                                    <button className="button"><i className="fa fa-heart"></i></button>
+                                                                    {/* <button className="button"><i className="fa-heart-o"></i></button> */}
+                                                                    {/* <button onClick={()=> handleFavorite(data.id)} className="button">
+      <i className={`fa ${isFavorited ? 'fa-heart' : 'fa-heart-o'}`}></i>
+    </button> */}
+              {/* <button onClick={() => handleFavorite(data.id)} className="button">
+      <i className={` ${isFavorited ? 'fa fa-heart' : 'fa-heart-o'}`}></i>
+    </button> */}
+             
+
+             <button onClick={() => handleFavorite(data.id)} className="button">
+                    <i className={` ${favoriteStates[data.id] ? 'fa fa-heart' : 'fa-heart-o'}`}></i>
+                  </button>
                                                                 </div>
                                                             </div>
                                                             <div className="cardImage">
@@ -538,7 +572,7 @@ export function PopularCategories({loading , data, handleIncrement, handleDecrem
                                                                 <h5 className="text-theme-primary font-weight-bold">${data.product_price}</h5>
                                                             </div>
                                                         </div>
-                                                    </Nav.Link>
+                                                    {/* </Nav.Link> */}
                                                     <div className="cardFooter">
                                                         <div className="cardAction">
                                                             <div className="counterAction">

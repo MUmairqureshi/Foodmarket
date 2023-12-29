@@ -4,8 +4,22 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../css/style.css'
 import { Link } from "react-router-dom"
+import { Form, Button, Container, Col, Row } from 'react-bootstrap';
+
+
 import { useNavigate } from 'react-router';
 export function Login() {
+    const [userType, setUserType] = useState('user'); // Default to 'user'
+
+    const handleUserTypeChange = (event) => {
+      setUserType(event.target.value);
+    };
+  
+    const handleSignUp = (event) => {
+      event.preventDefault();
+      // Add your signup logic here based on userType (user or admin)
+      console.log(`Signing up as ${userType}`);
+    };
     const [email , setEmail] = useState("")
     const [password , setPassword] = useState("")
     const navigate = useNavigate();
@@ -125,7 +139,7 @@ const data = {
                                             <input onChange={(e) => setPassword(e.target.value)} type="password" id="password" required />
                                             <label for="password">Password</label>
                                         </div>
-                                        {/* <a className="forgot_password"><label for="">Forgot your password?</label></a> */}
+ 
 
 
                                     </div>
@@ -134,16 +148,7 @@ const data = {
                                 </form>
 
 
-                                {/* <div className="different_login">
-                                    <p>Or Sign In With</p>
-
-
-                                    <div className="social_links_div">
-                                        <label className="facebook">facebook</label>
-                                        <label for="" className="google">G<label for="" style={{color: "#d55", cursor:"pointer"}}>o</label><label for="" style={{color: "#d2d226", cursor:"pointer"}}>o</label>g<label for="" style={{color: "#15b739", cursor:"pointer"}}>l</label><label for="" style={{color: "#d55", cursor:"pointer"}}>e</label></label>
-                                        <label for="" className="apple"><span><i className="fa-brands fa-apple"></i></span> Apple</label>
-                                    </div>
-                                </div> */}
+                         
 
 
                             </div>
@@ -159,7 +164,59 @@ const data = {
 
 
             </section>
+            
+            
+            {/* <Container>
+      <Row className="justify-content-md-center mt-5">
+        <Col md={6}>
+          <h2>Sign Up</h2>
+          <Form onSubmit={handleSignUp}>
+            <Form.Group controlId="formUserType">
+              <Form.Label>User Type</Form.Label>
+              <div>
+                <Form.Check
+                  type="radio"
+                  label="User"
+                  value="user"
+                  checked={userType === 'user'}
+                  onChange={handleUserTypeChange}
+                />
+                <Form.Check
+                  type="radio"
+                  label="Admin"
+                  value="admin"
+                  checked={userType === 'admin'}
+                  onChange={handleUserTypeChange}
+                />
+              </div>
+            </Form.Group>
+
+            <Form.Group controlId="formFullName">
+              {userType === 'user' && <Form.Label>Full Name</Form.Label>}
+              {userType === 'user' && <Form.Control type="text" placeholder="Enter your full name" />}
+            </Form.Group>
+
+            <Form.Group controlId="formEmail">
+              <Form.Label>Email</Form.Label>
+              <Form.Control type="email" placeholder="Enter your email" />
+            </Form.Group>
+
+            <Form.Group controlId="formPassword">
+              <Form.Label>Password</Form.Label>
+              <Form.Control type="password" placeholder="Enter your password" />
+            </Form.Group>
+
+            <Button variant="primary" type="submit">
+              Sign Up
+            </Button>
+          </Form>
+        </Col>
+      </Row>
+    </Container> */}
             <ToastContainer/>
+
         </div>
     )
 }
+
+// 
