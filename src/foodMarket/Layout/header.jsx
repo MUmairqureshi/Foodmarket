@@ -71,10 +71,10 @@ export function Header() {
         <div className="App">
             <header>
                 <div className="container">
-                    <div className="row">
-                        <div className="col-md-9 offset-md-3">
+                    <div className="row m-auto justify-content-center">
+                        <div className="col-md-12">
                             <nav className="navbar navbar-expand-lg navbar-light">
-                                <Link className="navbar-brand" to="/">Logo here</Link>
+                                <Link className="navbar-brand" to="/">Food <span className='text-theme-primary font-weight-bold'>Statdium</span></Link>
                                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                                     <span className="navbar-toggler-icon"></span>
                                 </button>
@@ -94,27 +94,32 @@ export function Header() {
                                             <Link className="nav-link" to="/contact-us">Contact Us </Link>
                                         </li>
                                     </ul>
-                                    <div className="form-inline my-2 my-lg-0 headerIcons">
-                                        <button type="button">
-                                            <Link to="/favourit-product">
-                                            <i className="fa fa-heart"></i>
-                                            </Link>
-                                        </button>
-                                        <button type="button">
-                                            <Link className="nav-link" to="/cart"> <i className="fa fa-shopping-cart"></i></Link>
+                                    {
 
-                                        </button>
+                                    }
+                                    <div className="form-inline my-2 my-lg-0 headerIcons">
+
                                         {!login ? (
-                                            <button type="button">
+                                            <button type="button" className='w-100'>
                                                 <Link className="no-link-decoration" id='nav-link' style={{ textDecorationStyle: 'none' }} to="/login" type="button">
-                                                    <i className="fa fa-user-circle-o" aria-hidden="true"></i>
+                                                    <i className="fa fa-user-circle-o" aria-hidden="true"></i> Login / Signup
                                                 </Link>
                                             </button>
 
                                         ) :
                                             (
-                                                <button type="button" onClick={logout}>         <i class="fa fa-sign-out" aria-hidden="true"></i>
-                                                </button>
+                                                <>
+                                                    <button type="button">
+                                                        <Link to="/favourit-product">
+                                                            <i className="fa fa-heart"></i>
+                                                        </Link>
+                                                    </button>
+                                                    <button type="button">
+                                                        <Link className="nav-link" to="/cart"> <i className="fa fa-shopping-cart"></i></Link>
+
+                                                    </button>
+                                                    <button type="button" onClick={logout}>     <i class="fa fa-sign-out" aria-hidden="true"></i>
+                                                    </button></>
                                             )}
                                     </div>
                                 </div>

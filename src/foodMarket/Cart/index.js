@@ -122,7 +122,7 @@ export function Cart() {
 
 
 
-    const [applycoupon, setApplycoupon] = useState()
+    const [applycoupon, setApplycoupon] = useState('');
 
 
     const handleCouponChange = (e) => {
@@ -345,7 +345,7 @@ export function Cart() {
                 // Clear the fields
                 setZipcode("");
                 setMessage("");
-                setApplyCoupon("");
+                setApplycoupon('');
                 // Add other fields to clear if needed
     
                 toast.success('Order placed successfully!', {

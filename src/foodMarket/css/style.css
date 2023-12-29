@@ -1654,8 +1654,9 @@ div#accordion {
 
 
       .login_page_section {
-        background-color: #e3e5f1;
+        background-color: #e9e9e9;
         padding: 70px 0px;
+        /* height: calc(100vh - 56px); */
     }
     
     .login_page{
@@ -1686,10 +1687,14 @@ div#accordion {
     }
     
     .forgot_password {
-        font-size: 12px;
+        /* font-size: 12px; */
         font-weight: 700;
-        color: #000;
+        color: var(--primaryColor);
         cursor: pointer;
+    }
+
+    .bg-theme-primary {
+        background-color: var(--primaryColor) !important;
     }
     
     .forgot_password label{
@@ -1783,7 +1788,7 @@ div#accordion {
     }
     .form-item input{
       display: block;
-      width: 400px;
+      width: 100%;
       height: 40px;
       background: #fff;
       border: solid 1px #ccc;
