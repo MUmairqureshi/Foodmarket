@@ -11,8 +11,8 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import { Link } from 'react-router-dom';
 
-export const Cart = () => {
-const [zip , setZip] = useState()
+export const Cart = ({ handlezipcode, setZipCode, zip }) => {
+
     const dispatch = useDispatch();
 
     const handleDelete = (itemId) => {
@@ -44,33 +44,6 @@ const [zip , setZip] = useState()
 
 
 
-    //   const totalCartPrice = cartItems?.reduce((total, product) => {
-    //     const productPrice = product.product_price || 0;
-    //     const productQuantity = product.quantity || 1; // Assuming a default quantity of 1
-
-    //     // Ensure that variation is an array before attempting to reduce
-
-
-    //     return total + productPrice * productQuantity + 10 ;
-    //   }, 0);
-
-
-
-    // const totalCartPrice = cartItems?.reduce((total, product) => {
-    //     const productPrice = product.product_price || 0;
-    //     const productQuantity = product.quantity || 1; // Assuming a default quantity of 1
-
-    //     // Ensure that variation is an array before attempting to reduce
-    //     const variationTotal = Array.isArray(product.variation)
-    //         ? product.variation.reduce(
-    //             (variationSum, variation) => variationSum + (variation.price || 0) * (variation.quantity || 1),
-    //             0
-    //         )
-    //         : 0;
-
-    //     return total + productPrice * productQuantity + variationTotal + 10 ;
-    // }, 0);
-
 
 
     const totalCartPrice = cartItems?.reduce((total, product) => {
@@ -89,23 +62,7 @@ const [zip , setZip] = useState()
     }, 0) + 10;
 
     return (
-        // <div>
-        //   <h2>Cart</h2>
-        //   <ul>
-        //     {cartItems.map((item) => (
-        //       <li key={item.id}>
-        //         {item.name} - ${item.price}
-        //         <button onClick={() => dispatch(removeFromCart(item.id))}>
-        //           Remove from Cart
-        //         </button>
-        //       </li>
-        //     ))}
-        //   </ul>
-        // </div>
 
-
-
-        // select different  product variation come in array to  onclick  create object and when add to card send into card page add variation
 
 
 
@@ -152,16 +109,23 @@ const [zip , setZip] = useState()
                 <div className="addressBox mb-3">
                     <div className="addressTitle flex-xl-nowrap flex-wrap">
                         <div className="addrssName">
-                            {/* <p className="mb-0">Your Address</p> */}
-                            {/* <h5 className="font-weight-bold text-black"><i className="fa fa-map-marker"></i>Jordan James</h5> */}
-                            {/* <input placeholder='Enter Zipcode ' onChange={(e) => setZip(e.target.value)}/> */}
+
                         </div>
-                        {/* <div className="actionChange">
-                            <button type="button" className="btn primaryButton">Find Neraest food</button>
-                        </div> */}
+
                     </div>
                     <div className="addressContent">
-                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the</p>
+
+
+
+
+                        <div className="col">
+                            <input value={zip}
+                                onChange={(e) => setZipCode(e.target.value)}
+
+                                type="number" className="form-control" placeholder="Enter Zip CODE"
+                            />
+                        </div>
+                        <button onClick={handlezipcode} type="button" className="primaryButton btn w-100 mt-2">Find Nearest Food</button>
                     </div>
                 </div>
                 <div className="orderMenu mb-3">
@@ -178,7 +142,7 @@ const [zip , setZip] = useState()
                                         </div>
                                         <div className="orderInfo">
                                             <p className="mb-0">{item?.title}</p>
-                                            {/* <p className="mb-0 text-secondary">{item?.quantity}</p> */}
+
                                         </div>
                                     </div>
                                     <div className="deleteButton ">
@@ -233,7 +197,7 @@ const [zip , setZip] = useState()
                     </div>
                 </div>
                 <div className="actionButton mb-3">
-                    
+
                     <div className="checkoutBtn">
                         <Link to="/cart" className="primaryButton btn w-100"> Checkout</Link>
                     </div>

@@ -19,7 +19,7 @@ import { Catigory_view } from './catigory_view'
 import { Get_all_product, filterProducts, filterMenu, filterDietary, filterPrice   , Zipcode} from '../../../components/services/catigories'
 
 export function Category() {
-    const cartItems = useSelector((state) => state.cart.items);
+     const cartItems = useSelector((state) => state.cart.items);
     const dispatch = useDispatch();
     const sliderRefs = useRef(null);
 
@@ -48,6 +48,7 @@ export function Category() {
     const [filteredData, setFilteredData] = useState([]);
     const [selectedCatigoryId, setSelectedCatigoryId] = useState('');
     const [selectedMenuId, setSelectedMenuId] = useState('');
+
     const [loading, setLoading] = useState(true);
 
     const [populerdata, setPopulardata] = useState(false)
@@ -56,17 +57,6 @@ export function Category() {
     console.log("allProducts", allProducts)
 
     console.log("dietary", dietary)
-   
-
-
-
-
-
-
-
-
-
-
     
     useEffect(() => {
         const fetchData = async () => {
@@ -76,7 +66,7 @@ export function Category() {
                 // Simulate a loading time of 2 seconds
                 const loadingTime = 100;
                 const startTime = new Date().getTime();
-
+// Zipcode
                 let data;
 
                 if (selectedCatigoryId) {
@@ -138,22 +128,18 @@ export function Category() {
 
     const handleAddToCart = (product) => {
         const firstProductStoreId = cartItems.length > 0 ? cartItems[0].store_id : null;
-    
-        // Check if the cart has 2 items and the first item belongs to a different store
+     
         if (cartItems.length === 2 && firstProductStoreId !== product.store_id) {
             // Remove the first product from the cart
             const updatedCardItems = cartItems.slice(1);
-    
-            // Dispatch action to update cartItems in the store
+     
             dispatch(updateCartItem(updatedCardItems));
-    
-            // Show toast indicating that the first vendor product has been removed from the order
+     
             toast.info('Removed the first vendor product from the order.', {
                 position: toast.POSITION.TOP_RIGHT,
             });
         }
-    
-        // Add the new product to the cart
+
         dispatch(addToCart(product));
     
         // Update the quantity of the added product in the local state
@@ -168,10 +154,97 @@ export function Category() {
             position: toast.POSITION.TOP_RIGHT,
         });
     };
+    const [zipcode, setZipCode] = useState();
+    // console.log("zipcode" , zipcode)
+    // const handlezipcode = () => {
+    //   // If the zipcode is empty, show all products
+    //   if (zipcode.trim() === "") {
+    //     setAllProducts((prevProducts) => [...prevProducts]); // Copy the array to trigger a re-render
+    //     setZipCode("")
+    // } else {
+    //     // Filter products based on the provided zipcode
+    //     setAllProducts((prevProducts) =>
+    //       prevProducts?.filter((product) => product?.zipcodes?.includes(zipcode))
+    //     );
+    //     setZipCode("")  
+    // }
+
+    // };
+
+    const handlezipcode = () => {
+        console.log(typeof(parseInt(zipcode)));
+         
+        if (zipcode.trim() === "") {
+          setAllProducts((prevProducts) => [...prevProducts]);  
+          setZipCode("");
+        } else {
+          // Filter products based on the provided zipcode
+
+          setAllProducts((prevProducts) =>
+            prevProducts.filter((product) =>
+              product?.zipcodes?.some((code) => code.includes(parseInt(zipcode)))
+             
+            )
+          );
+          setZipCode("");
+        }
+      };
+      
+    // const handlezipcode = () => { 
+    //     if (zipcode.trim() === "") {
+    //       setAllProducts((prevProducts) => [...prevProducts]);  
+    //       setFoundProducts([]);  
+    //     } else { 
+    //       const filteredProducts = allProducts.filter((product) => product?.zipcodes?.includes(4563));
+       
+    //       setFoundProducts(filteredProducts);
+       
+    //       setAllProducts([...filteredProducts]);
+    //     }
+       
+    //     if (zipcode.trim() === "") {
+    //       setZipCode("");
+    //     }
+    //   };
+
+//     const [zipcode, setZipCode] = useState("");
+ 
+
+ 
+// const [foundProducts, setFoundProducts] = useState([]); // State to store filtered products
+
+// console.log("zipcode", zipcode);
+
+// const handlezipcode = () => {
+//     console.log("handlezipcode", zipcode);
+ 
+//   if (zipcode.trim() === "") {
+//     setFoundProducts([]);
+//     setAllProducts((prevProducts) => [...prevProducts]); // Copy the array to trigger a re-render
+//   } else {
+//     // Filter products based on the provided zipcode
+//     const filteredProducts = allProducts.filter((product) => {
+//       const zipcodes = product?.zipcodes || [];
+//       return zipcodes.includes(zipcode);
+//     });
+ 
+//     setFoundProducts(filteredProducts);
+ 
+//     if (filteredProducts.length === 0) {
+//       console.log("No products found for the provided zipcode"); 
+//     }
+ 
+//     setAllProducts([...filteredProducts]);
+//   }
+ 
+//   if (zipcode.trim() === "") {
+//     setZipCode("");
+//   }
+// };
+
     
 
  
-
 
     const handlepopulerdata = () => {
 
@@ -190,8 +263,7 @@ export function Category() {
     const handlealldata = () => {
         setAllProducts(allProducts);
     };
-
-
+ 
      
 
     return (
@@ -200,7 +272,8 @@ export function Category() {
         <section className="homeCategory">
             <div className="container-fluid">
                 <div className="row">
-                    <Menue maxPrice={maxPrice} minPrice={minPrice} setSelectedMenuId={setSelectedMenuId} setMinPrice={setMinPrice} handletoprateddata={handletoprateddata} handlealldata={handlealldata}
+                    <Menue   
+                    maxPrice={maxPrice} minPrice={minPrice} setSelectedMenuId={setSelectedMenuId} setMinPrice={setMinPrice} handletoprateddata={handletoprateddata} handlealldata={handlealldata}
                         setDietary={setDietary} setMaxPrice={setMaxPrice} handlepopulerdata={handlepopulerdata} isRadioHidden={isRadioHidden}
                     />
 
@@ -209,7 +282,7 @@ export function Category() {
                             <Catigory_view setSelectedCatigoryId={setSelectedCatigoryId} />
 
                             <PopularCategories
-
+                            // datas={products}
                                 data={allProducts}
                                 handleIncrement={handleIncrement}
                                 handleDecrement={handleDecrement}
@@ -221,7 +294,7 @@ export function Category() {
 
                         </div>
                     </div>
-                    <Cart />
+                    <Cart zip={zipcode} setZipCode={setZipCode} handlezipcode={handlezipcode} />
 
                 </div>
             </div>

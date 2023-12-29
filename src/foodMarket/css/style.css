@@ -583,7 +583,17 @@ input[type="radio"]:checked {
     padding: 24px 10px 23px 30px;
     font-size: 14px;
 }
-
+.reviewBtn {
+    background-color: var(--primaryColor);
+    border-radius: 10px;
+    color: #fdfdfd !important;
+    border: 1px solid #f9f9f9;
+    display: block;
+    width: 100%;
+    text-align: center;
+    height: 50px;
+    border: 1px solid #000;
+}
 .form-group {
     position: relative;
 }

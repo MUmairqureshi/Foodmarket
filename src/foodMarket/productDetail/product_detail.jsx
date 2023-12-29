@@ -1,9 +1,10 @@
 // import CloseButton from 'react-bootstrap/CloseButton';
+import { Form, Button } from 'react-bootstrap';
 
 
 
-
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import user from '../../assets/images/user.png'
 import { useState, useMemo, useEffect } from 'react';
 
@@ -23,36 +24,59 @@ import { Tabs, Tab } from 'react-bootstrap';
 export const Product_deatail = (props) => {
 
 
-    const datas = props.productDetails?.data
+    const datas = props.productDetails?.data.id
+    console.log("datacomment", props.productDetails?.data.id)
+
+    const [remarks, setRemarks] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchRemarks = async () => {
+            try {
+                const response = await fetch(`https://custom2.mystagingserver.site/food-stadium/public/api/user/remark_by_product/${datas}`);
+                const data = await response.json();
+
+                setRemarks(data.data);
+            } catch (error) {
+                console.error('Error fetching remarks:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchRemarks();
+    }, [datas]);
+
+    console.log("remarks", remarks)
 
     console.log("datas", datas)
     const cartItems = useSelector((state) => state.cart.items);
     console.log("cartItems", cartItems)
 
-     
+
 
     useEffect(() => {
         const productId = props.productDetails?.data.id;
         const productqty = props.productDetails?.data.quantity;
         // Calculate the total quantity for the specific product
         const totalProductQuantity = cartItems
-          .filter((item) => item.id === productId )
-          .reduce((total, item) => total + item.quantity , 1);
+            .filter((item) => item.id === productId)
+            .reduce((total, item) => total + item.quantity, 1);
 
         // Set the initial quantity to the calculated total if it's greater than 0
         setNewQuantity(totalProductQuantity > 0 ? totalProductQuantity : 0);
-      }, [cartItems, props]);
+    }, [cartItems, props]);
 
 
     // useEffect(() => {
     //     const productId = props.productDetails?.data.id;
     //     const productqty = props.productDetails?.data.quantity;
-     
+
     //     const totalProductQuantity = cartItems?.reduce((total, item) => total + item.quantity > 0 ? (total, item) => total + item.quantity : 1);
     //         // .filter((item) => item.id === productId)
 
-    
-         
+
+
     //     setNewQuantity(totalProductQuantity > 0 ? totalProductQuantity : productqty > 0 ? totalProductQuantity : 1);
     // }, [cartItems, props]);
 
@@ -68,7 +92,7 @@ export const Product_deatail = (props) => {
 
 
 
- 
+
     const dispatch = useDispatch();
     const [selectedVariations, setSelectedVariations] = useState({});
 
@@ -105,7 +129,7 @@ export const Product_deatail = (props) => {
         calculateTotalPrice();
     }, [selectedVariations, props.productDetails?.data.product_price]);
 
- 
+
 
 
     const handleAddToCart = () => {
@@ -142,9 +166,6 @@ export const Product_deatail = (props) => {
             dispatch(addToCart(newCartItem));
         }
     };
-
-
-
 
 
 
@@ -198,120 +219,77 @@ export const Product_deatail = (props) => {
     console.log("itmdata", itmdata);
 
     const isItemChecked = (variationId, itemId) => {
-console.log("variationId" , variationId)
-console.log("itemId" , itemId)
+        console.log("variationId", variationId)
+        console.log("itemId", itemId)
     };
 
 
 
-    // const itmdata = cartItems?.variation;
+    const [reviewData, setReviewData] = useState({
+        name: '',
+        email: '',
+        rating: '',
+        description: '',
+    });
 
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setReviewData({ ...reviewData, [name]: value });
+    };
 
-    // const isItemChecked = (variationId, itemId) => {
-    //     console.log("variationId", variationId);
-    //     console.log("itemId", itemId);
+    //   const handleSubmit = async () => {
+    //     try {
+    //       const response = await fetch(`https://custom2.mystagingserver.site/food-stadium/public/api/user/product_remark_add/${datas}`, {
+    //         method: 'POST',
+    //         headers: {
+    //           'Content-Type': 'application/json',
+    //         },
+    //         body: JSON.stringify(reviewData),
+    //       });
 
-    //     // Use map() instead of forEach()
-
-    //     const checkcartitems = cartItems?.reduce((total, product) => {
-
-    //         const variationitems = Array?.isArray(product.variation)
-    //              product?.variation?.some(
-    //                 (variationSum, variation) => product.id === variationId   &&  variation.id === itemId 
-
-    //             )
-    //             console.log("checkcartitemsproduct" , product)
-    //             console.log("variationitems" , variationitems)
-    //             return variationitems
-
-    //      });
-
-        // const itmdatasata = cartItems?.variation?.map(cartVariation => cartVariation.id);
-        // console.log("itmdatasata", itmdatasata);
-
-        // const foundItem = itmdata?.find(cartVariation => cartVariation.id === itemId);
-        // console.log("foundItem", foundItem);
-        // return checkcartitems;?
-    // };
-    // in the cartitems come array in the array come variation in the variation array come variation_items thencheck with variation_items === itemId?
-
-
-
-
-
-
-
+    //       if (response.ok) {
+    //         console.log('Review submitted successfully!');
+    //         // Handle success, e.g., show a success message to the user
+    //       } else {
+    //         console.error('Error submitting review:', response.statusText);
+    //         // Handle error, e.g., show an error message to the user
+    //       }
+    //     } catch (error) {
+    //       console.error('Error submitting review:', error);
+    //       // Handle other types of errors
+    //     }
+    //   };
 
 
 
 
 
-    // const isItemChecked = (variationId, itemId) => {
-    //     console.log("variationId", variationId);
-    //     console.log("itemId", itemId);
+    const handleSubmit = async () => {
+        try {
+            const response = await fetch(`https://custom2.mystagingserver.site/food-stadium/public/api/user/product_remark_add/${datas}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(reviewData),
+            });
 
-    //     // Use reduce() to check if the item is present in cartItems
-    //     const checkcartitems = cartItems?.reduce((foundItem, product) => {
-    //         const variationItem = product.variation?.some(variation =>  variation.variation_items?.some(variationItem => 
-    //             product.id === variationId  &&    variationItem.id === itemId
-    //             )
-    //         );
-
-    //         console.log("variationItem", variationItem);
-    //         return variationItem ? product : foundItem;
-    //     }, null);
-
-    //     return checkcartitems;
-    // };
-
-    // const isItemChecked = (variationId, itemId) => {
-    //     console.log("variationId", variationId);
-    //     console.log("itemId", itemId);
-
-    //     // Use reduce() to check if the item is present in cartItems
-    //     const checkcartitems = cartItems?.reduce((foundItem, product) => {
-    //         const variationItem = product.variation?.find(variation =>
-    //             variation.variation_items?.some(variationItem =>
-    //                 variationItem.id === itemId
-    //             )
-    //         );
-
-    //         console.log("variationItem", variationItem);
-    //         return variationItem !== undefined && product.id === variationId ? product : foundItem;
-    //     }, null);
-
-    //     return checkcartitems;
-    // };
-    
-
-    // const isItemChecked = (variationId, itemId) => {
-    //     console.log("variationId", variationId);
-    //     console.log("itemId", itemId);
-
-    //     // Use some() to check if the item is present in cartItems
-    //     const checkcartitems = cartItems?.some(product => {
-    //         // Declare variation outside of the find function
-    //         let variation;
-
-    //         const variationItem = product?.variation?.reduce(variationObj => {
-    //             variation = variationObj;  // Assign variationObj to the outer variable
-    //             return Array.isArray(variationObj?.variation_items) && variationObj.variation_items?.some(variationItem =>
-    //                 variationItem.id === itemId
-    //             );
-    //         });
-
-    //         console.log("variation?.id:", variation && variation.id, "Variation Item:", variationItem);
-    //         return variationItem && variation && variation.id === variationId;
-    //     });
-
-    //     console.log("checkcartitems", checkcartitems);
-    //     return checkcartitems ?? null;
-    // };
-
-
-
- 
-
+            if (response.ok) {
+                console.log('Review submitted successfully!');
+                // Show a success toast
+                toast.success('Review submitted successfully!');
+                // You can also redirect the user or perform other actions upon success
+            } else {
+                console.error('Error submitting review:', response.statusText);
+                // Show an error toast
+                toast.error('Error submitting review. Please try again.');
+            }
+        } catch (error) {
+            console.error('Error submitting review:', error);
+            // Show an error toast
+            toast.error('Error submitting review. Please try again.');
+        }
+    };
 
 
     return (
@@ -428,32 +406,32 @@ console.log("itemId" , itemId)
 
 
                                                                         /> */}
-                                                                     
-                                                                     <input
-    type="radio"
-    name={`variation_${data?.id}`}
-    onChange={(e) => handleToggleSelection(data?.id, item?.id, e.target.checked)}
-    // checked={(() => {
-    //     const isChecked = cartItems?.some(product => {
-    //         const hasVariation = product?.variation?.some(variation => {
-    //             const hasVariationItems = Array.isArray(variation?.variation_items) &&
-    //                 variation.variation_items?.some(variationItem => variationItem.id === item.id);
 
-    //             console.log("Product ID:", product?.id, "Variation ID:", variation?.id, "Has Variation Items:", hasVariationItems);
+                                                                        <input
+                                                                            type="radio"
+                                                                            name={`variation_${data?.id}`}
+                                                                            onChange={(e) => handleToggleSelection(data?.id, item?.id, e.target.checked)}
+                                                                        // checked={(() => {
+                                                                        //     const isChecked = cartItems?.some(product => {
+                                                                        //         const hasVariation = product?.variation?.some(variation => {
+                                                                        //             const hasVariationItems = Array.isArray(variation?.variation_items) &&
+                                                                        //                 variation.variation_items?.some(variationItem => variationItem.id === item.id);
 
-    //             return hasVariationItems;
-    //         });
+                                                                        //             console.log("Product ID:", product?.id, "Variation ID:", variation?.id, "Has Variation Items:", hasVariationItems);
 
-    //         console.log("Product ID:", product?.id, "Has Variation:", hasVariation);
+                                                                        //             return hasVariationItems;
+                                                                        //         });
 
-    //         return hasVariation || product;
-    //     });
+                                                                        //         console.log("Product ID:", product?.id, "Has Variation:", hasVariation);
 
-    //     console.log("Is Checked:", isChecked);
+                                                                        //         return hasVariation || product;
+                                                                        //     });
 
-    //     return isChecked || item;
-    // })()}
-/>
+                                                                        //     console.log("Is Checked:", isChecked);
+
+                                                                        //     return isChecked || item;
+                                                                        // })()}
+                                                                        />
                                                                         {console.log("Data:", data, " data id :", data.id, "Item ID:", item?.id)}
 
                                                                     </div>
@@ -509,7 +487,7 @@ console.log("itemId" , itemId)
 
                                     <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Reviews</a>
 
-
+                                    {/* {remarks?.map((data)=>(
 
                                     <div id="contact" role="tabpanel" aria-labelledby="contact-tab">
                                         <div class="store_detail reviews_tabb">
@@ -520,19 +498,62 @@ console.log("itemId" , itemId)
                                                 </div>
                                                 <div class="client_name">
                                                     <div class="title">
-                                                        <h3>Client Name</h3>
+                                                        <h3>{data?.name}</h3>
                                                     </div>
-                                                    <p>Company Name</p>
+                                                    <p>Rating : { data?.rating}</p>
                                                 </div>
                                             </div>
-                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero beatae architecto sequi? Placeat corporis iste hic officiis magni id atque
-                                                ipsam sed dolorum. Id, itaque. Deserunt tempora ab quia nostrum.</p>
+                                            <p>{data?.description}</p>
                                             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero beatae architecto sequi? Placeat corporis iste hic officiis magni id atque
                                                 ipsam sed dolorum. Id, itaque. Deserunt tempora ab quia nostrum.</p>
                                             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero beatae architecto sequi? Placeat corporis iste hic officiis magni id atque
                                                 ipsam sed dolorum. Id, itaque. Deserunt tempora ab quia nostrum.</p>
 
                                         </div>
+                                    </div>))} */}
+
+                                    <div id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                                        <div class="store_detail reviews_tabb">
+
+                                            {remarks?.map((data) => (
+                                                <div>   <div class="client_info">
+                                                    <div class="img_div">
+                                                        <img src={user} class="img-fluid" alt="" />
+                                                    </div>
+                                                    <div class="client_name">
+                                                        <div class="title">
+                                                            <h3>{data?.name}</h3>
+                                                        </div>
+                                                        <p>Rating : {data?.rating}</p>
+                                                    </div>
+                                                </div>
+                                                    <p>{data?.description}</p>
+
+
+                                                </div>
+                                            ))}
+                                        </div>
+
+                                        <div class="form-row mt-5 mb-4">
+                                            <div class="form-group col-md-6">
+                                                <input type="text" class="form-control" placeholder="Name" name="name" value={reviewData.name} onChange={handleChange} required />
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <input type="text" class="form-control" placeholder="Email" name="email" value={reviewData.email} onChange={handleChange} required />
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                <input type="text" class="form-control" placeholder="Rating" name="rating" value={reviewData.rating} onChange={handleChange} required />
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                <input type="text" class="form-control" placeholder="Description" name="description" value={reviewData.description} onChange={handleChange} required />
+                                            </div>
+                                            <div class="col-md-12">
+                                                <button type="button" class="reviewBtn" onClick={handleSubmit}>Submit</button>
+                                            </div>
+                                        </div>
+
+
+
                                     </div>
                                 </Tab>
                             </Tabs>
@@ -582,204 +603,7 @@ console.log("itemId" , itemId)
                 </div>
             </section>
 
-            <section class="recomendation_section">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="titleBox mb-3">
-                                <h2>Recomendations</h2>
-                            </div>
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <div class="categoryCard shadow">
-                                <div class="cardHeader">
-                                    <div class="topMeta">
-                                        <div class="tags">
-                                            <span>15%off</span>
-                                        </div>
-                                        <div class="tags wishList">
-                                            <button class="button"><i class="fa fa-heart"></i></button>
-                                        </div>
-                                    </div>
-                                    <div class="cardImage">
-                                        <img src={c1} alt="Category Image" class="mw-100" />
-                                    </div>
 
-                                    <div class="topMeta">
-                                        <div class="companyLogo tags">
-                                            <button class="button"><img src={mac} alt="MAc" /></button>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="cardBody">
-                                    <div class="body-upper">
-                                        <div class="ratingBox">
-                                            <p class="mb-0">Reviews 3.5k</p>
-                                            <p class="mb-0">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                            </p>
-                                        </div>
-                                        <div class="deliveryInfo">
-                                            <div class="meter">
-                                                <p class="mb-0"> 30-40 mins</p>
-                                                <p class="mb-0 text-success">$0 Delivery</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="cardContent">
-                                        <h3>The Classic</h3>
-                                        <p>Fire Roasted pepper s, spanach</p>
-                                        <h5 class="text-theme-primary font-weight-bold">$99.00</h5>
-                                    </div>
-                                </div>
-                                <div class="cardFooter">
-                                    <div class="cardAction">
-                                        <div class="counterAction">
-                                            <span class="qunatingCount">01</span>
-                                            <button class="minus" type="button"><i class="fa fa-minus"></i></button>
-                                            |
-                                            <button class="plus" type="button"><i class="fa fa-plus"></i></button>
-                                        </div>
-                                        <div class="addToCart">
-                                            <button type="button">Add To Cart</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col mb-3">
-                            <div class="categoryCard shadow">
-                                <div class="cardHeader">
-                                    <div class="topMeta">
-                                        <div class="tags">
-                                            <span>15%off</span>
-                                        </div>
-                                        <div class="tags wishList">
-                                            <button class="button"><i class="fa fa-heart"></i></button>
-                                        </div>
-                                    </div>
-                                    <div class="cardImage">
-                                        <img src={c1} alt="Category Image" class="mw-100" />
-                                    </div>
-
-                                    <div class="topMeta">
-                                        <div class="companyLogo tags">
-                                            <button class="button"><img src={mac} alt="MAc" /></button>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="cardBody">
-                                    <div class="body-upper">
-                                        <div class="ratingBox">
-                                            <p class="mb-0">Reviews 3.5k</p>
-                                            <p class="mb-0">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                            </p>
-                                        </div>
-                                        <div class="deliveryInfo">
-                                            <div class="meter">
-                                                <p class="mb-0"> 30-40 mins</p>
-                                                <p class="mb-0 text-success">$0 Delivery</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="cardContent">
-                                        <h3>The Classic</h3>
-                                        <p>Fire Roasted pepper s, spanach</p>
-                                        <h5 class="text-theme-primary font-weight-bold">$99.00</h5>
-                                    </div>
-                                </div>
-                                <div class="cardFooter">
-                                    <div class="cardAction">
-                                        <div class="counterAction">
-                                            <span class="qunatingCount">01</span>
-                                            <button class="minus" type="button"><i class="fa fa-minus"></i></button>
-                                            |
-                                            <button class="plus" type="button"><i class="fa fa-plus"></i></button>
-                                        </div>
-                                        <div class="addToCart">
-                                            <button type="button">Add To Cart</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col mb-3">
-                            <div class="categoryCard shadow">
-                                <div class="cardHeader">
-                                    <div class="topMeta">
-                                        <div class="tags">
-                                            <span>15%off</span>
-                                        </div>
-                                        <div class="tags wishList">
-                                            <button class="button"><i class="fa fa-heart"></i></button>
-                                        </div>
-                                    </div>
-                                    <div class="cardImage">
-                                        <img src={c1} alt="Category Image" class="mw-100" />
-                                    </div>
-
-                                    <div class="topMeta">
-                                        <div class="companyLogo tags">
-                                            <button class="button"><img src={mac} alt="MAc" /></button>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="cardBody">
-                                    <div class="body-upper">
-                                        <div class="ratingBox">
-                                            <p class="mb-0">Reviews 3.5k</p>
-                                            <p class="mb-0">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                            </p>
-                                        </div>
-                                        <div class="deliveryInfo">
-                                            <div class="meter">
-                                                <p class="mb-0"> 30-40 mins</p>
-                                                <p class="mb-0 text-success">$0 Delivery</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="cardContent">
-                                        <h3>The Classic</h3>
-                                        <p>Fire Roasted pepper s, spanach</p>
-                                        <h5 class="text-theme-primary font-weight-bold">$99.00</h5>
-                                    </div>
-                                </div>
-                                <div class="cardFooter">
-                                    <div class="cardAction">
-                                        <div class="counterAction">
-                                            <span class="qunatingCount">01</span>
-                                            <button class="minus" type="button"><i class="fa fa-minus"></i></button>
-                                            |
-                                            <button class="plus" type="button"><i class="fa fa-plus"></i></button>
-                                        </div>
-                                        <div class="addToCart">
-                                            <button type="button">Add To Cart</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </section>
 
 
             <section class="footer">
@@ -797,6 +621,7 @@ console.log("itemId" , itemId)
                     </div>
                 </div>
             </section>
+            <ToastContainer />
         </Modal>
     );
 };

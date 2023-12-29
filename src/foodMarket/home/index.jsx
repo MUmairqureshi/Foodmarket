@@ -1,5 +1,5 @@
 
-import { Get_all_product } from '../../components/services/catigories'
+import { Get_all_product , Zipcode } from '../../components/services/catigories'
 import { useState, useEffect } from 'react'
 import { Hero } from './components/hero'
 import { Category } from './components/category'
@@ -21,6 +21,26 @@ import { ColorRing } from 'react-loader-spinner'
 export function Home() {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState(null);
+  const [zip, setZip] = useState('');
+  const [products, setProducts] = useState([]);
+  const [error, setError] = useState(null);
+
+  const handleZipChange = (e) => {
+    // Update the state with the new value from the input
+    setZip(e.target.value);
+  };
+
+ // Function to fetch data by zip code
+  
+
+ 
+console.log("productshome" , products)
+
+
+
+
+
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -61,6 +81,7 @@ export function Home() {
     //         </div>
     <div>
 
+
       {loading && <div><Placeholder.Paragraph rows={8} />
         <ColorRing
           visible={true}
@@ -74,12 +95,11 @@ export function Home() {
 
       {!loading && data && (
         <>
-
-          <Hero />
-          <Category />
+          <Hero  setZip={setZip} zip={zip}  handleFetchData={handleZipChange}/>
+          <Category zip={zip} />
           <Shakingdissert />
           <Trending_dishes />
-          <FavoriteseNear />
+          {/* <FavoriteseNear /> */}
           <Bakery />
           <Subscription />
           <Beverages />

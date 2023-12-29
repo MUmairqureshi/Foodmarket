@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom'
 import { Menu_listing, Dietary_listing } from '../../../components/services/catigories'
-export function Menue({isRadioHidden ,  setSelectedMenuId, setDietary, minPrice, setMinPrice, setMaxPrice, maxPrice  , handlepopulerdata , handletoprateddata , handlealldata}) {
+export function Menue({setZipCode ,  isRadioHidden ,  setSelectedMenuId, setDietary, minPrice, setMinPrice, setMaxPrice, maxPrice  , handlepopulerdata , handletoprateddata , handlealldata}) {
 
 
     const ImageUrl = "https://custom2.mystagingserver.site/food-stadium/public/"
@@ -68,6 +68,7 @@ export function Menue({isRadioHidden ,  setSelectedMenuId, setDietary, minPrice,
             <div className="categoryFilter bg-white shadow p-md-3 h-100">
                 <div className="menuList">
                     <div className="titleBox text-center mb-3">
+                      
                         <h3>Menu</h3>
                     </div>
                     <div className="featuredBtn mb-3">
@@ -117,7 +118,8 @@ export function Menue({isRadioHidden ,  setSelectedMenuId, setDietary, minPrice,
                 </div>
 
                 <div className="stores">
-                    <div className="titleBox text-center mb-3">
+ 
+                    {/* <div className="titleBox text-center mb-3">
                         <h3>All Stores</h3>
                         <p>Sort</p>
                     </div>
@@ -147,7 +149,7 @@ export function Menue({isRadioHidden ,  setSelectedMenuId, setDietary, minPrice,
                     <div className="form-check">
                         <label for="delivery">
                             <input className="form-check-input position-static" type="radio" name="stores" id="delivery" value="delivery" aria-label="..." /> Delivery</label>
-                    </div>
+                    </div> */}
 
                 </div>
             </div>
