@@ -18,7 +18,8 @@ export function Cart() {
 
     const [coupon, setCoupon] = useState()
     const [message, setMessage] = useState('')
-
+    const [date, setDate] = useState('')
+    
     const [qty, setQty] = useState(1)
     const [productQuantities, setProductQuantities] = useState({});
     const cartItems = useSelector((state) => state.cart.items);
@@ -247,22 +248,82 @@ export function Cart() {
 
 
     
+    // const placeOrder = async () => {
+    //     try {
+    //         const firstProductStoreId = cartItems.length > 0 ? cartItems[0].storeId : null;
+
+    //         if (cartItems.length === 2 && firstProductStoreId !== cartItems[1].storeId) {
+    //             const updatedCardItems = cartItems.slice(1);
+
+    //             // Dispatch action to update cardItems in the store
+    //             dispatch(updateCartItem(updatedCardItems));
+
+    //             toast.info('Removed the first vendor product from the order.', {
+    //                 position: toast.POSITION.TOP_RIGHT,
+    //             });
+    //         }
+
+    //         const data = {
+    //             date:date,
+    //             user_address : "dwqed",
+    //             sub_total: totalCartPrice,
+    //             total: totalCartPrice,
+    //             zipcode: zipcode,
+    //             message: message,
+    //             products: cartItems,
+    //             discount: 32,
+    //             coupon_code: applycoupon,
+    //             user_address : "dedjedn" ,
+    //             delivery_type: "ontime"
+    //         };
+    //         const response = await Order_Placed(data);
+
+    //         if (response && response.status === true) {
+    //             // Handle the successful response here
+    //             console.log('Success ', response.message);
+
+    //             zipcode(""),
+    //             message(""),
+    //             discount("")
+    //             coupon_code("")
+                  
+                    
+    //             toast.success('Order placed successfully!', {
+    //                 position: toast.POSITION.TOP_RIGHT,
+    //             });
+    //         } else {
+    //             console.error('Error in placing order:', response.statusText);
+
+    //             toast.error('Failed to place order. Please try again.', {
+    //                 position: toast.POSITION.TOP_RIGHT,
+    //             });
+    //         }
+    //     } catch (error) {
+    //         console.error('Error in placing order:', error);
+
+    //         toast.error('An error occurred while placing the order.', {
+    //             position: toast.POSITION.TOP_RIGHT,
+    //         });
+    //     }
+    // };    
     const placeOrder = async () => {
         try {
             const firstProductStoreId = cartItems.length > 0 ? cartItems[0].storeId : null;
-
+    
             if (cartItems.length === 2 && firstProductStoreId !== cartItems[1].storeId) {
                 const updatedCardItems = cartItems.slice(1);
-
+    
                 // Dispatch action to update cardItems in the store
                 dispatch(updateCartItem(updatedCardItems));
-
+    
                 toast.info('Removed the first vendor product from the order.', {
                     position: toast.POSITION.TOP_RIGHT,
                 });
             }
-
+    
+     
             const data = {
+                date:date,
                 user_address : "dwqed",
                 sub_total: totalCartPrice,
                 total: totalCartPrice,
@@ -274,31 +335,38 @@ export function Cart() {
                 user_address : "dedjedn" ,
                 delivery_type: "ontime"
             };
+    
             const response = await Order_Placed(data);
-
-            if (response && response.status === true) {
+    
+            if (response && response.status === 200) {
                 // Handle the successful response here
                 console.log('Success ', response.message);
-
+    
+                // Clear the fields
+                setZipcode("");
+                setMessage("");
+                setApplyCoupon("");
+                // Add other fields to clear if needed
+    
                 toast.success('Order placed successfully!', {
                     position: toast.POSITION.TOP_RIGHT,
                 });
             } else {
                 console.error('Error in placing order:', response.statusText);
-
+    
                 toast.error('Failed to place order. Please try again.', {
                     position: toast.POSITION.TOP_RIGHT,
                 });
             }
         } catch (error) {
             console.error('Error in placing order:', error);
-
+    
             toast.error('An error occurred while placing the order.', {
                 position: toast.POSITION.TOP_RIGHT,
             });
         }
-    };    
-
+    };
+    
 
     return (
         <div>
@@ -331,25 +399,25 @@ export function Cart() {
                                                                 <h3>{data?.title}</h3>
 
                                                             </div>
-                                                            <p className='d-flex justify-content-start'>Order are expected to ship <br /> within 7-10 days
+                                                            {/* <p className='d-flex justify-content-start'>Order are expected to ship <br /> within 7-10 days
                                                                 <Nav.Link className="no-link-decoration" id='nav-link' style={{ textDecorationStyle: 'none' }} onClick={() => handleProductClick(data?.id)}>
                                                                     <i className="fa-solid fa-pen-to-square"></i>
                                                                 </Nav.Link>
-                                                            </p>
+                                                            </p> */}
                                                             <div className="product_detail_extras">
 
                                                                 {data.variation?.map(item => (
                                                                     <div key={item.id}>
                                                                         {/* Your existing code for data.variation */}
 
-                                                                        {item.variation_item?.map(variationItem => (
-                                                                            <div key={variationItem.id} className="first_extra d-flex align-items-center">
+                                                                        {/* {item.variation_item?.map(variationItem => ( */}
+                                                                            <div key={item.id} className="first_extra d-flex align-items-center">
                                                                                 <div className="img_div">
-                                                                                    <img src={ImageUrl + variationItem?.image} className="img-fluid" alt="" />
+                                                                                    <img src={ImageUrl + item?.image} className="img-fluid" alt="" />
                                                                                 </div>
-                                                                                <p>{item?.title} : <span> ${variationItem.price}</span></p>
+                                                                                <p>{item?.title} : <span> ${item.price}</span></p>
                                                                             </div>
-                                                                        ))}
+                                                                        {/* ))} */}
                                                                     </div>
                                                                 ))}
 
@@ -438,7 +506,7 @@ export function Cart() {
 
 
 
-                            <div className="delivery_detail d-flex gap-10 flex-lg-nowrap flex-wrap justify-content-between">
+                            {/* <div className="delivery_detail d-flex gap-10 flex-lg-nowrap flex-wrap justify-content- between">
                                 <div className="delivery_content">
                                     <div className="titleBox text-left ">
                                         <h3>Delivery Zip*</h3>
@@ -455,7 +523,7 @@ export function Cart() {
                                         <i className="fa fa-map-marker" aria-hidden="true"></i>
                                     </div>
                                 </div>
-
+ 
                                 <div className="delivery_content">
                                     <div className="titleBox text-left ">
                                         <h3>Delivery Date*</h3>
@@ -466,7 +534,7 @@ export function Cart() {
                                             type="date"
                                             placeholder="20/10/23"
                                             className="form-control"
-                                            onChange={(e) => setMessage(e.target.value)}
+                                            // onChange={(e) => setMessage(e.target.value)}
                                         />
                                         <i className="fa fa-calendar" aria-hidden="true"></i>
                                     </div>
@@ -489,7 +557,74 @@ export function Cart() {
                                     </div>
                                 </div>
 
-                            </div>
+                            </div> */}
+
+
+
+
+
+
+<div className="delivery_detail">
+    <div className="row">
+        <div className="col-md-6">
+            <div className="delivery_content">
+                <div className="titleBox text-left">
+                    <h3>Delivery Zip*</h3>
+                </div>
+                <p>Hint: if this is a gift, enter your recipient’s ZIP!</p>
+                <div className="delivery_info">
+                    <input
+                        type="text"
+                        placeholder="484892"
+                        className="form-control"
+                        value={zipcode}
+                        onChange={handleZipcodeChange}
+                    />
+                    <i className="fa fa-map-marker" aria-hidden="true"></i>
+                </div>
+            </div>
+        </div>
+        <div className="col-md-6">
+            <div className="delivery_content">
+                <div className="titleBox text-left">
+                    <h3>Delivery Date*</h3>
+                </div>
+                <p>Choose an arrival date for order</p>
+                <div className="delivery_info">
+                    <input
+                        type="date"
+                        placeholder="20/10/23"
+                        className="form-control"
+                        value={date}
+                        onChange={(e) => setDate(e.target.value)}
+                    />
+                    <i className="fa fa-calendar" aria-hidden="true"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div className="row mt-4">
+        <div className="col-md-12">
+            <div className="delivery_content">
+                <div className="titleBox text-left">
+                    <h3>Gift Message</h3>
+                </div>
+                {/* <p>Write a message for your gift</p> */}
+                <div className="delivery_info">
+                    <textarea
+                        rows="4"
+                        placeholder="Write Message"
+                        className="form-control"
+                        value={message}
+                        onChange={(e) => setMessage(e.target.value)}
+                    />
+                    {/* <i className="fa fa-comments" aria-hidden="true"></i> */}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
                         </div>
                         <div className="col-md-4 mb-4">
                             <div className="apply_coupon">

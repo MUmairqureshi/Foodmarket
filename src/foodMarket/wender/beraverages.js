@@ -13,7 +13,7 @@ import { Product_deatail } from '../productDetail/product_detail'
 
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts, addToCart } from   '../../components/redux/actions';
-export function Beverages({data}) {
+export function Beverages({data , setWenderdata}) {
 
 
 
@@ -189,7 +189,7 @@ export function Beverages({data}) {
 
     //   handlealldata
     const handleIncrement = (productId) => {
-        setFilteredBeverages((prevProducts) =>
+        setWenderdata((prevProducts) =>
             prevProducts.map((product) =>
                 product.id === productId
                     ? { ...product, quantity: product.quantity + 1 }
@@ -199,7 +199,7 @@ export function Beverages({data}) {
     };
 
     const handleDecrement = (productId) => {
-        setFilteredBeverages((prevProducts) =>
+        setWenderdata((prevProducts) =>
             prevProducts.map((product) =>
                 product.id === productId && product.quantity > 0
                     ? { ...product, quantity: product.quantity - 1 }
@@ -215,7 +215,7 @@ export function Beverages({data}) {
         dispatch(addToCart(product));
 
 
-        setFilteredBeverages((prevProducts) =>
+        setWenderdata((prevProducts) =>
             prevProducts.map((p) =>
                 p.id === product.id ? { ...p, quantity: 1 } : p
             )
@@ -299,7 +299,7 @@ export function Beverages({data}) {
                                         {filteredBeverages.length > 0 ? (
                                             <Slider ref={sliderRef} {...settings} style={carouselStyles} >
                                                 {
-                                                    data.data?.store_products?.map(data => (
+                                                    data?.map(data => (
                                                         <div className="row">
                                                             <div key={data?.id} className="col-md-3 mb-3">
                                                                 <Card style={{ width: '22em' }} className="categoryCard shadow">

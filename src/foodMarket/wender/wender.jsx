@@ -53,8 +53,8 @@ const { id } = useParams()
 
             if (componentMounted) {
                 const venderdata = await data.json()
-                const vemdorproduct = venderdata.data
-                setWenderdata(venderdata)
+                const vemdorproduct = venderdata.data?.store_products
+                setWenderdata(vemdorproduct)
                 setLoading(false)
             }
             return () => {
@@ -141,7 +141,7 @@ const { id } = useParams()
                             </div>
                         </div>
                     </div> */}
-                     <Trending_dishes data={wenderdata}/>
+                     <Trending_dishes data={wenderdata} setWenderdata={setWenderdata}/>
 
  
 
@@ -154,7 +154,7 @@ const { id } = useParams()
 
         
 
-<Beverages data={wenderdata}/>
+<Beverages data={wenderdata} setWenderdata={setWenderdata}/>
            
            {/* <Beverages_Recommendations /> */}
 

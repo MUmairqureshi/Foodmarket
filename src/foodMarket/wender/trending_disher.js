@@ -10,7 +10,7 @@ import {  Card } from 'react-bootstrap';
 import mac from '../../assets/images/mac.png'
 import {  Trending_product  , Get_all_product_detail} from  '../../components/services/catigories'
 
-export function Trending_dishes({data}){
+export function Trending_dishes({data , setWenderdata}){
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(true);
  
@@ -34,7 +34,7 @@ export function Trending_dishes({data}){
         }, []);
       
         const handleIncrement = (productId) => {
-          setTrendingdishes((prevProducts) =>
+          setWenderdata((prevProducts) =>
             prevProducts.map((product) =>
               product.id === productId
                 ? { ...product, quantity: product.quantity + 1 }
@@ -44,7 +44,7 @@ export function Trending_dishes({data}){
         };
       
         const handleDecrement = (productId) => {
-          setTrendingdishes((prevProducts) =>
+          setWenderdata((prevProducts) =>
             prevProducts.map((product) =>
               product.id === productId && product.quantity > 0
                 ? { ...product, quantity: product.quantity - 1 }
@@ -60,7 +60,7 @@ export function Trending_dishes({data}){
             dispatch(addToCart(product));
         
             // Reset the quantity for the specific product
-            setTrendingdishes((prevProducts) =>
+            setWenderdata((prevProducts) =>
               prevProducts.map((p) =>
                 p.id === product.id ? { ...p, quantity: 1 } : p
               )
@@ -160,7 +160,7 @@ export function Trending_dishes({data}){
                             <div className=" ">
                             <Slider  ref={sliderRef} {...settings}>
                                  
-                                  {data.data?.store_products?.map(data =>(
+                                  {data?.map(data =>(
                                         <div className="row"> 
                                         <Card style={{ width: '22em' }}>
                                    
