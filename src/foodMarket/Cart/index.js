@@ -89,6 +89,22 @@ export function Cart() {
             : 0;
 
         return total + productPrice * productQuantity + variationTotal;
+    }, 0) ;
+
+
+
+    const sunbtotalCartPrice = cartItems?.reduce((total, product) => {
+        const productPrice = product.product_price || 0;
+        const productQuantity = product.quantity || 1; // Assuming a default quantity of 1
+
+        const variationTotal = Array.isArray(product.variation)
+            ? product.variation.reduce(
+                (variationSum, variation) => variationSum + (variation.price || 0) * (variation.quantity || 1),
+                0
+            )
+            : 0;
+
+        return total + productPrice * productQuantity + variationTotal;
     }, 0) + 10;
 
     const [showModal, setShowModal] = useState(false);
@@ -171,7 +187,7 @@ export function Cart() {
     const data = {
         date: date,
         user_address: "dwqed",
-        sub_total: totalCartPrice,
+        sub_total: sunbtotalCartPrice,
         total: totalCartPrice,
         zipcode: zipcode,
         message: message,
@@ -506,11 +522,11 @@ export function Cart() {
                                     </div>
                                     <div>
                                         <p>Shipping:</p>
-                                        <p>Free</p>
+                                        <p>$10</p>
                                     </div>
                                     <div>
                                         <p>Total:</p>
-                                        <p>${totalCartPrice}</p>
+                                        <p>${sunbtotalCartPrice}</p>
                                     </div>
                                 </div>
                                 {/* <form > */}

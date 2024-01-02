@@ -1,5 +1,6 @@
 {
   "name": "foodmarket",
+  "homepage": "foodmarket",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
