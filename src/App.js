@@ -2,8 +2,8 @@ import logo from './logo.svg';
 import './App.css';
 // import { Aboutus } from './foodMarket'
 import { Header } from './foodMarket/Layout/header'
-import { Elements } from '@stripe/react-stripe-js';
-import { loadStripe } from '@stripe/stripe-js';
+ 
+ 
 import   Product_deatail  from './foodMarket/home/productdetail/index'
 import { Home } from './foodMarket/home/index' 
 import { Provider } from 'react-redux'; 
@@ -13,12 +13,12 @@ import {Rout} from './route/index'
  
 
 function App() {
-  const stripePromise = loadStripe('pk_test_6pRNASCoBOKtIshFeQd4XMUh');
+ 
 
 
   return (
     <div className="App">
-    <Elements stripe={stripePromise}>       <Provider store={store}>
+  <Provider store={store}>
       <div>
       {/* <Contact/> */}
         {/* <Header /> */}
@@ -46,8 +46,7 @@ function App() {
 
       </div>
 
-      </Provider>,
-      </Elements>
+      </Provider>,  
 
     </div>
   );

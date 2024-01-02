@@ -2,7 +2,7 @@
 import { Nav } from 'react-bootstrap';
 import { Product_deatail } from '../productDetail/product_detail'
 
-import { useStripe, useElements, PaymentElement } from '@stripe/react-stripe-js';
+// import { useStripe, useElements, PaymentElement } from '@stripe/react-stripe-js';
 
 import React, { useState } from 'react'
 import { useEffect } from 'react'
@@ -15,6 +15,32 @@ import { json } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 export function Cart() {
+
+
+
+
+
+
+
+
+
+
+
+    const [name, setName] = useState('');
+    const [cardNumber, setCardNumber] = useState('');
+    const [cvc, setCVC] = useState('');
+    const [expiration, setExpiration] = useState('');
+  
+    const handleNameChange = (e) => setName(e.target.value);
+    const handleCardNumberChange = (e) => setCardNumber(e.target.value);
+    const handleCVCChange = (e) => setCVC(e.target.value);
+    const handleExpirationChange = (e) => setExpiration(e.target.value);
+  
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      // Add your payment processing logic here
+    };
+
     const [errorMessage, setErrorMessage] = useState(null);
 
     const [zipcode, setZipcode] = useState()
@@ -191,18 +217,7 @@ export function Cart() {
     };
 
 
-    const stripe = useStripe();
-    const elements = useElements();
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-
-        if (!stripe || !elements) {
-            return;
-        }
-
-        // Your payment processing logic here
-    };
-
+   
 
 
 
@@ -498,69 +513,37 @@ export function Cart() {
                                         <p>${totalCartPrice}</p>
                                     </div>
                                 </div>
-                                <form style={{
-                                    "base": {
-                                        'lineHeight': '1.35',
-                                        'fontSize': '1.11rem',
-                                        'color': '#495057',
-                                        'fontFamily': 'apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif'
-                                    }
-                                }}
-                                    onSubmit={handleSubmit}>
-                                    <div class="container-fluid">
-
-                                        <div id="card-errors" role="alert"></div>
-                                        <div class="card p-4 mt-4">
-                                            <div class="card-body">
-                                                <form id="payment-form">
-                                                    <label for="name">Name on Card</label>
-                                                    <div class="input-group mb-2">
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text">A</span>
-                                                        </div>
-                                                        <input type="text" class="form-control" id="name" />
-                                                        <div class="input-group-append">
-                                                            <span class="input-group-text">B</span>
-                                                        </div>
-                                                    </div>
-                                                    <label for="card-number">Credit Card Number</label>
-                                                    <div class="input-group mb-2">
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text">C</span>
-                                                        </div>
-                                                        <span id="card-number" class="form-control">
-
-                                                        </span>
-                                                        <div class="input-group-append">
-                                                            <span class="input-group-text">D</span>
-                                                        </div>
-                                                    </div>
-                                                    <label for="card-cvc">CVC Number</label>
-                                                    <div class="input-group mb-2">
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text">E</span>
-                                                        </div>
-                                                        <span id="card-cvc" class="form-control">
-
-                                                        </span>
-                                                    </div>
-                                                    <label for="card-exp">Expiration</label>
-                                                    <div class="input-group mb-2">
-                                                        <span id="card-exp" class="form-control">
-
-                                                        </span>
-                                                        <div class="input-group-append">
-                                                            <span class="input-group-text">F</span>
-                                                        </div>
-                                                    </div>
-                                                    <button id="payment-submit" class="btn btn-primary mt-1">Submit Payment</button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-
+                                {/* <form > */}
+                                <div className="container-fluid">
+      <div id="card-errors" role="alert"></div>
+      <div className="card p-4 mt-4">
+        <div className="card-body">
+          <form id="payment-form" onSubmit={handleSubmit}>
+            <div className="form-group">
+              <label htmlFor="name">Name on Card</label>
+              <input type="text" className="form-control" id="name" placeholder="John Doe" value={name} onChange={handleNameChange} />
+            </div>
+            <div className="form-group">
+              <label htmlFor="card-number">Credit Card Number</label>
+              <input type="text" className="form-control" id="card-number" placeholder="1234 5678 9012 3456" value={cardNumber} onChange={handleCardNumberChange} />
+            </div>
+            <div className="form-row">
+              <div className="form-group col-md-6">
+                <label htmlFor="card-cvc">CVC Number</label>
+                <input type="text" className="form-control" id="card-cvc" placeholder="123" value={cvc} onChange={handleCVCChange} />
+              </div>
+              <div className="form-group col-md-6">
+                <label htmlFor="card-exp">Expiration</label>
+                <input type="text" className="form-control" id="card-exp" placeholder="MM/YYYY" value={expiration} onChange={handleExpirationChange} />
+              </div>
+            </div>
+            <button type="submit" className="btn btn-primary mt-3">Submit Payment</button>
+          </form>
+        </div>
+      </div>
+    </div>
                                     {/* Show error message to your customers */}
-                                </form>
+                                {/* </form> */}
                                 <div className="actionApply">
                                     <button type="button" className="btn couponButton" onClick={placeOrder}>Proceesd To Checkout</button>
                                 </div>

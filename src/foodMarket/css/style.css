@@ -1865,4 +1865,8 @@ div#accordion {
       } */
 
 
- 
+      form#payment-form {
+        justify-content: start;
+        margin: auto;
+        text-align: justify;
+    }
