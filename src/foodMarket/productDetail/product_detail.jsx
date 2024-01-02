@@ -161,8 +161,9 @@ export const Product_deatail = (props) => {
                 ...props.productDetails?.data,
                 quantity: newQuantity,
                 variation: selectedVariationsObject,
-            };
-
+            }; toast.success(`${props.productDetails?.data.title}  added to cart!`, {
+                position: toast.POSITION.TOP_RIGHT,
+            });
             dispatch(addToCart(newCartItem));
         }
     };
@@ -411,7 +412,7 @@ export const Product_deatail = (props) => {
                                                                             type="radio"
                                                                             name={`variation_${data?.id}`}
                                                                             onChange={(e) => handleToggleSelection(data?.id, item?.id, e.target.checked)}
-                                                                    
+
                                                                         />
                                                                         {console.log("Data:", data, " data id :", data.id, "Item ID:", item?.id)}
 
@@ -468,7 +469,7 @@ export const Product_deatail = (props) => {
 
                                     <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Reviews</a>
 
-                              
+
 
                                     <div id="contact" role="tabpanel" aria-labelledby="contact-tab">
                                         <div class="store_detail reviews_tabb">

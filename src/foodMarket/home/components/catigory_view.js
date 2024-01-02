@@ -4,28 +4,33 @@ import { Get_all_product, Get_all_catigories } from '../../../components/service
 import Slider from "react-slick";
 import burger from '../../../assets/images/burger.png'
 import { useRef } from "react";
+
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 import { Link } from 'react-router-dom'
-export function Catigory_view({setSelectedCatigoryId}) {
+export function Catigory_view({ setSelectedCatigoryId }) {
 
-
+    const [loading, setLoading] = useState(true)
     const handleProductClick = async (productId) => {
         try {
             setSelectedCatigoryId(productId);
- 
-            return "Success";  
+
+            return "Success";
         } catch (error) {
             console.error('Error handling product click:', error);
-            return "Error";  
+            return "Error";
         }
     };
 
     const [all_product, setAll_product] = useState([]);
- 
+
     useEffect(() => {
         const fetchData = async () => {
             try {
+                setLoading(true)
                 const data = await Get_all_catigories();
                 setAll_product(data);
+                setLoading(false)
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -133,35 +138,61 @@ export function Catigory_view({setSelectedCatigoryId}) {
                                                 <p className="mb-0">National Picks</p>
                                             </div>
                                         </div>
-
-
-                                        {all_product.data?.map(data => (
-                                            <div className="categorySlider ">
-                                                <Link className="no-link-decoration" id='nav-link' style={{ textDecorationStyle: 'none' }} onClick={() => handleProductClick(data?.id)}>
-                                                    <div className="categoryBox bg-white shadow" id='categoriesSlider'>
-                                                        <div className='text-center'>
-                                                            <img src={ImageUrl + data?.image} alt="" />
+                                        {loading ? (
+                                            <div className="d-flex">
+                                                <div className="categorySlider ">
+                                                    <Link className="no-link-decoration" id='nav-link' style={{ textDecorationStyle: 'none' }}  >
+                                                        <div className="categoryBox bg-white shadow" id='categoriesSlider'>
+                                                            <div className='text-center'>
+                                                                <Skeleton width={200} />
+                                                            </div>
+                                                            <p className="mb-0"><Skeleton /></p>
                                                         </div>
-                                                        <p className="mb-0">{data?.name} </p>
-                                                    </div>
-                                                </Link>
+                                                    </Link>
+                                                </div>
+
+                                                <div className="categorySlider ">
+                                                    <Link className="no-link-decoration" id='nav-link' style={{ textDecorationStyle: 'none' }}  >
+                                                        <div className="categoryBox bg-white shadow" id='categoriesSlider'>
+                                                            <div className='text-center'>
+                                                                <Skeleton width={200} />
+                                                            </div>
+                                                            <p className="mb-0"><Skeleton /></p>
+                                                        </div>
+                                                    </Link>
+                                                </div>
+
+
+                                                <div className="categorySlider ">
+                                                    <Link className="no-link-decoration" id='nav-link' style={{ textDecorationStyle: 'none' }}  >
+                                                        <div className="categoryBox bg-white shadow" id='categoriesSlider'>
+                                                            <div className='text-center'>
+                                                                <Skeleton width={200} />
+                                                            </div>
+                                                            <p className="mb-0"><Skeleton /></p>
+                                                        </div>
+                                                    </Link>
+                                                </div>
                                             </div>
-                                        ))}
+
+
+
+                                        ) :
+
+                                            all_product.data?.map(data => (
+                                                <div className="categorySlider ">
+                                                    <Link className="no-link-decoration" id='nav-link' style={{ textDecorationStyle: 'none' }} onClick={() => handleProductClick(data?.id)}>
+                                                        <div className="categoryBox bg-white shadow" id='categoriesSlider'>
+                                                            <div className='text-center'>
+                                                                <img src={ImageUrl + data?.image} alt="" />
+                                                            </div>
+                                                            <p className="mb-0">{data?.name} </p>
+                                                        </div>
+                                                    </Link>
+                                                </div>
+                                            ))}
                                     </Slider>
                                 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
                             </div>
                             <div className="d-flex justify-content-end carouselArrows CategoryArrows">
                                 <a className="carousel-control-prevs" href="#homeCategoryCarousel " onClick={previouscat} role="button" data-slide="prev">
@@ -179,7 +210,7 @@ export function Catigory_view({setSelectedCatigoryId}) {
                     </div>
                 </div>
             </div>
-    
+
         </div>
     )
 }

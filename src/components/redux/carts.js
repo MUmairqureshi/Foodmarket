@@ -153,14 +153,15 @@ export const Cart = ({ handlezipcode, setZipCode, zip }) => {
 
                                 <div className='price_qty'>
                                     <div className="orderPrice">
-                                        <p><span>+</span>${item?.product_price}</p>
+                                        <p><span><i class="fa fa-plus" aria-hidden="true"></i></span>${item?.product_price}</p>
                                     </div>
 
                                     <div class="qty-container">
-                                        <button onClick={() => handledecrement(item?.id)} className="qty-btn-minus " type="button">-</button>
+                                        <button onClick={() => handledecrement(item?.id)} className="qty-btn-minus " type="button"><i class="fa fa-minus" aria-hidden="true"></i>
+                                        </button>
                                         <input className="form-control" type="hidden" value="{{$item->id}}" name="" />
                                         <input type="number" name="quantity" className="product_qty input-qty" value={item?.quantity} placeholder="Quantity" />
-                                        <button onClick={() => handleincrement(item?.id)} className="qty-btn-plus " type="button">+</button>
+                                        <button onClick={() => handleincrement(item?.id)} className="qty-btn-plus " type="button"><i class="fa fa-plus" aria-hidden="true"></i></button>
                                     </div>
                                 </div>
 

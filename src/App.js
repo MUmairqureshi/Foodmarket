@@ -4,8 +4,7 @@ import './App.css';
 import { Header } from './foodMarket/Layout/header'
  
  
-import   Product_deatail  from './foodMarket/home/productdetail/index'
-import { Home } from './foodMarket/home/index' 
+ import { Home } from './foodMarket/home/index' 
 import { Provider } from 'react-redux'; 
 import store from './components/redux/store';
 import {Contact} from './foodMarket/Contact-us/contactus'
