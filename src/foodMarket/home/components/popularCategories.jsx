@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { TailSpin } from 'react-loader-spinner'
+
+
 import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
 import Slider from "react-slick";
@@ -12,54 +14,46 @@ import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import mac from '../../../assets/images/mac.png'
 import '../../css/style.css'
+import { Virtual, Navigation, Pagination } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
+
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-export function PopularCategories({ loading, data, handleIncrement, handleDecrement, handleAddToCart }) {
-
-
-    //  <TailSpin
-    //   visible={true}
-    //   height="80"
-    //   width="80"
-    //   color="#4fa94d"
-    //   ariaLabel="tail-spin-loading"
-    //   radius="1"
-    //   wrapperStyle={{}}
-    //   wrapperClass=""
-    //   />
-
-    // const [isFavorited, setIsFavorited] = useState(false);
-
-    // const handleFavorite = (itemId) => {
-    //     console.log("itemid" ,itemId )
-    //     setIsFavorited((prevState) => !prevState);
-
-    //    };
-    // const getFavoritedStatus = () => {
-    //     return isFavorited ? 'Favorited' : 'Not Favorited';
-    //   };
-
-
+export function PopularCategories({ loading, data, handleIncrement, handleDecrement, handleAddToCart  , handlealldata}) {
+    const [swiperRef, setSwiperRef] = useState(null);
+    const appendNumber = useRef(500);
+    const prependNumber = useRef(1);
+    // Create array with 500 slides
+    const [slides, setSlides] = useState(
+      Array.from({ length: 500 }).map((_, index) => `Slide ${index + 4}`)
+    );
+  
+    const prepend = () => {
+      setSlides([
+        `Slide ${prependNumber.current - 2}`,
+        `Slide ${prependNumber.current - 3}`,
+        ...slides,
+      ]);
+      prependNumber.current = prependNumber.current - 2;
+      swiperRef.slideTo(swiperRef.activeIndex + 2, 0);
+    };
+  
+    const append = () => {
+      setSlides([...slides, 'Slide ' + ++appendNumber.current]);
+    };
+  
+    const slideTo = (index) => {
+      swiperRef.slideTo(index - 3, 0);
+    };
+  
 
     const [favoriteStates, setFavoriteStates] = useState({});
 
-    //     const handleFavorite = async (itemId) => {
-
-    //         try {
-    //             const response = await Favourite(itemId)
-
-    //   if(response.status === true){
-    //     toast.success(`${ "Add to Favorite"} added to cart!`, {
-    //         position: toast.POSITION.TOP_RIGHT,
-    //     });
-    //   }
-
-    //         } catch (error) {
-    //             console.error('Error fetching product details:', error);
-    //         } 
-    //     };
     const handleFavorite = async (itemId, title) => {
         console.log("itemId", itemId)
         try {
@@ -84,7 +78,7 @@ export function PopularCategories({ loading, data, handleIncrement, handleDecrem
 
         setFavoriteStates((prevStates) => ({
             ...prevStates,
-            [itemId]: !prevStates[itemId], // Toggle the favorite state for the specific item
+            [itemId]: !prevStates[itemId],
         }));
     };
 
@@ -180,17 +174,20 @@ export function PopularCategories({ loading, data, handleIncrement, handleDecrem
     return (
         <div className="popularCategories">
             <div className="categoryHeader d-flex justify-content-between align-items-center flex-wrap">
-                <div className="titleBox">
-                    <h3>Most Popular </h3>
+            <div className="titleBox d-flex justify-content-between" style={{  'width' : '100%'  , "margin" : "0"  }}>
+
+            <h3 className="mb-0">Most Popular</h3>
+
+                    <h3 onClick={handlealldata} className=" btn">All Food </h3>
                 </div>
             </div>
 
             <div id="homeMostPopularCarousel" className="carousel slide" data-ride="carousel">
                 <div className="d-flex justify-content-end carouselArrows mostPopular">
-                    <a className="carousel-control-prevs" onClick={previous} href="#homeMostPopularCarousel" role="button" data-slide="prev">
+                    <a className="carousel-control-prevs" href="#homeMostPopularCarousel" onClick={next} role="button" data-slide="prev">
                         <i className="fa fa-chevron-left" aria-hidden="true"></i>
                     </a>
-                    <a className="carousel-control-nexts" onClick={next} href="#homeMostPopularCarousel" role="button" data-slide="next">
+                    <a className="carousel-control-nexts" href="#homeMostPopularCarousel" role="button"  onClick={previous} data-slide="next">
                         <i className="fa fa-chevron-right" aria-hidden="true"  ></i>
 
                     </a>
@@ -199,18 +196,7 @@ export function PopularCategories({ loading, data, handleIncrement, handleDecrem
 
                 </div>
                 <div className="carousel-inner">
-                    {/*   {/* <TailSpin
-                                visible={true}
-                                height="80"
-                                width="80"
-                                margin="auto"
-                                textAlign="center"
-                                color="#4fa94d"
-                                ariaLabel="tail-spin-loading"
-                                radius="1"
-                                wrapperStyle={{}}
-                                wrapperClass=""
-                            /> */}
+
                     <div className="loaderContainerStyle">
                         {loading ? (
 
@@ -234,16 +220,7 @@ export function PopularCategories({ loading, data, handleIncrement, handleDecrem
                                                     <div className="ratingBox">
                                                         <p className="mb-0"><Skeleton /></p>
                                                         <p className="mb-0">
-                                                            {/* <Skeleton />
-                                                                    <Skeleton />
-                                                                    <Skeleton />
-                                                                    <Skeleton />
-                                                                    <Skeleton /> */}
-                                                            {/* <i className="fa fa-star"></i><Skeleton /> */}
-                                                            {/* <i className="fa fa-star"></i> */}
-                                                            {/* <i className="fa fa-star"></i> */}
-                                                            {/* <i className="fa fa-star"></i> */}
-                                                            {/* <i className="fa fa-star"></i> */}
+
                                                         </p>
                                                     </div>
                                                     <div className="deliveryInfo">
@@ -277,7 +254,6 @@ export function PopularCategories({ loading, data, handleIncrement, handleDecrem
 
                                                 </div>
                                                 <div className="cardImage">
-                                                    {/* <img src={  <Skeleton />}  alt="Category Image" className="mw-100" /> */}<Skeleton height={200} width={200} />
                                                 </div>
 
 
@@ -288,16 +264,7 @@ export function PopularCategories({ loading, data, handleIncrement, handleDecrem
                                                     <div className="ratingBox">
                                                         <p className="mb-0"><Skeleton /></p>
                                                         <p className="mb-0">
-                                                            {/* <Skeleton />
-                                                                    <Skeleton />
-                                                                    <Skeleton />
-                                                                    <Skeleton />
-                                                                    <Skeleton /> */}
-                                                            {/* <i className="fa fa-star"></i><Skeleton /> */}
-                                                            {/* <i className="fa fa-star"></i> */}
-                                                            {/* <i className="fa fa-star"></i> */}
-                                                            {/* <i className="fa fa-star"></i> */}
-                                                            {/* <i className="fa fa-star"></i> */}
+
                                                         </p>
                                                     </div>
                                                     <div className="deliveryInfo">
@@ -331,7 +298,6 @@ export function PopularCategories({ loading, data, handleIncrement, handleDecrem
 
                                                 </div>
                                                 <div className="cardImage">
-                                                    {/* <img src={  <Skeleton />}  alt="Category Image" className="mw-100" /> */}<Skeleton height={200} width={200} />
                                                 </div>
 
 
@@ -342,16 +308,7 @@ export function PopularCategories({ loading, data, handleIncrement, handleDecrem
                                                     <div className="ratingBox">
                                                         <p className="mb-0"><Skeleton /></p>
                                                         <p className="mb-0">
-                                                            {/* <Skeleton />
-                                                                    <Skeleton />
-                                                                    <Skeleton />
-                                                                    <Skeleton />
-                                                                    <Skeleton /> */}
-                                                            {/* <i className="fa fa-star"></i><Skeleton /> */}
-                                                            {/* <i className="fa fa-star"></i> */}
-                                                            {/* <i className="fa fa-star"></i> */}
-                                                            {/* <i className="fa fa-star"></i> */}
-                                                            {/* <i className="fa fa-star"></i> */}
+
                                                         </p>
                                                     </div>
                                                     <div className="deliveryInfo">
@@ -387,7 +344,6 @@ export function PopularCategories({ loading, data, handleIncrement, handleDecrem
 
                                                 </div>
                                                 <div className="cardImage">
-                                                    {/* <img src={  <Skeleton />}  alt="Category Image" className="mw-100" /> */}<Skeleton height={200} width={200} />
                                                 </div>
 
 
@@ -398,16 +354,7 @@ export function PopularCategories({ loading, data, handleIncrement, handleDecrem
                                                     <div className="ratingBox">
                                                         <p className="mb-0"><Skeleton /></p>
                                                         <p className="mb-0">
-                                                            {/* <Skeleton />
-                                                                    <Skeleton />
-                                                                    <Skeleton />
-                                                                    <Skeleton />
-                                                                    <Skeleton /> */}
-                                                            {/* <i className="fa fa-star"></i><Skeleton /> */}
-                                                            {/* <i className="fa fa-star"></i> */}
-                                                            {/* <i className="fa fa-star"></i> */}
-                                                            {/* <i className="fa fa-star"></i> */}
-                                                            {/* <i className="fa fa-star"></i> */}
+
                                                         </p>
                                                     </div>
                                                     <div className="deliveryInfo">
@@ -441,7 +388,6 @@ export function PopularCategories({ loading, data, handleIncrement, handleDecrem
 
                                                 </div>
                                                 <div className="cardImage">
-                                                    {/* <img src={  <Skeleton />}  alt="Category Image" className="mw-100" /> */}<Skeleton height={200} width={200} />
                                                 </div>
 
 
@@ -452,16 +398,7 @@ export function PopularCategories({ loading, data, handleIncrement, handleDecrem
                                                     <div className="ratingBox">
                                                         <p className="mb-0"><Skeleton /></p>
                                                         <p className="mb-0">
-                                                            {/* <Skeleton />
-                                                                    <Skeleton />
-                                                                    <Skeleton />
-                                                                    <Skeleton />
-                                                                    <Skeleton /> */}
-                                                            {/* <i className="fa fa-star"></i><Skeleton /> */}
-                                                            {/* <i className="fa fa-star"></i> */}
-                                                            {/* <i className="fa fa-star"></i> */}
-                                                            {/* <i className="fa fa-star"></i> */}
-                                                            {/* <i className="fa fa-star"></i> */}
+
                                                         </p>
                                                     </div>
                                                     <div className="deliveryInfo">
@@ -495,7 +432,6 @@ export function PopularCategories({ loading, data, handleIncrement, handleDecrem
 
                                                 </div>
                                                 <div className="cardImage">
-                                                    {/* <img src={  <Skeleton />}  alt="Category Image" className="mw-100" /> */}<Skeleton height={200} width={200} />
                                                 </div>
 
 
@@ -506,16 +442,6 @@ export function PopularCategories({ loading, data, handleIncrement, handleDecrem
                                                     <div className="ratingBox">
                                                         <p className="mb-0"><Skeleton /></p>
                                                         <p className="mb-0">
-                                                            {/* <Skeleton />
-                                                                    <Skeleton />
-                                                                    <Skeleton />
-                                                                    <Skeleton />
-                                                                    <Skeleton /> */}
-                                                            {/* <i className="fa fa-star"></i><Skeleton /> */}
-                                                            {/* <i className="fa fa-star"></i> */}
-                                                            {/* <i className="fa fa-star"></i> */}
-                                                            {/* <i className="fa fa-star"></i> */}
-                                                            {/* <i className="fa fa-star"></i> */}
                                                         </p>
                                                     </div>
                                                     <div className="deliveryInfo">
@@ -545,62 +471,77 @@ export function PopularCategories({ loading, data, handleIncrement, handleDecrem
                         ) : (
                             <>
 
-                                {data.length > 0 ? (
-                                    <Slider ref={sliderRef} {...settings}>
+                            {data.length > 0 ? (
+                        //      <Swiper
+                        //      modules={[Virtual, Navigation, Pagination]}
+                        //      onSwiper={setSwiperRef}
+                        //      slidesPerView={3}
+                        //     //  centeredSlides={true}
+                        //      slidesPerColumn={26}
+                        //     //  spaceBetween={30}
+ 
+                        //     //  pagination={{
+                        //     //      type: 'fraction',
+                        //     //  }}
 
-
-                                        {data?.map(data => (
-                                            <div className="row">
-                                                <Card className="mb-3" style={{ width: '16rem' }}>
+                        //      navigation={true}
+                        //     //  virtual
+                        //     //  slidesPerGroup={3} 
+                        //     //  slidesPerColumnFill="row"  // Fill the rows with slides
+                        //  >
+                        <Slider  ref={sliderRef} {...settings}>
+                                         {data?.map((data , index )=> (
+                                                  <SwiperSlide key={data}> 
+                                                <Card className="mb-3 p-2 ml-2">
                                                     <Nav.Link className="no-link-decoration" id='nav-link' style={{ textDecorationStyle: 'none' }} onClick={() => handleProductClick(data?.id)}>
-                                                    <div className="cardHeader">
-                                                        <div className="topMeta">
-                                                            <div className="tags">
-                                                                <span>19%off</span>
-                                                            </div>
-                                                            <div className="tags wishList">
+                                                        <div className="cardHeader">
+                                                            <div className="topMeta">
+                                                                <div className="tags">
+                                                                    <span>19%off</span>
+                                                                </div>
+                                                                <div className="tags wishList">
 
-                                                                <button onClick={() => handleFavorite(data.id, data.title)} className="button" id="wwwefl">
-                                                                    <i className={` ${favoriteStates[data.id] ? 'fa fa-heart' : ' fa fa-heart-o'}`} aria-hidden="true"></i>
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                        <div className="cardImage">
-                                                            <img src={ImageUrl + data?.feature_image || <Skeleton />} alt="Category Image" className="mw-100" />
-                                                        </div>
-
-                                                        <div className="topMeta">
-                                                            <div className="companyLogo tags">
-                                                                <button className="button"><img src={mac} alt="MAc" /></button>
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-                                                    <div className="cardBody">
-                                                        <div className="body-upper">
-                                                            <div className="ratingBox">
-                                                                <p className="mb-0">Reviews 3.5k</p>
-                                                                <p className="mb-0">
-                                                                    <i className="fa fa-star"></i>
-                                                                    <i className="fa fa-star"></i>
-                                                                    <i className="fa fa-star"></i>
-                                                                    <i className="fa fa-star"></i>
-                                                                    <i className="fa fa-star"></i>
-                                                                </p>
-                                                            </div>
-                                                            <div className="deliveryInfo">
-                                                                <div className="meter">
-                                                                    <p className="mb-0"> 30-40 mins</p>
-                                                                    <p className="mb-0 text-success">$0 Delivery</p>
+                                                                    <button onClick={() => handleFavorite(data.id, data.title)} className="button" id="wwwefl">
+                                                                        <i className={` ${favoriteStates[data.id] ? 'fa fa-heart' : ' fa fa-heart-o'}`} aria-hidden="true"></i>
+                                                                    </button>
                                                                 </div>
                                                             </div>
+                                                            <div className="cardImage">
+                                                                <img src={ImageUrl + data?.feature_image || <Skeleton />} alt="Category Image" className="mw-100" />
+                                                            </div>
+
+                                                            <div className="topMeta">
+                                                                <div className="companyLogo tags">
+                                                                    <button className="button"><img src={mac} alt="MAc" /></button>
+                                                                </div>
+                                                            </div>
+
                                                         </div>
-                                                        <div className="cardContent" style={{ textAlign: 'left' }}>
-                                                            <h3>{data.title.slice(0, 10) || <Skeleton />}</h3>
-                                                            <p>{data.description.slice(0, 20)}</p>
-                                                            <h5 className="text-theme-primary font-weight-bold">${data.product_price}</h5>
+                                                        <div className="cardBody">
+                                                            <div className="body-upper">
+                                                                <div className="ratingBox">
+                                                                    <p className="mb-0">Reviews 3.5k</p>
+                                                                    <p className="mb-0">
+                                                                        <i className="fa fa-star"></i>
+                                                                        <i className="fa fa-star"></i>
+                                                                        <i className="fa fa-star"></i>
+                                                                        <i className="fa fa-star"></i>
+                                                                        <i className="fa fa-star"></i>
+                                                                    </p>
+                                                                </div>
+                                                                <div className="deliveryInfo">
+                                                                    <div className="meter">
+                                                                        <p className="mb-0"> 30-40 mins</p>
+                                                                        <p className="mb-0 text-success">$0 Delivery</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div className="cardContent" style={{ textAlign: 'left' }}>
+                                                                <h3>{data.title.slice(0, 10) || <Skeleton />}</h3>
+                                                                <p>{data.description.slice(0, 20)}</p>
+                                                                <h5 className="text-theme-primary font-weight-bold">${data.product_price}</h5>
+                                                            </div>
                                                         </div>
-                                                    </div>
                                                     </Nav.Link>
                                                     <div className="cardFooter">
                                                         <div className="cardAction">
@@ -617,12 +558,16 @@ export function PopularCategories({ loading, data, handleIncrement, handleDecrem
                                                         </div>
                                                     </div>
 
+
                                                 </Card>
-                                            </div>
+                                                </SwiperSlide>
+
+                                            ))}
+                                    </Slider>
 
 
-                                        ))}
-                                    </Slider>)
+
+                                )
                                     : (
                                         <p>No results found.</p>
                                     )}

@@ -2,31 +2,33 @@
 import { Nav } from 'react-bootstrap';
 import { Product_deatail } from '../productDetail/product_detail'
 
+import { useStripe, useElements, PaymentElement } from '@stripe/react-stripe-js';
+
 import React, { useState } from 'react'
 import { useEffect } from 'react'
 import mac from '../../assets/images/mac.png'
 import c1 from '../../assets/images/c1.png'
 import { Get_all_product_detail, Order_Placed } from '../../components/services/catigories'
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchProducts, addToCart, incrementvariationQuantity, removeFromCart , updateCartItem } from '../../components/redux/actions';
+import { fetchProducts, addToCart, incrementvariationQuantity, removeFromCart, updateCartItem } from '../../components/redux/actions';
 import { json } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 export function Cart() {
+    const [errorMessage, setErrorMessage] = useState(null);
 
     const [zipcode, setZipcode] = useState()
 
     const [coupon, setCoupon] = useState()
     const [message, setMessage] = useState('')
     const [date, setDate] = useState('')
-    
+
     const [qty, setQty] = useState(1)
     const [productQuantities, setProductQuantities] = useState({});
     const cartItems = useSelector((state) => state.cart.items);
     console.log("cartItems", cartItems)
     console.log("cartItems", cartItems)
     const dispatch = useDispatch()
-
 
 
 
@@ -111,13 +113,6 @@ export function Cart() {
 
 
 
-    const handleAddToCart = () => {
-        dispatch(addToCart());
-    }
-
-    const handleIncrement = (productId) => {
-        dispatch(incrementvariationQuantity(productId));
-    };
 
 
 
@@ -145,31 +140,21 @@ export function Cart() {
 
 
 
-    // const data = {
-    //     sub_total: totalCartPrice,
-    //     total: totalCartPrice,
-    //     zipcode: zipcode,
-    //     message: message,
-    //     products: cartItems,
-    //     discount: 32,
-    //     coupon_code: applycoupon,
-    // };
 
 
-
-               const data = {
-                date:date,
-                user_address : "dwqed",
-                sub_total: totalCartPrice,
-                total: totalCartPrice,
-                zipcode: zipcode,
-                message: message,
-                products: cartItems,
-                discount: 32,
-                coupon_code: applycoupon,
-                user_address : "dedjedn" ,
-                delivery_type: "ontime"
-            };
+    const data = {
+        date: date,
+        user_address: "dwqed",
+        sub_total: totalCartPrice,
+        total: totalCartPrice,
+        zipcode: zipcode,
+        message: message,
+        products: cartItems,
+        discount: 32,
+        coupon_code: applycoupon,
+        user_address: "dedjedn",
+        delivery_type: "ontime"
+    };
     const placeOrder = async () => {
         try {
             const response = await Order_Placed(data);
@@ -206,192 +191,20 @@ export function Cart() {
     };
 
 
+    const stripe = useStripe();
+    const elements = useElements();
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+
+        if (!stripe || !elements) {
+            return;
+        }
+
+        // Your payment processing logic here
+    };
 
 
 
-
-
-
-
-
-
-
-    // const placeOrder = async () => {
-    //     try {
-    //         // Assuming data is the order data with cardItems
-    //         const firstProductStoreId = cartItems.length > 0 ? cartItems[0].storeId : null;
-    
-    //         // Check if there are two vendor products
-    //         if (cartItems.length === 2 && firstProductStoreId !== cardItems[1].storeId) {
-    //             // Remove the first product
-    //             const updatedCardItems = cartItems.slice(1);
-    
-    //             // Update the order data or perform any other necessary actions
-    //             setData({
-    //                 ...data,
-    //                 cardItems: updatedCardItems,
-    //             });
-    //         }
-    
-    //         const response = await Order_Placed(data);
-    
-    //         if (response && response.status === true) {
-    //             // Handle the successful response here
-    //             console.log('Success ', response.message);
-    
-    //             toast.success('Order placed successfully!', {
-    //                 position: toast.POSITION.TOP_RIGHT,
-    //             });
-    //         } else {
-    //             console.error('Error in placing order:', response.statusText);
-    
-    //             toast.error('Failed to place order. Please try again.', {
-    //                 position: toast.POSITION.TOP_RIGHT,
-    //             });
-    //         }
-    //     } catch (error) {
-    //         console.error('Error in placing order:', error);
-    
-    //         toast.error('An error occurred while placing the order.', {
-    //             position: toast.POSITION.TOP_RIGHT,
-    //         });
-    //     }
-    // };
-   
-    
-
-
-
-
-
-
-
-
-    
-    // const placeOrder = async () => {
-    //     try {
-    //         const firstProductStoreId = cartItems.length > 0 ? cartItems[0].storeId : null;
-
-    //         if (cartItems.length === 2 && firstProductStoreId !== cartItems[1].storeId) {
-    //             const updatedCardItems = cartItems.slice(1);
-
-    //             // Dispatch action to update cardItems in the store
-    //             dispatch(updateCartItem(updatedCardItems));
-
-    //             toast.info('Removed the first vendor product from the order.', {
-    //                 position: toast.POSITION.TOP_RIGHT,
-    //             });
-    //         }
-
-    //         const data = {
-    //             date:date,
-    //             user_address : "dwqed",
-    //             sub_total: totalCartPrice,
-    //             total: totalCartPrice,
-    //             zipcode: zipcode,
-    //             message: message,
-    //             products: cartItems,
-    //             discount: 32,
-    //             coupon_code: applycoupon,
-    //             user_address : "dedjedn" ,
-    //             delivery_type: "ontime"
-    //         };
-    //         const response = await Order_Placed(data);
-
-    //         if (response && response.status === true) {
-    //             // Handle the successful response here
-    //             console.log('Success ', response.message);
-
-    //             zipcode(""),
-    //             message(""),
-    //             discount("")
-    //             coupon_code("")
-                  
-                    
-    //             toast.success('Order placed successfully!', {
-    //                 position: toast.POSITION.TOP_RIGHT,
-    //             });
-    //         } else {
-    //             console.error('Error in placing order:', response.statusText);
-
-    //             toast.error('Failed to place order. Please try again.', {
-    //                 position: toast.POSITION.TOP_RIGHT,
-    //             });
-    //         }
-    //     } catch (error) {
-    //         console.error('Error in placing order:', error);
-
-    //         toast.error('An error occurred while placing the order.', {
-    //             position: toast.POSITION.TOP_RIGHT,
-    //         });
-    //     }
-    // };    
-    // const placeOrder = async () => {
-    //     try {
-    //         const firstProductStoreId = cartItems.length > 0 ? cartItems[0].storeId : null;
-    
-    //         if (cartItems.length === 2 && firstProductStoreId !== cartItems[1].storeId) {
-    //             const updatedCardItems = cartItems.slice(1);
-    
-    //             // Dispatch action to update cardItems in the store
-    //             dispatch(updateCartItem(updatedCardItems));
-    
-    //             toast.info('Removed the first vendor product from the order.', {
-    //                 position: toast.POSITION.TOP_RIGHT,
-    //             });
-    //         }
-    
-     
-    //         const data = {
-    //             date:date,
-    //             user_address : "dwqed",
-    //             sub_total: totalCartPrice,
-    //             total: totalCartPrice,
-    //             zipcode: zipcode,
-    //             message: message,
-    //             products: cartItems,
-    //             discount: 32,
-    //             coupon_code: applycoupon,
-    //             user_address : "dedjedn" ,
-    //             delivery_type: "ontime"
-    //         };
-    
-    //         const response = await Order_Placed(data);
-    
-    //         if (response && response.status === 200) {
-    //             // Handle the successful response here
-    //             console.log('Success ', response.message);
-    
-                // Clear the fields
-                // setZipcode("");
-                // setMessage("");
-                // setApplycoupon('');
-                // Add other fields to clear if needed
-    //             // Clear the fields
-    //             setZipcode("");
-    //             setMessage("");
-    //             setApplyCoupon("");
-    //             // Add other fields to clear if needed
-    
-    //             toast.success('Order placed successfully!', {
-    //                 position: toast.POSITION.TOP_RIGHT,
-    //             });
-    //         } else {
-    //             console.error('Error in placing order:', response.statusText);
-    
-    //             toast.error('Failed to place order. Please try again.', {
-    //                 position: toast.POSITION.TOP_RIGHT,
-    //             });
-    //         }
-    //     } catch (error) {
-    //         console.error('Error in placing order:', error);
-    
-    //         toast.error('An error occurred while placing the order.', {
-    //             position: toast.POSITION.TOP_RIGHT,
-    //         });
-    //     }
-    // };
-    
 
     return (
         <div>
@@ -424,24 +237,18 @@ export function Cart() {
                                                                 <h3>{data?.title}</h3>
 
                                                             </div>
-                                                            {/* <p className='d-flex justify-content-start'>Order are expected to ship <br /> within 7-10 days
-                                                                <Nav.Link className="no-link-decoration" id='nav-link' style={{ textDecorationStyle: 'none' }} onClick={() => handleProductClick(data?.id)}>
-                                                                    <i className="fa-solid fa-pen-to-square"></i>
-                                                                </Nav.Link>
-                                                            </p> */}
+
                                                             <div className="product_detail_extras">
 
                                                                 {data.variation?.map(item => (
                                                                     <div key={item.id}>
-                                                                        {/* Your existing code for data.variation */}
 
-                                                                        {/* {item.variation_item?.map(variationItem => ( */}
-                                                                            <div key={item.id} className="first_extra d-flex align-items-center">
-                                                                                <div className="img_div">
-                                                                                    <img src={ImageUrl + item?.image} className="img-fluid" alt="" />
-                                                                                </div>
-                                                                                <p>{item?.title} : <span> ${item.price}</span></p>
+                                                                        <div key={item.id} className="first_extra d-flex align-items-center">
+                                                                            <div className="img_div">
+                                                                                <img src={ImageUrl + item?.image} className="img-fluid" alt="" />
                                                                             </div>
+                                                                            <p>{item?.title} : <span> ${item.price}</span></p>
+                                                                        </div>
                                                                         {/* ))} */}
                                                                     </div>
                                                                 ))}
@@ -493,7 +300,7 @@ export function Cart() {
 
                                             </tr>
                                         ))}
-{/* 
+                                        {/* 
                                         <tr>
                                             <td>
                                                 <div className="actionChange">
@@ -589,66 +396,66 @@ export function Cart() {
 
 
 
-<div className="delivery_detail">
-    <div className="row">
-        <div className="col-md-6">
-            <div className="delivery_content">
-                <div className="titleBox text-left">
-                    <h3>Delivery Zip*</h3>
-                </div>
-                <p>Hint: if this is a gift, enter your recipient’s ZIP!</p>
-                <div className="delivery_info">
-                    <input
-                        type="text"
-                        placeholder="484892"
-                        className="form-control"
-                        value={zipcode}
-                        onChange={handleZipcodeChange}
-                    />
-                    <i className="fa fa-map-marker" aria-hidden="true"></i>
-                </div>
-            </div>
-        </div>
-        <div className="col-md-6">
-            <div className="delivery_content">
-                <div className="titleBox text-left">
-                    <h3>Delivery Date*</h3>
-                </div>
-                <p>Choose an arrival date for order</p>
-                <div className="delivery_info">
-                    <input
-                        type="date"
-                        placeholder="20/10/23"
-                        className="form-control"
-                        value={date}
-                        onChange={(e) => setDate(e.target.value)}
-                    />
-                    <i className="fa fa-calendar" aria-hidden="true"></i>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div className="row mt-4">
-        <div className="col-md-12">
-            <div className="delivery_content">
-                <div className="titleBox text-left">
-                    <h3>Gift Message</h3>
-                </div>
-                {/* <p>Write a message for your gift</p> */}
-                <div className="delivery_info">
-                    <textarea
-                        rows="4"
-                        placeholder="Write Message"
-                        className="form-control"
-                        value={message}
-                        onChange={(e) => setMessage(e.target.value)}
-                    />
-                    {/* <i className="fa fa-comments" aria-hidden="true"></i> */}
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+                            <div className="delivery_detail">
+                                <div className="row">
+                                    <div className="col-md-6">
+                                        <div className="delivery_content">
+                                            <div className="titleBox text-left">
+                                                <h3>Delivery Zip*</h3>
+                                            </div>
+                                            <p>Hint: if this is a gift, enter your recipient’s ZIP!</p>
+                                            <div className="delivery_info">
+                                                <input
+                                                    type="text"
+                                                    placeholder="484892"
+                                                    className="form-control"
+                                                    value={zipcode}
+                                                    onChange={handleZipcodeChange}
+                                                />
+                                                <i className="fa fa-map-marker" aria-hidden="true"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-md-6">
+                                        <div className="delivery_content">
+                                            <div className="titleBox text-left">
+                                                <h3>Delivery Date*</h3>
+                                            </div>
+                                            <p>Choose an arrival date for order</p>
+                                            <div className="delivery_info">
+                                                <input
+                                                    type="date"
+                                                    placeholder="20/10/23"
+                                                    className="form-control"
+                                                    value={date}
+                                                    onChange={(e) => setDate(e.target.value)}
+                                                />
+                                                <i className="fa fa-calendar" aria-hidden="true"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="row mt-4">
+                                    <div className="col-md-12">
+                                        <div className="delivery_content">
+                                            <div className="titleBox text-left">
+                                                <h3>Gift Message</h3>
+                                            </div>
+                                            {/* <p>Write a message for your gift</p> */}
+                                            <div className="delivery_info">
+                                                <textarea
+                                                    rows="4"
+                                                    placeholder="Write Message"
+                                                    className="form-control"
+                                                    value={message}
+                                                    onChange={(e) => setMessage(e.target.value)}
+                                                />
+                                                {/* <i className="fa fa-comments" aria-hidden="true"></i> */}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
                         </div>
                         <div className="col-md-4 mb-4">
@@ -691,6 +498,69 @@ export function Cart() {
                                         <p>${totalCartPrice}</p>
                                     </div>
                                 </div>
+                                <form style={{
+                                    "base": {
+                                        'lineHeight': '1.35',
+                                        'fontSize': '1.11rem',
+                                        'color': '#495057',
+                                        'fontFamily': 'apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif'
+                                    }
+                                }}
+                                    onSubmit={handleSubmit}>
+                                    <div class="container-fluid">
+
+                                        <div id="card-errors" role="alert"></div>
+                                        <div class="card p-4 mt-4">
+                                            <div class="card-body">
+                                                <form id="payment-form">
+                                                    <label for="name">Name on Card</label>
+                                                    <div class="input-group mb-2">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">A</span>
+                                                        </div>
+                                                        <input type="text" class="form-control" id="name" />
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text">B</span>
+                                                        </div>
+                                                    </div>
+                                                    <label for="card-number">Credit Card Number</label>
+                                                    <div class="input-group mb-2">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">C</span>
+                                                        </div>
+                                                        <span id="card-number" class="form-control">
+
+                                                        </span>
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text">D</span>
+                                                        </div>
+                                                    </div>
+                                                    <label for="card-cvc">CVC Number</label>
+                                                    <div class="input-group mb-2">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">E</span>
+                                                        </div>
+                                                        <span id="card-cvc" class="form-control">
+
+                                                        </span>
+                                                    </div>
+                                                    <label for="card-exp">Expiration</label>
+                                                    <div class="input-group mb-2">
+                                                        <span id="card-exp" class="form-control">
+
+                                                        </span>
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text">F</span>
+                                                        </div>
+                                                    </div>
+                                                    <button id="payment-submit" class="btn btn-primary mt-1">Submit Payment</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Show error message to your customers */}
+                                </form>
                                 <div className="actionApply">
                                     <button type="button" className="btn couponButton" onClick={placeOrder}>Proceesd To Checkout</button>
                                 </div>
@@ -699,199 +569,7 @@ export function Cart() {
                     </div>
                 </div>
             </section>
-            {/* <section className="mt-5 mb-3">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-md-4">
-                            <div className="categoryCard shadow mb-4">
-                                <div className="cardHeader">
-                                    <div className="topMeta">
-                                        <div className="tags">
-                                            <span>15%off</span>
-                                        </div>
-                                        <div className="tags wishList">
-                                            <button className="button"><i className="fa fa-heart"></i></button>
-                                        </div>
-                                    </div>
-                                    <div className="cardImage">
-                                        <img src={c1} alt="Category Image" className="mw-100" />
-                                    </div>
 
-                                    <div className="topMeta">
-                                        <div className="companyLogo tags">
-                                            <button className="button"><img src={mac} alt="MAc" /></button>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div className="cardBody">
-                                    <div className="body-upper">
-                                        <div className="ratingBox">
-                                            <p className="mb-0">Reviews 3.5k</p>
-                                            <p className="mb-0">
-                                                <i className="fa fa-star"></i>
-                                                <i className="fa fa-star"></i>
-                                                <i className="fa fa-star"></i>
-                                                <i className="fa fa-star"></i>
-                                                <i className="fa fa-star"></i>
-                                            </p>
-                                        </div>
-                                        <div className="deliveryInfo">
-                                            <div className="meter">
-                                                <p className="mb-0"> 30-40 mins</p>
-                                                <p className="mb-0 text-success">$0 Delivery</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="cardContent">
-                                        <h3>The Classic</h3>
-                                        <p>Fire Roasted pepper s, spanach</p>
-                                        <h5 className="text-theme-primary font-weight-bold">$99.00</h5>
-                                    </div>
-                                </div>
-                                <div className="cardFooter">
-                                    <div className="cardAction">
-                                        <div className="counterAction">
-                                            <span className="qunatingCount">01</span>
-                                            <button className="minus" type="button"><i className="fa fa-minus"></i></button>
-                                            |
-                                            <button className="plus" type="button"><i className="fa fa-plus"></i></button>
-                                        </div>
-                                        <div className="addToCart">
-                                            <button type="button">Add To Cart</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-md-4">
-                            <div className="categoryCard shadow mb-4">
-                                <div className="cardHeader">
-                                    <div className="topMeta">
-                                        <div className="tags">
-                                            <span>15%off</span>
-                                        </div>
-                                        <div className="tags wishList">
-                                            <button className="button"><i className="fa fa-heart"></i></button>
-                                        </div>
-                                    </div>
-                                    <div className="cardImage">
-                                        <img src={c1} alt="Category Image" className="mw-100" />
-                                    </div>
-
-                                    <div className="topMeta">
-                                        <div className="companyLogo tags">
-                                            <button className="button"><img src={mac} alt="MAc" /></button>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div className="cardBody">
-                                    <div className="body-upper">
-                                        <div className="ratingBox">
-                                            <p className="mb-0">Reviews 3.5k</p>
-                                            <p className="mb-0">
-                                                <i className="fa fa-star"></i>
-                                                <i className="fa fa-star"></i>
-                                                <i className="fa fa-star"></i>
-                                                <i className="fa fa-star"></i>
-                                                <i className="fa fa-star"></i>
-                                            </p>
-                                        </div>
-                                        <div className="deliveryInfo">
-                                            <div className="meter">
-                                                <p className="mb-0"> 30-40 mins</p>
-                                                <p className="mb-0 text-success">$0 Delivery</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="cardContent">
-                                        <h3>The Classic</h3>
-                                        <p>Fire Roasted pepper s, spanach</p>
-                                        <h5 className="text-theme-primary font-weight-bold">$99.00</h5>
-                                    </div>
-                                </div>
-                                <div className="cardFooter">
-                                    <div className="cardAction">
-                                        <div className="counterAction">
-                                            <span className="qunatingCount">01</span>
-                                            <button className="minus" type="button"><i className="fa fa-minus"></i></button>
-                                            |
-                                            <button className="plus" type="button"><i className="fa fa-plus"></i></button>
-                                        </div>
-                                        <div className="addToCart">
-                                            <button type="button">Add To Cart</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-md-4">
-                            <div className="categoryCard shadow mb-4">
-                                <div className="cardHeader">
-                                    <div className="topMeta">
-                                        <div className="tags">
-                                            <span>15%off</span>
-                                        </div>
-                                        <div className="tags wishList">
-                                            <button className="button"><i className="fa fa-heart"></i></button>
-                                        </div>
-                                    </div>
-                                    <div className="cardImage">
-                                        <img src={c1} alt="Category Image" className="mw-100" />
-                                    </div>
-
-                                    <div className="topMeta">
-                                        <div className="companyLogo tags">
-                                            <button className="button"><img src={mac} alt="MAc" /></button>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div className="cardBody">
-                                    <div className="body-upper">
-                                        <div className="ratingBox">
-                                            <p className="mb-0">Reviews 3.5k</p>
-                                            <p className="mb-0">
-                                                <i className="fa fa-star"></i>
-                                                <i className="fa fa-star"></i>
-                                                <i className="fa fa-star"></i>
-                                                <i className="fa fa-star"></i>
-                                                <i className="fa fa-star"></i>
-                                            </p>
-                                        </div>
-                                        <div className="deliveryInfo">
-                                            <div className="meter">
-                                                <p className="mb-0"> 30-40 mins</p>
-                                                <p className="mb-0 text-success">$0 Delivery</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="cardContent">
-                                        <h3>The Classic</h3>
-                                        <p>Fire Roasted pepper s, spanach</p>
-                                        <h5 className="text-theme-primary font-weight-bold">$99.00</h5>
-                                    </div>
-                                </div>
-                                <div className="cardFooter">
-                                    <div className="cardAction">
-                                        <div className="counterAction">
-                                            <span className="qunatingCount">01</span>
-                                            <button className="minus" type="button"><i className="fa fa-minus"></i></button>
-                                            |
-                                            <button className="plus" type="button"><i className="fa fa-plus"></i></button>
-                                        </div>
-                                        <div className="addToCart">
-                                            <button type="button">Add To Cart</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section> */}
-            <ToastContainer />
 
             <section className="footer">
                 <div className="container">

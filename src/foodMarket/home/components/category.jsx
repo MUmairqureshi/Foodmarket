@@ -1,10 +1,10 @@
-import { useState, useEffect  } from 'react'
+import { useState, useEffect } from 'react'
 import { PopularCategories } from './popularCategories.jsx'
 import '../../css/style.css'
 import { Menue } from './menue'
-import { useDispatch , useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 // import { useDispatch, useSelector } from 'react-redux';
-import { addToCart  , updateCartItem} from '../../../components/redux/actions';
+import { addToCart, updateCartItem } from '../../../components/redux/actions';
 import { Cart } from '../../../components/redux/carts'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -16,10 +16,10 @@ import { useRef } from "react";
 
 import { Catigory_view } from './catigory_view'
 
-import { Get_all_product, filterProducts, filterMenu, filterDietary, filterPrice   , Zipcode} from '../../../components/services/catigories'
+import { Get_all_product, filterProducts, filterMenu, filterDietary, filterPrice, Zipcode } from '../../../components/services/catigories'
 
 export function Category() {
-     const cartItems = useSelector((state) => state.cart.items);
+    const cartItems = useSelector((state) => state.cart.items);
     const dispatch = useDispatch();
     const sliderRefs = useRef(null);
 
@@ -39,7 +39,7 @@ export function Category() {
     const previous = () => {
         sliderRef.current.slickPrev();
     };
-
+    const [alldata, setAlldata] = useState([]);
     const [dietary, setDietary] = useState('');
     const [minPrice, setMinPrice] = useState('');
     const [maxPrice, setMaxPrice] = useState('');
@@ -48,6 +48,7 @@ export function Category() {
     const [filteredData, setFilteredData] = useState([]);
     const [selectedCatigoryId, setSelectedCatigoryId] = useState('');
     const [selectedMenuId, setSelectedMenuId] = useState('');
+    const [zipcodes, setZipcode] = useState('');
 
     const [loading, setLoading] = useState(true);
 
@@ -56,8 +57,7 @@ export function Category() {
     const [allProducts, setAllProducts] = useState([]);
     console.log("allProducts", allProducts)
 
-    console.log("dietary", dietary)
-    
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -66,13 +66,17 @@ export function Category() {
                 // Simulate a loading time of 2 seconds
                 const loadingTime = 100;
                 const startTime = new Date().getTime();
-// Zipcode
+                // Zipcode
                 let data;
 
                 if (selectedCatigoryId) {
                     data = await filterProducts(selectedCatigoryId);
                 } else if (selectedMenuId) {
                     data = await filterMenu(selectedMenuId);
+                    setAllProducts([]);
+                }
+                else if (zipcodes) {
+                    data = await Zipcode(zipcodes);
                     setAllProducts([]);
                 } else if (dietary) {
                     data = await filterDietary(dietary);
@@ -83,6 +87,7 @@ export function Category() {
                 } else {
                     data = await Get_all_product();
                     setAllProducts(data?.data || []);
+                    setAlldata(data?.data || [])
                 }
 
                 const elapsedTime = new Date().getTime() - startTime;
@@ -101,10 +106,9 @@ export function Category() {
         };
 
         fetchData();
-    }, [selectedCatigoryId, selectedMenuId, dietary, minPrice, maxPrice ]);
+    }, [selectedCatigoryId, selectedMenuId, dietary, minPrice, maxPrice]);
 
-    console.log("")
-    const handleIncrement = (productId) => {
+     const handleIncrement = (productId) => {
         setAllProducts((prevProducts) =>
             prevProducts.map((product) =>
                 product.id === productId
@@ -128,123 +132,60 @@ export function Category() {
 
     const handleAddToCart = (product) => {
         const firstProductStoreId = cartItems.length > 0 ? cartItems[0].store_id : null;
-     
+
         if (cartItems.length === 2 && firstProductStoreId !== product.store_id) {
             // Remove the first product from the cart
             const updatedCardItems = cartItems.slice(1);
-     
+
             dispatch(updateCartItem(updatedCardItems));
-     
+
             toast.info('Removed the first vendor product from the order.', {
                 position: toast.POSITION.TOP_RIGHT,
             });
         }
 
         dispatch(addToCart(product));
-    
-        // Update the quantity of the added product in the local state
+ 
         setAllProducts((prevProducts) =>
             prevProducts.map((p) =>
                 p?.id === product?.id ? { ...p, quantity: 1 } : p
             )
         );
-    
-        // Show toast indicating that the product has been added to the cart
+ 
         toast.success(`${product.title} added to cart!`, {
             position: toast.POSITION.TOP_RIGHT,
         });
     };
     const [zipcode, setZipCode] = useState();
-    // console.log("zipcode" , zipcode)
-    // const handlezipcode = () => {
-    //   // If the zipcode is empty, show all products
-    //   if (zipcode.trim() === "") {
-    //     setAllProducts((prevProducts) => [...prevProducts]); // Copy the array to trigger a re-render
-    //     setZipCode("")
-    // } else {
-    //     // Filter products based on the provided zipcode
-    //     setAllProducts((prevProducts) =>
-    //       prevProducts?.filter((product) => product?.zipcodes?.includes(zipcode))
-    //     );
-    //     setZipCode("")  
-    // }
+ 
 
-    // };
+ 
+const handlezipcode = () => {
 
-    const handlezipcode = () => {
-        console.log(typeof(parseInt(zipcode)));
-         
-        if (zipcode.trim() === "") {
-          setAllProducts((prevProducts) => [...prevProducts]);  
-          setZipCode("");
-        } else {
-          // Filter products based on the provided zipcode
-
-          setAllProducts((prevProducts) =>
+    if (zipcode.trim() === "") {
+        setAllProducts((prevProducts) => [...prevProducts]);
+        setZipCode("");
+    } else {
+         setAllProducts((prevProducts) =>
             prevProducts.filter((product) =>
-              product?.zipcodes?.some((code) => code.includes(parseInt(zipcode)))
-             
+                product?.zipcode?.some((code) => {
+                    if (Array.isArray(code)) {
+                        return code.includes(parseInt(zipcode));
+                    } else if (typeof code === 'string') {
+                        return code === zipcode;
+                    }
+                    return false;
+                })
             )
-          );
-          setZipCode("");
-        }
-      };
-      
-    // const handlezipcode = () => { 
-    //     if (zipcode.trim() === "") {
-    //       setAllProducts((prevProducts) => [...prevProducts]);  
-    //       setFoundProducts([]);  
-    //     } else { 
-    //       const filteredProducts = allProducts.filter((product) => product?.zipcodes?.includes(4563));
-       
-    //       setFoundProducts(filteredProducts);
-       
-    //       setAllProducts([...filteredProducts]);
-    //     }
-       
-    //     if (zipcode.trim() === "") {
-    //       setZipCode("");
-    //     }
-    //   };
-
-//     const [zipcode, setZipCode] = useState("");
+        );
+        setZipCode("");
+    }
+};
  
 
  
-// const [foundProducts, setFoundProducts] = useState([]); // State to store filtered products
 
-// console.log("zipcode", zipcode);
 
-// const handlezipcode = () => {
-//     console.log("handlezipcode", zipcode);
- 
-//   if (zipcode.trim() === "") {
-//     setFoundProducts([]);
-//     setAllProducts((prevProducts) => [...prevProducts]); // Copy the array to trigger a re-render
-//   } else {
-//     // Filter products based on the provided zipcode
-//     const filteredProducts = allProducts.filter((product) => {
-//       const zipcodes = product?.zipcodes || [];
-//       return zipcodes.includes(zipcode);
-//     });
- 
-//     setFoundProducts(filteredProducts);
- 
-//     if (filteredProducts.length === 0) {
-//       console.log("No products found for the provided zipcode"); 
-//     }
- 
-//     setAllProducts([...filteredProducts]);
-//   }
- 
-//   if (zipcode.trim() === "") {
-//     setZipCode("");
-//   }
-// };
-
-    
-
- 
 
     const handlepopulerdata = () => {
 
@@ -258,13 +199,15 @@ export function Category() {
 
         setAllProducts((prevProducts) => prevProducts?.filter(beverage => beverage.is_trending === toprateddata));
 
-     };
+    };
 
     const handlealldata = () => {
-        setAllProducts(allProducts);
+        console.log("data  ,setAllProducts" , )
+        setAllProducts(alldata);
     };
- 
-     
+
+    console.log("setAllProducts" , setAllProducts)
+
 
     return (
 
@@ -272,8 +215,8 @@ export function Category() {
         <section className="homeCategory">
             <div className="container-fluid">
                 <div className="row">
-                    <Menue   
-                    maxPrice={maxPrice} minPrice={minPrice} setSelectedMenuId={setSelectedMenuId} setMinPrice={setMinPrice} handletoprateddata={handletoprateddata} handlealldata={handlealldata}
+                    <Menue
+                        maxPrice={maxPrice} minPrice={minPrice} setSelectedMenuId={setSelectedMenuId} setMinPrice={setMinPrice} handletoprateddata={handletoprateddata} handlealldata={handlealldata}
                         setDietary={setDietary} setMaxPrice={setMaxPrice} handlepopulerdata={handlepopulerdata} isRadioHidden={isRadioHidden}
                     />
 
@@ -282,19 +225,20 @@ export function Category() {
                             <Catigory_view setSelectedCatigoryId={setSelectedCatigoryId} />
 
                             <PopularCategories
-                            // datas={products}
+                                // datas={products}
                                 data={allProducts}
+                                handlealldata={handlealldata}
                                 handleIncrement={handleIncrement}
                                 handleDecrement={handleDecrement}
                                 handleAddToCart={handleAddToCart}
                                 loading={loading}
                             />
- 
+
 
 
                         </div>
                     </div>
-                    <Cart zip={zipcode} setZipCode={setZipCode} handlezipcode={handlezipcode} />
+                    <Cart zip={zipcode} setZipCode={setZipCode} handlezipcode={handlezipcode}  />
 
                 </div>
             </div>
