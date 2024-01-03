@@ -178,7 +178,7 @@ export function PopularCategories({ loading, data, handleIncrement, handleDecrem
 
             <h3 className="mb-0">Most Popular</h3>
 
-                    <h3 onClick={handlealldata} className=" btn">All Food </h3>
+                    {/* <h3 onClick={handlealldata} className=" btn">All Food </h3> */}
                 </div>
             </div>
 
@@ -574,6 +574,11 @@ export function PopularCategories({ loading, data, handleIncrement, handleDecrem
                             </>
                         )}
 
+                        <div className="row">
+                            <div className="col-md-4 mb-3">
+                                
+                            </div>
+                        </div>
 
                     </div>
                 </div>

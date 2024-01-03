@@ -1,5 +1,4 @@
-// import CloseButton from 'react-bootstrap/CloseButton';
-import { Form, Button } from 'react-bootstrap';
+  
 
 
 
@@ -9,11 +8,11 @@ import user from '../../assets/images/user.png'
 import { useState, useMemo, useEffect } from 'react';
 
 
-import mac from '../../assets/images/mac.png'
+ 
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts, addToCart, updateCartItem, incrementvariationQuantity, incrementQuantity, decrementcariationQuantity } from '../../components/redux/actions';
 import '../css/style.css'
-import c1 from '../../assets/images/c1.png'
+ 
 
 
 
@@ -25,7 +24,7 @@ export const Product_deatail = (props) => {
 
 
     const datas = props.productDetails?.data.id
-    console.log("datacomment", props.productDetails?.data.id)
+    console.log("datacomment", props.productDetails?.data)
 
     const [remarks, setRemarks] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -47,11 +46,11 @@ export const Product_deatail = (props) => {
         fetchRemarks();
     }, [datas]);
 
-    console.log("remarks", remarks)
+    // console.log("remarks", remarks)
 
-    console.log("datas", datas)
+    // console.log("datas", datas)
     const cartItems = useSelector((state) => state.cart.items);
-    console.log("cartItems", cartItems[0])
+    // console.log("cartItems", cartItems[0])
 
 
 
@@ -63,7 +62,8 @@ export const Product_deatail = (props) => {
             .filter((item) => item.id === productId)
         // .reduce((item) => item.quantity);
 
-        console.log('abc', totalProductQuantity[0])
+        // console.log('abc', totalProductQuantity[0])
+
 
         // Set the initial quantity to the calculated total if it's greater than 0
         setNewQuantity(totalProductQuantity[0]?.quantity > 0 ? totalProductQuantity[0]?.quantity : 0);
@@ -142,6 +142,9 @@ export const Product_deatail = (props) => {
             quantity: newQuantity,
         }));
 
+
+        console.log("selectedVariationsObject" , selectedVariationsObject)
+
         const existingCartItem = cartItems?.find(
             (cartVariation) => cartVariation.id === props.productDetails?.data?.id
         );
@@ -192,7 +195,7 @@ export const Product_deatail = (props) => {
     // const handleToggleSelection = (variationId, itemId, selected) => {
     //     console.log(selected)
 
-    //     cartItems.reduce((variatonItem)=> variatonItem?.variation?.some(cartVariation => cartVariation.variation_id === itemId))
+ 
 
     //     setSelectedVariations((prevVariations) => {
     //         const updatedVariations = { ...prevVariations };
@@ -210,57 +213,117 @@ export const Product_deatail = (props) => {
 
     //             setSelectedVariationId(itemId);
     //         } else {
-    //             delete updatedVariations[variationId];
+    //             // delete updatedVariations[variationId];
     //             setSelectedVariationId(null);
     //         }
 
     //         return updatedVariations;
     //     });
     // };
+ 
 
 
 
-    const handleToggleSelection = (variationId, itemId, selected) => {
-        console.log(selected);
+// const handleToggleSelection = (variationId, itemId, selected) => {
+//     console.log(selected);
+//     // cartItems.some(variationItem =>
+//     //     variationItem?.variation?.some(cartVariation => cartVariation.id === item?.id && cartVariation.variation_id === data?.id)
+//     setSelectedVariations((prevVariations) => {
+//         const updatedVariations = { ...prevVariations };
 
-        const isItemInCart = cartItems.some(variationItem =>
-            variationItem?.variation?.some(cartVariation => cartVariation.variation_id === itemId)
-        );
+//         if (selected) {
+//             const selectedItem = props.productDetails?.data.variation
+//                 .find((variation) => variation.id === variationId)
+//                 .variation_items.find((item) => item.id === itemId);
 
-        setSelectedVariations((prevVariations) => {
-            const updatedVariations = { ...prevVariations };
+//             updatedVariations[variationId] = {
+//                 item_id: itemId,
+//                 ...selectedItem,
+//                 quantity: 1,
+//             };
 
-            if (selected) {
-                if (!isItemInCart) {
-                    const selectedItem = props.productDetails?.data.variation
-                        .find((variation) => variation.id === variationId)
-                        .variation_items.find((item) => item.id === itemId);
+//             setSelectedVariationId(itemId);
+//         } else {
+     
+//             delete updatedVariations[variationId];
 
-                    updatedVariations[variationId] = {
-                        item_id: itemId,
-                        ...selectedItem,
-                        quantity: 1,
-                    };
+          
+//             const remainingVariations = Object.values(updatedVariations);
+//             const newSelectedVariationId = remainingVariations.length > 0
+//                 ? remainingVariations[0].item_id
+//                 : null;
 
-                    setSelectedVariationId(itemId);
-                }
-            } else {
+//             setSelectedVariationId(newSelectedVariationId);
+//         }
+
+//         return updatedVariations;
+//     });
+// };
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+const handleToggleSelection = (variationId, itemId, selected) => {
+    console.log(selected);
+
+    // Check if the variation is present in cartItems
+    const isVariationInCart = cartItems.some((variationItem) =>
+        variationItem?.variation?.some(
+            (cartVariation) =>
+                cartVariation.id === itemId && cartVariation.variation_id === variationId
+        )
+    );
+
+    setSelectedVariations((prevVariations) => {
+        const updatedVariations = { ...prevVariations };
+
+        if (selected) {
+            const selectedItem = props.productDetails?.data.variation
+                .find((variation) => variation.id === variationId)
+                .variation_items.find((item) => item.id === itemId);
+
+            updatedVariations[variationId] = {
+                item_id: itemId,
+                ...selectedItem,
+                quantity: 1,
+            };
+
+            setSelectedVariationId(itemId);
+        } else {
+         
+            if (!isVariationInCart) {
                 delete updatedVariations[variationId];
-                setSelectedVariationId(null);
             }
 
-            return updatedVariations;
-        });
-    };
+            const remainingVariations = Object.values(updatedVariations);
+            const newSelectedVariationId =
+                remainingVariations.length > 0 ? remainingVariations[0].item_id : null;
+
+            setSelectedVariationId(newSelectedVariationId);
+        }
+
+        return updatedVariations;
+    });
+};
 
 
+ 
     const itmdata = cartItems?.variation;
-    console.log("itmdata", itmdata);
-
-    const isItemChecked = (variationId, itemId) => {
-        console.log("variationId", variationId)
-        console.log("itemId", itemId)
-    };
+ 
+    // const isItemChecked = (variationId, itemId) => {
+    //      console.log("itemId", itemId)
+    // };
 
 
 
@@ -314,17 +377,17 @@ export const Product_deatail = (props) => {
             });
 
             if (response.ok) {
-                console.log('Review submitted successfully!');
+                // console.log('Review submitted successfully!');
                 // Show a success toast
                 toast.success('Review submitted successfully!');
                 // You can also redirect the user or perform other actions upon success
             } else {
-                console.error('Error submitting review:', response.statusText);
+                // console.error('Error submitting review:', response.statusText);
                 // Show an error toast
                 toast.error('Error submitting review. Please try again.');
             }
         } catch (error) {
-            console.error('Error submitting review:', error);
+            // console.error('Error submitting review:', error);
             // Show an error toast
             toast.error('Error submitting review. Please try again.');
         }
@@ -422,22 +485,11 @@ export const Product_deatail = (props) => {
                                                                             type="radio"
                                                                             name={`variation_${data?.id}`}
                                                                             defaultChecked={cartItems.some(variationItem =>
-                                                                                variationItem?.variation?.some(cartVariation => cartVariation.variation_id === item?.id)
+                                                                                variationItem?.variation?.some(cartVariation => cartVariation.id === item?.id && cartVariation.variation_id === data?.id)
                                                                             )}
                                                                             onChange={(e) => handleToggleSelection(data?.id, item?.id, e.target.checked)}
                                                                         />
-
-                                                                        {/* <input
-                                                                            type="radio"
-                                                                            name={`variation_${data?.id}`}
-                                                                                onChange={(e) => handleToggleSelection(data?.id, item?.id, e.target.checked)}
-
-                                                                        /> */}
-                                                                        {/* // checked={cartItems[0]?.variation?.some(cartVariation =>  cartVariation.item_id === item.id && cartVariation.variation_id === data?.id)}
-                                                                        // checked={cartItems.reduce((variatonItem)=> variatonItem?.variation?.some(cartVariation =>  cartVariation.item_id === item.id && cartVariation.variation_id === data?.id))} */}
-
-                                                                        {console.log("Data:", data, " data id :", data.id, "Item ID:", item?.id)}
-
+ 
                                                                     </div>
                                                                     <div className="order_img">
                                                                         <img src={ImageUrl + item?.image} className="img-fluid" alt="" />

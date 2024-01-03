@@ -75,12 +75,14 @@ export function Menue({setZipCode ,  isRadioHidden ,  setSelectedMenuId, setDiet
                         <button type="button" className="primaryButton btn w-100">Featured Items</button>
                      </div>
                     <div className="categoryData">
-                    <li   onClick={handlealldata}  className="nav-link px-md-0"><Link className="catLink text-dark" >All Product</Link></li>                       
+                    <ul>
+                                  <li   onClick={handlealldata}  className="nav-link px-md-0 font-weight-bold"><Link className="catLink text-dark" >   <i className="fa fa-home" aria-hidden="true"></i>    All Product</Link></li>                       
 
-                        {mainmenu.data?.map(data => (<ul>
+                        {mainmenu.data?.map(data => (
                             
                             <li onClick={() => handleProductClick(data.id)} key={data.id} className="nav-link px-md-0"><Link className="catLink text-dark" ><i className="fa fa-home" aria-hidden="true"></i> {data.name}</Link></li>
-                        </ul>))}
+                        ))}
+                        </ul>
                     </div>
                 </div>
 

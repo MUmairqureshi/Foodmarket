@@ -258,17 +258,20 @@ export function Cart() {
                                             <tr>
                                                 <td>
                                                     {/* variation */}
-                                                    <Nav.Link className="no-link-decoration" id='nav-link' style={{ textDecorationStyle: 'none' }} onClick={() => handleProductClick(data?.id)}>
+                                                    {/* <Nav.Link className="no-link-decoration" id='nav-link' style={{ textDecorationStyle: 'none' }} onClick={() => handleProductClick(data?.id)}> */}
                                                     <div className="product_discription ">
                                                         <div className="img_div mb-3" style={{ display: 'flex', alignItems: 'center' }}>
                                                             <img src={ImageUrl + data?.feature_image} className="img-fluid" alt="" />
                                                         </div>
                                                         <div className="product_detail">
-                                                            <div className="titleBox text-left ">
-                                                                <h3>{data?.title}</h3>
-
-                                                            </div>
-
+                                                           
+                                                        <Nav.Link className="no-link-decoration" id='nav-link' style={{ textDecorationStyle: 'none' }} onClick={() => handleProductClick(data?.id)}>
+                                                
+<div className="titleBox text-left d-flex items-inline  ">
+    <h3>{data?.title}</h3> <h5> 
+    <i className="ml-4 fa-solid fa-pen-to-square"></i></h5>
+</div>
+</Nav.Link>
                                                             <div className="product_detail_extras">
 
                                                                 {data.variation?.map(item => (
@@ -297,7 +300,7 @@ export function Cart() {
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    </Nav.Link>
+
 
 
                                                 </td>
@@ -367,63 +370,7 @@ export function Cart() {
                         <div className="col-md-12 mb-5">
 
 
-
-
-                            {/* <div className="delivery_detail d-flex gap-10 flex-lg-nowrap flex-wrap justify-content- between">
-                                <div className="delivery_content">
-                                    <div className="titleBox text-left ">
-                                        <h3>Delivery Zip*</h3>
-                                    </div>
-                                    <p>Hint: if this is a gift, enter your recipient’s ZIP!</p>
-                                    <div className="delivery_info">
-                                        <input
-                                            type="text"
-                                            placeholder="484892"
-                                            className="form-control"
-                                            value={zipcode}
-                                            onChange={handleZipcodeChange}
-                                        />
-                                        <i className="fa fa-map-marker" aria-hidden="true"></i>
-                                    </div>
-                                </div>
  
-                                <div className="delivery_content">
-                                    <div className="titleBox text-left ">
-                                        <h3>Delivery Date*</h3>
-                                    </div>
-                                    <p>Choose an arrival date for order</p>
-                                    <div className="delivery_info">
-                                        <input
-                                            type="date"
-                                            placeholder="20/10/23"
-                                            className="form-control"
-                                            // onChange={(e) => setMessage(e.target.value)}
-                                        />
-                                        <i className="fa fa-calendar" aria-hidden="true"></i>
-                                    </div>
-                                </div>
-
-                                <div className="delivery_content">
-                                    <div className="titleBox text-left ">
-                                        <h3>Gift Message</h3>
-                                    </div>
-                                    <p>Choose an arrival date for order</p>
-                                    <div className="delivery_info">
-                                        <input
-                                            type="text"
-                                            placeholder="Write Message"
-                                            className="form-control"
-                                            value={message}
-                                            onChange={(e) => setMessage(e.target.value)}
-                                        />
-                                        <i className="fa fa-comments" aria-hidden="true"></i>
-                                    </div>
-                                </div>
-
-                            </div> */}
-
-
-
 
 
 
@@ -553,7 +500,7 @@ export function Cart() {
                 <input type="text" className="form-control" id="card-exp" placeholder="MM/YYYY" value={expiration} onChange={handleExpirationChange} />
               </div>
             </div>
-            <button type="submit" className="btn btn-primary mt-3">Submit Payment</button>
+            <button type="submit" className="btn btn-secoundary mt-3">Submit Payment</button>
           </form>
         </div>
       </div>
