@@ -61,10 +61,12 @@ export const Product_deatail = (props) => {
         // Calculate the total quantity for the specific product
         const totalProductQuantity = cartItems
             .filter((item) => item.id === productId)
-            .reduce((total, item) => total + item.quantity, 1);
+            // .reduce((item) => item.quantity);
+
+            console.log('abc', totalProductQuantity[0])
 
         // Set the initial quantity to the calculated total if it's greater than 0
-        setNewQuantity(totalProductQuantity > 0 ? totalProductQuantity : 0);
+        setNewQuantity(totalProductQuantity[0]?.quantity > 0 ? totalProductQuantity[0]?.quantity : 0);
     }, [cartItems, props]);
 
 
@@ -379,39 +381,12 @@ export const Product_deatail = (props) => {
                                                             {data?.variation_items?.map((item) =>
                                                                 <div key={item.id} className="selection_div">
                                                                     <div className="">
-                                                                        {/* <input
-                type="radio"
-                name={`variation_${data?.id}`}
-                onChange={(e) => handleToggleSelection(data?.id, item?.id, e.target.checked)}
-                checked={isItemChecked(data?.id, item?.id)}
-              /> */}
-
-                                                                        {/* <input
-        type="radio"
-        name={`variation_${data?.id}_${item?.id}`} 
-        onChange={(e) => handleToggleSelection(data?.id, item?.id, e.target.checked)}
-        checked={isItemChecked(data?.id, item?.id)}
-    />      */}
-
-                                                                        {/* <input
-                                                                            type="radio"
-                                                                            name={`variation_${data?.id}`}
-                                                                            onChange={(e) =>
-                                                                                handleToggleSelection(data?.id, item?.id, e.target.checked)
-                                                                            }
-                                                                            // checked={cartItems?.vari?ation?.some(cartVariation =>  cartVariation.id === item.id)}
-                                                                             // checked={cartItems?.variation?.some((cartVariation) => cartVariation.id === data?.id && cartVariation.item_id === item.id)}
-
-                                                                            // checked={isItemChecked(data?.id, item?.id)}
-                                                                        // checked={selectedItemsObj && selectedItemsObj[`${data?.id}_${item?.id}`]}
-
-
-                                                                        /> */}
 
                                                                         <input
                                                                             type="radio"
                                                                             name={`variation_${data?.id}`}
                                                                             onChange={(e) => handleToggleSelection(data?.id, item?.id, e.target.checked)}
+                                                                            checked={cartItems?.variation?.some(cartVariation =>  cartVariation.id === item.id)}
 
                                                                         />
                                                                         {console.log("Data:", data, " data id :", data.id, "Item ID:", item?.id)}

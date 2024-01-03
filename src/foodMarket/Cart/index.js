@@ -258,7 +258,7 @@ export function Cart() {
                                             <tr>
                                                 <td>
                                                     {/* variation */}
-                                                    {/* <Nav.Link className="no-link-decoration" id='nav-link' style={{ textDecorationStyle: 'none' }} onClick={() => handleProductClick(data?.id)}> */}
+                                                    <Nav.Link className="no-link-decoration" id='nav-link' style={{ textDecorationStyle: 'none' }} onClick={() => handleProductClick(data?.id)}>
                                                     <div className="product_discription ">
                                                         <div className="img_div mb-3" style={{ display: 'flex', alignItems: 'center' }}>
                                                             <img src={ImageUrl + data?.feature_image} className="img-fluid" alt="" />
@@ -297,7 +297,7 @@ export function Cart() {
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    {/* </Nav.Link> */}
+                                                    </Nav.Link>
 
 
                                                 </td>
