@@ -51,7 +51,7 @@ export const Product_deatail = (props) => {
 
     console.log("datas", datas)
     const cartItems = useSelector((state) => state.cart.items);
-    console.log("cartItems", cartItems)
+    console.log("cartItems", cartItems[0])
 
 
 
@@ -61,9 +61,9 @@ export const Product_deatail = (props) => {
         // Calculate the total quantity for the specific product
         const totalProductQuantity = cartItems
             .filter((item) => item.id === productId)
-            // .reduce((item) => item.quantity);
+        // .reduce((item) => item.quantity);
 
-            console.log('abc', totalProductQuantity[0])
+        console.log('abc', totalProductQuantity[0])
 
         // Set the initial quantity to the calculated total if it's greater than 0
         setNewQuantity(totalProductQuantity[0]?.quantity > 0 ? totalProductQuantity[0]?.quantity : 0);
@@ -186,29 +186,64 @@ export const Product_deatail = (props) => {
     const [newQuantity, setNewQuantity] = useState(1);
 
 
-
-
     const [selectedVariationId, setSelectedVariationId] = useState(null);
 
+
+    // const handleToggleSelection = (variationId, itemId, selected) => {
+    //     console.log(selected)
+
+    //     cartItems.reduce((variatonItem)=> variatonItem?.variation?.some(cartVariation => cartVariation.variation_id === itemId))
+
+    //     setSelectedVariations((prevVariations) => {
+    //         const updatedVariations = { ...prevVariations };
+
+    //         if (selected) {
+    //             const selectedItem = props.productDetails?.data.variation
+    //                 .find((variation) => variation.id === variationId)
+    //                 .variation_items.find((item) => item.id === itemId);
+
+    //             updatedVariations[variationId] = {
+    //                 item_id: itemId,
+    //                 ...selectedItem,
+    //                 quantity: 1,
+    //             };
+
+    //             setSelectedVariationId(itemId);
+    //         } else {
+    //             delete updatedVariations[variationId];
+    //             setSelectedVariationId(null);
+    //         }
+
+    //         return updatedVariations;
+    //     });
+    // };
 
 
 
     const handleToggleSelection = (variationId, itemId, selected) => {
+        console.log(selected);
+
+        const isItemInCart = cartItems.some(variationItem =>
+            variationItem?.variation?.some(cartVariation => cartVariation.variation_id === itemId)
+        );
+
         setSelectedVariations((prevVariations) => {
             const updatedVariations = { ...prevVariations };
 
             if (selected) {
-                const selectedItem = props.productDetails?.data.variation
-                    .find((variation) => variation.id === variationId)
-                    .variation_items.find((item) => item.id === itemId);
+                if (!isItemInCart) {
+                    const selectedItem = props.productDetails?.data.variation
+                        .find((variation) => variation.id === variationId)
+                        .variation_items.find((item) => item.id === itemId);
 
-                updatedVariations[variationId] = {
-                    item_id: itemId,
-                    ...selectedItem,
-                    quantity: 1,
-                };
+                    updatedVariations[variationId] = {
+                        item_id: itemId,
+                        ...selectedItem,
+                        quantity: 1,
+                    };
 
-                setSelectedVariationId(itemId);
+                    setSelectedVariationId(itemId);
+                }
             } else {
                 delete updatedVariations[variationId];
                 setSelectedVariationId(null);
@@ -217,6 +252,7 @@ export const Product_deatail = (props) => {
             return updatedVariations;
         });
     };
+
 
     const itmdata = cartItems?.variation;
     console.log("itmdata", itmdata);
@@ -385,10 +421,21 @@ export const Product_deatail = (props) => {
                                                                         <input
                                                                             type="radio"
                                                                             name={`variation_${data?.id}`}
+                                                                            defaultChecked={cartItems.some(variationItem =>
+                                                                                variationItem?.variation?.some(cartVariation => cartVariation.variation_id === item?.id)
+                                                                            )}
                                                                             onChange={(e) => handleToggleSelection(data?.id, item?.id, e.target.checked)}
-                                                                            checked={cartItems?.variation?.some(cartVariation =>  cartVariation.id === item.id)}
-
                                                                         />
+
+                                                                        {/* <input
+                                                                            type="radio"
+                                                                            name={`variation_${data?.id}`}
+                                                                                onChange={(e) => handleToggleSelection(data?.id, item?.id, e.target.checked)}
+
+                                                                        /> */}
+                                                                        {/* // checked={cartItems[0]?.variation?.some(cartVariation =>  cartVariation.item_id === item.id && cartVariation.variation_id === data?.id)}
+                                                                        // checked={cartItems.reduce((variatonItem)=> variatonItem?.variation?.some(cartVariation =>  cartVariation.item_id === item.id && cartVariation.variation_id === data?.id))} */}
+
                                                                         {console.log("Data:", data, " data id :", data.id, "Item ID:", item?.id)}
 
                                                                     </div>
