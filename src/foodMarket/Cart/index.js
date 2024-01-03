@@ -30,15 +30,15 @@ export function Cart() {
     const [cardNumber, setCardNumber] = useState('');
     const [cvc, setCVC] = useState('');
     const [expiration, setExpiration] = useState('');
-  
+
     const handleNameChange = (e) => setName(e.target.value);
     const handleCardNumberChange = (e) => setCardNumber(e.target.value);
     const handleCVCChange = (e) => setCVC(e.target.value);
     const handleExpirationChange = (e) => setExpiration(e.target.value);
-  
+
     const handleSubmit = (e) => {
-      e.preventDefault();
-      // Add your payment processing logic here
+        e.preventDefault();
+        // Add your payment processing logic here
     };
 
     const [errorMessage, setErrorMessage] = useState(null);
@@ -89,7 +89,7 @@ export function Cart() {
             : 0;
 
         return total + productPrice * productQuantity + variationTotal;
-    }, 0) ;
+    }, 0);
 
 
 
@@ -233,7 +233,7 @@ export function Cart() {
     };
 
 
-   
+
 
 
 
@@ -264,14 +264,14 @@ export function Cart() {
                                                             <img src={ImageUrl + data?.feature_image} className="img-fluid" alt="" />
                                                         </div>
                                                         <div className="product_detail">
-                                                           
-                                                        <Nav.Link className="no-link-decoration" id='nav-link' style={{ textDecorationStyle: 'none' }} onClick={() => handleProductClick(data?.id)}>
-                                                
-<div className="titleBox text-left d-flex items-inline  ">
-    <h3>{data?.title}</h3> <h5> 
-    <i className="ml-4 fa-solid fa-pen-to-square"></i></h5>
-</div>
-</Nav.Link>
+
+                                                            <Nav.Link className="no-link-decoration" id='nav-link' style={{ textDecorationStyle: 'none' }} onClick={() => handleProductClick(data?.id)}>
+
+                                                                <div className="titleBox text-left d-flex items-inline  ">
+                                                                    <h3>{data?.title}</h3> <h5>
+                                                                        <i className="ml-4 fa-solid fa-pen-to-square"></i></h5>
+                                                                </div>
+                                                            </Nav.Link>
                                                             <div className="product_detail_extras">
 
                                                                 {data.variation?.map(item => (
@@ -370,7 +370,7 @@ export function Cart() {
                         <div className="col-md-12 mb-5">
 
 
- 
+
 
 
 
@@ -478,34 +478,34 @@ export function Cart() {
                                 </div>
                                 {/* <form > */}
                                 <div className="container-fluid">
-      <div id="card-errors" role="alert"></div>
-      <div className="card p-4 mt-4">
-        <div className="card-body">
-          <form id="payment-form" onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label htmlFor="name">Name on Card</label>
-              <input type="text" className="form-control" id="name" placeholder="John Doe" value={name} onChange={handleNameChange} />
-            </div>
-            <div className="form-group">
-              <label htmlFor="card-number">Credit Card Number</label>
-              <input type="text" className="form-control" id="card-number" placeholder="1234 5678 9012 3456" value={cardNumber} onChange={handleCardNumberChange} />
-            </div>
-            <div className="form-row">
-              <div className="form-group col-md-6">
-                <label htmlFor="card-cvc">CVC Number</label>
-                <input type="text" className="form-control" id="card-cvc" placeholder="123" value={cvc} onChange={handleCVCChange} />
-              </div>
-              <div className="form-group col-md-6">
-                <label htmlFor="card-exp">Expiration</label>
-                <input type="text" className="form-control" id="card-exp" placeholder="MM/YYYY" value={expiration} onChange={handleExpirationChange} />
-              </div>
-            </div>
-            <button type="submit" className="btn btn-secoundary mt-3">Submit Payment</button>
-          </form>
-        </div>
-      </div>
-    </div>
-                                    {/* Show error message to your customers */}
+                                    <div id="card-errors" role="alert"></div>
+                                    <div className="card p-4 mt-4">
+                                        <div className="card-body">
+                                            <form id="payment-form" onSubmit={handleSubmit}>
+                                                <div className="form-group">
+                                                    <label htmlFor="name">Name on Card</label>
+                                                    <input type="text" className="form-control" id="name" placeholder="John Doe" value={name} onChange={handleNameChange} />
+                                                </div>
+                                                <div className="form-group">
+                                                    <label htmlFor="card-number">Credit Card Number</label>
+                                                    <input type="text" className="form-control" id="card-number" placeholder="1234 5678 9012 3456" value={cardNumber} onChange={handleCardNumberChange} />
+                                                </div>
+                                                <div className="form-row">
+                                                    <div className="form-group col-md-6">
+                                                        <label htmlFor="card-cvc">CVC Number</label>
+                                                        <input type="text" className="form-control" id="card-cvc" placeholder="123" value={cvc} onChange={handleCVCChange} />
+                                                    </div>
+                                                    <div className="form-group col-md-6">
+                                                        <label htmlFor="card-exp">Expiration</label>
+                                                        <input type="text" className="form-control" id="card-exp" placeholder="MM/YYYY" value={expiration} onChange={handleExpirationChange} />
+                                                    </div>
+                                                </div>
+                                                <button type="submit" className="btn btn-secoundary mt-3">Submit Payment</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                {/* Show error message to your customers */}
                                 {/* </form> */}
                                 <div className="actionApply">
                                     <button type="button" className="btn couponButton" onClick={placeOrder}>Proceesd To Checkout</button>

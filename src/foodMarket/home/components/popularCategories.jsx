@@ -121,49 +121,163 @@ export function PopularCategories({ loading, data, handleIncrement, handleDecrem
 
 
 
-    const settings = {
+    // const settings = {
 
-        infinite: true,
-        speed: 500,
-        // slidesToShow: all_product.length > 6 ? 6 : all_product.length, // Set slidesToShow based on the number of items
+    //     infinite: true,
+    //     speed: 500,
+    //     // slidesToShow: all_product.length > 6 ? 6 : all_product.length, // Set slidesToShow based on the number of items
+    //     horizontal: true,
+    //     horizontalSwiping: true,
+    //     slidesToShow: 3,
+    //     slidesToScroll: 1,
+    //     rows: 2,
+    //     responsive: [
+    //         {
+    //             infinite: true,
+    //             breakpoint: 1024, // Medium devices (tablets, 768px and up)
+    //             settings: {
+    //                 infinite: true,
+    //                 horizontal: true,
+    //                 horizontalSwiping: true,
+    //                 slidesToShow: 2,
+    //                 slidesToScroll: 1,
+    //                 rows: 2,
+    //             },
+    //         },
+    //         {
+    //             infinite: true,
+    //             breakpoint: 768, // Small devices (landscape phones, 576px and up)
+    //             settings: {
+    //                 infinite: true,
+    //                 horizontal: true,
+    //                 horizontalSwiping: true,
+    //                 slidesToShow: 1,
+    //                 slidesToScroll: 1,
+    //                 rows: 1,
+    //             },
+    //         },
+    //         {
+    //             infinite: true,
+    //             breakpoint: 576, // Extra small devices (portrait phones, 576px and down)
+    //             settings: {
+    //                 infinite: true,
+    //                 slidesToShow: 1,
+    //                 slidesToScroll: 1,
+    //                 rows: 1,
+    //             },
+    //         },
+    //     ],
+    // };
+console.log("data"  ,  data.length)
 
-        slidesToShow: 3,
-        slidesToScroll: 1,
-        rows: 2,
-        responsive: [
-            {
-                infinite: true,
-                breakpoint: 1024, // Medium devices (tablets, 768px and up)
-                settings: {
-                    infinite: true,
-                    slidesToShow: 2,
-                    slidesToScroll: 1,
-                    rows: 2,
-                },
-            },
-            {
-                infinite: true,
-                breakpoint: 768, // Small devices (landscape phones, 576px and up)
-                settings: {
-                    infinite: true,
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                    rows: 1,
-                },
-            },
-            {
-                infinite: true,
-                breakpoint: 576, // Extra small devices (portrait phones, 576px and down)
-                settings: {
-                    infinite: true,
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                    rows: 1,
-                },
-            },
-        ],
-    };
+// const settings = {
+//     infinite: true,
+//     speed: 500,
+//     slidesToShow: Math.min(3, data.length), // Show at most 3 products, adjust as needed
+//     slidesToScroll: 1,
+//     rows: data.length > 3 ? 2 : 1, // Show 2 rows if there are more than 3 products
+//     responsive: [
+//       {
+//         breakpoint: 1024,
+//         settings: {
+//           slidesToShow: data.length > 3 ? 2 : 1, // Show at most 2 products on medium devices
+//           slidesToScroll: 1,
+//           rows: data.length > 3 ? 2 : 1,
+//         },
+//       },
+//       {
+//         breakpoint: 768,
+//         settings: {
+//           slidesToShow: Math.min(1, data.length), // Show at most 1 product on small devices
+//           slidesToScroll: 1,
+//           rows: 1,
+//         },
+//       },
+//       {
+//         breakpoint: 576,
+//         settings: {
+//           slidesToShow: Math.min(1, data.length), // Show at most 1 product on extra small devices
+//           slidesToScroll: 1,
+//           rows: 1,
+//         },
+//       },
+//     ],
+//   };
+  
 
+
+
+
+
+const settings = {
+    infinite: true,
+    speed: 500,
+    slidesToShow: Math.min(3, data.length), // Show at most 3 products, adjust as needed
+    slidesToScroll: 1,
+    rows: Math.min(2, Math.ceil(data.length / 3)), // Ensure no more than 2 rows
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: Math.min(2, data.length), // Show at most 2 products on medium devices
+          slidesToScroll: 1,
+          rows: Math.min(2, Math.ceil(data.length / 3)),
+        },
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: Math.min(1, data.length), // Show at most 1 product on small devices
+          slidesToScroll: 1,
+          rows: 1,
+        },
+      },
+      {
+        breakpoint: 576,
+        settings: {
+          slidesToShow: Math.min(1, data.length), // Show at most 1 product on extra small devices
+          slidesToScroll: 1,
+          rows: 1,
+        },
+      },
+    ],
+  };
+// const settings = {
+//     infinite: true,
+//     speed: 500,
+//     slidesToShow: Math.min(3, data.length), // Show at most 3 products, adjust as needed
+//     slidesToScroll: 1,
+//     rows: data.length === 4 ? 2 : 1, // Show 2 rows only if there are exactly 4 products
+//     responsive: [
+//       {
+//         breakpoint: 1024,
+//         settings: {
+//           slidesToShow: data.length >= 3 ? 2 : 1, // Show at most 2 products on medium devices
+//           slidesToScroll: 1,
+//           rows: data.length >= 3 ? 2 : 1,
+//         },
+//       },
+//       {
+//         breakpoint: 768,
+//         settings: {
+//           slidesToShow: Math.min(1, data.length), // Show at most 1 product on small devices
+//           slidesToScroll: 1,
+//           rows: 1,
+//         },
+//       },
+//       {
+//         breakpoint: 576,
+//         settings: {
+//           slidesToShow: Math.min(1, data.length), // Show at most 1 product on extra small devices
+//           slidesToScroll: 1,
+//           rows: 1,
+//         },
+//       },
+//     ],
+//   };
+  
+  
+      
     const ImageUrl = "https://custom2.mystagingserver.site/food-stadium/public/"
     const loaderContainerStyle = {
         display: 'flex',
@@ -575,7 +689,7 @@ export function PopularCategories({ loading, data, handleIncrement, handleDecrem
                         )}
 
                         <div className="row">
-                            <div className="col-md-4 mb-3">
+                            <div className="col-md-3 mb-3">
                                 
                             </div>
                         </div>

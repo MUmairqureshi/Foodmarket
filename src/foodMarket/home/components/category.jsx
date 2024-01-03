@@ -205,8 +205,7 @@ const handlezipcode = () => {
         console.log("data  ,setAllProducts" , )
         setAllProducts(alldata);
     };
-
-    console.log("setAllProducts" , setAllProducts)
+ 
 
 
     return (
